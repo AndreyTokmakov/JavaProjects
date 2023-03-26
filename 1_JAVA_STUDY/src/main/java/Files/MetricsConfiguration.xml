@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BrowserMetrics>
+    <Metric>
+		<Parameter>
+			<name>type</name>
+			<type>mandatory</type>
+			<value>SomeValue</value>
+		</Parameter>		
+    </Metric>
+</BrowserMetrics>

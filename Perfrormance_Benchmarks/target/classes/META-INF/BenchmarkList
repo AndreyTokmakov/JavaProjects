@@ -1,0 +1,15 @@
+JMH S 24 JMH_Tests.BenchmarkModes S 62 JMH_Tests.jmh_generated.BenchmarkModes_measureMultiple_jmhTest S 15 measureMultiple S 10 Throughput E A 1 1 1 E E E E E E E E E E E E E E U 12 MICROSECONDS E E 
+JMH S 23 JMH_Tests.BenchmarkLoop S 55 JMH_Tests.jmh_generated.BenchmarkLoop_loopWhile_jmhTest S 9 loopWhile S 11 AverageTime E A 1 1 1 E E E E E E E I 1 2 E E L 2 6 -Xms2G 6 -Xmx2G E E M 1 1 N 1 24 xAAMAADAwAAMAADAwAAMAA== U 12 MILLISECONDS E E 
+JMH S 24 JMH_Tests.BenchmarkModes S 64 JMH_Tests.jmh_generated.BenchmarkModes_measureThroughput_jmhTest S 17 measureThroughput S 10 Throughput E A 1 1 1 E E E E E E E E E E E E E E U 7 SECONDS E E 
+JMH S 24 JMH_Tests.HelloWorldTest S 61 JMH_Tests.jmh_generated.HelloWorldTest_wellHelloThere_jmhTest S 14 wellHelloThere S 10 Throughput E A 1 1 1 E E E E E E E E E E E E E E E E E 
+JMH S 23 JMH_Tests.BenchmarkLoop S 58 JMH_Tests.jmh_generated.BenchmarkLoop_loopIterator_jmhTest S 12 loopIterator S 11 AverageTime E A 1 1 1 E E E E E E E I 1 2 E E L 2 6 -Xms2G 6 -Xmx2G E E M 1 1 N 1 24 xAAMAADAwAAMAADAwAAMAA== U 12 MILLISECONDS E E 
+JMH S 24 JMH_Tests.BenchmarkModes S 57 JMH_Tests.jmh_generated.BenchmarkModes_measureAll_jmhTest S 10 measureAll S 3 All E A 1 1 1 E E E E E E E E E E E E E E U 12 MICROSECONDS E E 
+JMH S 24 JMH_Tests.BenchmarkModes S 61 JMH_Tests.jmh_generated.BenchmarkModes_measureAvgTime_jmhTest S 14 measureAvgTime S 11 AverageTime E A 1 1 1 E E E E E E E E E E E E E E U 12 MICROSECONDS E E 
+JMH S 24 JMH_Tests.BenchmarkModes S 62 JMH_Tests.jmh_generated.BenchmarkModes_measureMultiple_jmhTest S 15 measureMultiple S 10 SampleTime E A 1 1 1 E E E E E E E E E E E E E E U 12 MICROSECONDS E E 
+JMH S 24 JMH_Tests.BenchmarkModes S 64 JMH_Tests.jmh_generated.BenchmarkModes_measureSingleShot_jmhTest S 17 measureSingleShot S 14 SingleShotTime E A 1 1 1 E E E E E E E E E E E E E E U 12 MICROSECONDS E E 
+JMH S 23 JMH_Tests.BenchmarkLoop S 57 JMH_Tests.jmh_generated.BenchmarkLoop_loopForEach_jmhTest S 11 loopForEach S 11 AverageTime E A 1 1 1 E E E E E E E I 1 2 E E L 2 6 -Xms2G 6 -Xmx2G E E M 1 1 N 1 24 xAAMAADAwAAMAADAwAAMAA== U 12 MILLISECONDS E E 
+JMH S 23 JMH_Tests.BenchmarkLoop S 53 JMH_Tests.jmh_generated.BenchmarkLoop_loopFor_jmhTest S 7 loopFor S 11 AverageTime E A 1 1 1 E E E E E E E I 1 2 E E L 2 6 -Xms2G 6 -Xmx2G E E M 1 1 N 1 24 xAAMAADAwAAMAADAwAAMAA== U 12 MILLISECONDS E E 
+JMH S 20 JMH_Tests.SimpleTest S 53 JMH_Tests.jmh_generated.SimpleTest_testMethod_jmhTest S 10 testMethod S 11 AverageTime E A 1 1 1 E E E E E E E E E E E E E E U 12 MICROSECONDS E E 
+JMH S 24 JMH_Tests.BenchmarkModes S 61 JMH_Tests.jmh_generated.BenchmarkModes_measureSamples_jmhTest S 14 measureSamples S 10 SampleTime E A 1 1 1 E E E E E E E E E E E E E E U 12 MICROSECONDS E E 
+JMH S 24 JMH_Tests.BenchmarkModes S 62 JMH_Tests.jmh_generated.BenchmarkModes_measureMultiple_jmhTest S 15 measureMultiple S 11 AverageTime E A 1 1 1 E E E E E E E E E E E E E E U 12 MICROSECONDS E E 
+JMH S 24 JMH_Tests.BenchmarkModes S 62 JMH_Tests.jmh_generated.BenchmarkModes_measureMultiple_jmhTest S 15 measureMultiple S 14 SingleShotTime E A 1 1 1 E E E E E E E E E E E E E E U 12 MICROSECONDS E E 
