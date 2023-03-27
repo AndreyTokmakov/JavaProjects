@@ -6,7 +6,8 @@ import java.io.InputStreamReader;
 import java.util.List;
 import java.util.StringTokenizer;
 
-public class WIFIManager {
+public class WIFIManager
+{
     public List<String> exec(final List<String> cmd) {
         final ProcessBuilder processBuilder = new ProcessBuilder(cmd);
         try {

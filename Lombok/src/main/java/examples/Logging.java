@@ -98,8 +98,8 @@ public class Logging {
 	public static void main(String[] args) 
 	{
 		// commonsLogTest();
-		// logTest();
-		 log4jTest();
+		logTest();
+		// log4jTest();
 		// log4j2Test();
 		// slf4j_Test();
 	}

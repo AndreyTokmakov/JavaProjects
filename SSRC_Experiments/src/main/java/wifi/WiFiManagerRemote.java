@@ -1,5 +1,7 @@
 package wifi;
 
+import com.jcraft.jsch.*;
+
 import java.io.ByteArrayOutputStream;
 import java.util.concurrent.TimeUnit;
 
@@ -124,14 +126,14 @@ public class WiFiManagerRemote
 {
     public static void main(String[] args) throws InterruptedException
     {
-        // SSHClientRemote client = new SSHClientRemote(Credentials.ROOT_USER, Credentials.PASSWORD, Credentials.HOST_2);
-        SSHClientRemote client = new SSHClientRemote(Credentials.CSL_USER, Credentials.CSL_USER, Credentials.CSL_HOST);
+        SSHClientRemote client = new SSHClientRemote(Credentials.ROOT_USER, Credentials.PASSWORD, Credentials.HOST_2);
+        // SSHClientRemote client = new SSHClientRemote(Credentials.CSL_USER, Credentials.CSL_USER, Credentials.CSL_HOST);
 
-        // String output = client.execCommand("df -h");
+        // String output = client.execCommand("duf");
         // String output = client.execCommand("ps axf");
-        // String output = client.execCommand("nmcli d wifi list");
+        String output = client.execCommand("nmcli d wifi list");
 
-        String output = client.execCommand("iw dev wlan1 station dump | grep Station");
+        // String output = client.execCommand("iw dev wlan1 station dump | grep Station");
         // String output = client.execCommand("ps axf | grep ssh");
 
 

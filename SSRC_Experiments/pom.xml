@@ -16,6 +16,7 @@
 
     <properties>
         <jsch.version>0.1.55</jsch.version>
+        <testng.version>7.7.0</testng.version>
     </properties>
 
     <dependencies>
@@ -23,6 +24,12 @@
             <groupId>com.jcraft</groupId>
             <artifactId>jsch</artifactId>
             <version>${jsch.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>${testng.version}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
