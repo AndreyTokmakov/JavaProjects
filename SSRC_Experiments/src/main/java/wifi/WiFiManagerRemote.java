@@ -1,7 +1,5 @@
 package wifi;
 
-import com.jcraft.jsch.*;
-
 import java.io.ByteArrayOutputStream;
 import java.util.concurrent.TimeUnit;
 
