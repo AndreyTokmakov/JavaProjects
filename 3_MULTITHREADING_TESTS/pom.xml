@@ -13,17 +13,6 @@
     <artifactId>3_MULTITHREADING_TESTS</artifactId>
 
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
-        <maven.compiler.source>15</maven.compiler.source>
-        <maven.compiler.target>${maven.compiler.source}</maven.compiler.target>
-
-        <junit.jupiter.version>5.7.1</junit.jupiter.version>
-        <junit.platform.version>1.7.1</junit.platform.version>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>org.junit.jupiter</groupId>

@@ -3,6 +3,9 @@ package wifi;
 import com.jcraft.jsch.*;
 
 import java.io.ByteArrayOutputStream;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 class Credentials {
@@ -14,7 +17,7 @@ class Credentials {
 
     public static final String CSL_USER = "root";
     public static final String CSL_PASSWORD = "root";
-    public static final String CSL_HOST = "192.168.101.100";
+    public static final String CSL_HOST = "192.168.101.101";
 
     private Credentials() {
     }
@@ -119,6 +122,32 @@ class SSHClientRemote
             throw new RuntimeException(exc);
         }
     }
+
+    // TODO: Refactor ????
+    public Boolean CheckIsConnectedToAccessPoint(String interfaceName,
+                                                 String apName) throws InterruptedException {
+        String result = execCommand("iw " + interfaceName + " link");
+        return Arrays.stream(result.split("\n")).filter(e -> e.contains("SSID") && e.contains(apName)).
+                map(String::trim).findFirst().isPresent();
+    }
+
+    // TODO: Refactor
+    public Boolean ConnectToWiFiAccessPoint(String apName,
+                                            String password) throws InterruptedException {
+        String result = execCommand("nmcli d wifi connect " + apName + " password " + password);
+        return true;
+    }
+
+    public Boolean isClientConnected(String clientMacAddress,
+                                     String interfaceName) {
+        try {
+            String output = execCommand("iw dev " + interfaceName + " station dump | grep Station");
+            return output.contains(clientMacAddress);
+        } catch (Exception exc) {
+            // exc.printStackTrace(); // TODO: Handle exception
+            return false;
+        }
+    }
 }
 
 
@@ -126,17 +155,30 @@ public class WiFiManagerRemote
 {
     public static void main(String[] args) throws InterruptedException
     {
-        SSHClientRemote client = new SSHClientRemote(Credentials.ROOT_USER, Credentials.PASSWORD, Credentials.HOST_2);
-        // SSHClientRemote client = new SSHClientRemote(Credentials.CSL_USER, Credentials.CSL_USER, Credentials.CSL_HOST);
+        // SSHClientRemote client = new SSHClientRemote(Credentials.ROOT_USER, Credentials.PASSWORD, Credentials.HOST_2);
+        SSHClientRemote client = new SSHClientRemote(Credentials.CSL_USER, Credentials.CSL_USER, Credentials.CSL_HOST);
 
         // String output = client.execCommand("duf");
         // String output = client.execCommand("ps axf");
-        String output = client.execCommand("nmcli d wifi list");
+        // String output = client.execCommand("nmcli d wifi list");
 
-        // String output = client.execCommand("iw dev wlan1 station dump | grep Station");
+        client.isClientConnected("18:f0:e4:1f:b2:84", "wlan1");
+        client.isClientConnected("18:f0:e4:1f:b2:84", "wlan1");
+
+
         // String output = client.execCommand("ps axf | grep ssh");
 
+        // System.out.println(output);
 
-        System.out.println(output);
+        /*
+        System.out.println("Unikie: " + client.CheckIsConnectedToAccessPoint("wlp0s20f3", "Unikie"));
+        System.out.println("comms_sleeve#6027: " + client.CheckIsConnectedToAccessPoint("wlp0s20f3", "comms_sleeve#6027"));
+
+        client.ConnectToWiFiAccessPoint("comms_sleeve#6027", "ssrcdemo");
+        // client.ConnectToWiFiAccessPoint("Unikie", "AbuDhabiUnikie-2022");
+
+        System.out.println("Unikie: " + client.CheckIsConnectedToAccessPoint("wlp0s20f3", "Unikie"));
+        System.out.println("comms_sleeve#6027: " + client.CheckIsConnectedToAccessPoint("wlp0s20f3", "comms_sleeve#6027"));
+        */
     }
 }

@@ -4,8 +4,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
+import java.util.Optional;
 import java.util.StringTokenizer;
+import java.util.stream.Collectors;
 
+// https://wireless.wiki.kernel.org/en/users/documentation/iw
+
+// TODO: Need to get WiFi Interfaces
 public class WIFIManager
 {
     public List<String> exec(final List<String> cmd) {
@@ -25,6 +30,8 @@ public class WIFIManager
         }
     }
 
+    // TODO: Need to refactored
+    // TODO: Parse response:
     public void GetAccessPoints()
     {
         // List<String> lines = this.exec(List.of("nmcli", "d", "wifi", "list", "--rescan", "yes"));
@@ -40,14 +47,48 @@ public class WIFIManager
         }
     }
 
+    // FIXME: Rename?? What to return ??
+    // TODO : Refactor parse: 'iw IFACE link' or 'iwconfig IFACE'
+    //        Parse return Data --> Structure / Class
+    public void GetConnectionStatus(final String interfaceName)
+    {
+        final List<String> result = this.exec(List.of("iw", interfaceName, "link"));
+        final Optional<String> ssid = result.stream().filter(entry -> entry.contains("SSID")).map(String::trim).findFirst();
+        if (ssid.isPresent()) {
+            String apName = ssid.get().replace("SSID: ", "");
+            System.out.println(apName);
+        }
+        else {
+            System.err.println("Not connected");
+        }
+    }
+
+    // TODO: Refactor ????
+    public Boolean CheckIsConnectedToAccessPoint(String interfaceName, String apName)
+    {
+        final List<String> result = this.exec(List.of("iw", interfaceName, "link"));
+        return result.stream().filter(e -> {
+            return e.contains("SSID") && e.contains(apName);
+        }).map(String::trim).findFirst().isPresent();
+    }
+
+    // TODO: Refactor
+    public Boolean ConnectToWiFiAccessPoint(String apName, String password)
+    {
+        final List<String> result = this.exec(List.of("nmcli", "d", "wifi", "connect", apName, "password", password));
+        System.out.println(result);
+        return true;
+    }
+
     public static void main(String[] args)
     {
         WIFIManager mgr = new WIFIManager();
-        mgr.GetAccessPoints();
+        // mgr.GetAccessPoints();
+        // mgr.GetConnectionStatus("wlp0s20f3");
 
+        // System.out.println(mgr.CheckIsConnectedToAccessPoint("wlp0s20f3", "Unikie"));
 
-        // List<String> lines = mgr.exec(List.of("nmcli", "connection", "show"));
-        // lines.forEach(System.out::println);
+        mgr.ConnectToWiFiAccessPoint("comms_sleeve#6027", "ssrcdemo");
     }
 }
 

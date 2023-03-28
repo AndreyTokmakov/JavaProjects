@@ -15,8 +15,7 @@
     <url>http://maven.apache.org</url>
 
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.parser.version>3.24.4</java.parser.version>
+        <java.parser.version>3.25.1</java.parser.version>
     </properties>
 
     <dependencies>

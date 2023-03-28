@@ -23,4 +23,5 @@ public class BasicTests
         System.out.println("   - Check NO connection from Client machine");
         System.out.println("   - Check NO connection on the CSL side");
     }
+
 }
