@@ -76,8 +76,8 @@ public class WIFIManager
     public Boolean ConnectToWiFiAccessPoint(String apName, String password)
     {
         final List<String> result = this.exec(List.of("nmcli", "d", "wifi", "connect", apName, "password", password));
-        System.out.println(result);
-        return true;
+        return result.stream().anyMatch(s -> s.contains("successfully activated"));
+
     }
 
     public static void main(String[] args)
@@ -88,7 +88,8 @@ public class WIFIManager
 
         // System.out.println(mgr.CheckIsConnectedToAccessPoint("wlp0s20f3", "Unikie"));
 
-        mgr.ConnectToWiFiAccessPoint("comms_sleeve#6027", "ssrcdemo");
+        Boolean result = mgr.ConnectToWiFiAccessPoint("comms_sleeve#6027", "ssrcdemo");
+        System.out.println(result);
     }
 }
 

@@ -1,23 +1,19 @@
-import data.Credentials;
-import org.testng.annotations.Test;
+package experiments;
+
 import utils.Utilities;
 import wifi.SSHClientRemote;
 import wifi.WIFIManager;
 
 import java.time.Duration;
 import java.time.Instant;
+import data.Credentials;
+import data.TestData;
 
 import static data.TestData.*;
-import static data.TestData.monitorWiFiInterface;
 
-// TODO: Add logging
-// TODO: Add BaseClass for tests ??
-// TODO: XML configuration for tests
-// TODO: Implement Credentials DataStructure
-
-
-public class BasicTests
-{   // TODO: Use Awaitability
+public class Tests
+{
+    // TODO: Use Awaitability
     public static Boolean WaitForClientDisconnected(WIFIManager mgr,
                                                     SSHClientRemote sshClient)
     {
@@ -112,10 +108,8 @@ public class BasicTests
         }
     }
 
-    @Test(description="WiFi DeAuthentication test")
-    public void DeAuthenticationTest()
+    public static void main(String[] args)
     {
-        // TODO: Move to setUp()
         System.out.println("0. Starting test");
         SSHClientRemote cslClient = new SSHClientRemote(Credentials.CSL_USER, Credentials.CSL_USER, Credentials.CSL_HOST);
         SSHClientRemote clientLaptopSecond = new SSHClientRemote(Credentials.ROOT_USER, Credentials.PASSWORD, Credentials.HOST_T14_SECOND);
@@ -142,7 +136,6 @@ public class BasicTests
         }
         // TODO: Check Disconnection local
 
-        // TODO: Add TearDown()
+        System.out.println("OK. Test passed");
     }
-
 }

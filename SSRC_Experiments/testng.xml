@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="Suite1" verbose="1"  >
+
+    <test name="SimpleTest" >
+        <!--classes>
+            <class name="examples.SimpleTest">
+                <methods>
+                    <include name = "all"/>
+                </methods>
+            </class>
+        </classes-->
+
+        <classes>
+            <class name="BasicTests"/>
+        </classes>
+
+        
+    </test>
+
+    <!--test name="newSamplePage Test" >
+        <classes>
+            <class name="TestScripts.NewSamplePage" >
+                <methods>
+                    <include name = "NewSamplePage_Execution02"/>
+                </methods>
+            </class>
+        </classes>
+    </test-->
+
+
+</suite>

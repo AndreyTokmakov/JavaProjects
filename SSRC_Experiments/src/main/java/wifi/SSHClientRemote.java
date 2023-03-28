@@ -4,26 +4,10 @@ import com.jcraft.jsch.*;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-class Credentials {
-    public static final String HOST_1 = "192.168.101.1";
-    public static final String HOST_2 = "192.168.101.2";
-    public static final String USER_NAME = "andtokm";
-    public static final String ROOT_USER = "root";
-    public static final String PASSWORD = "123!@#QWEqwe";
 
-    public static final String CSL_USER = "root";
-    public static final String CSL_PASSWORD = "root";
-    public static final String CSL_HOST = "192.168.101.101";
-
-    private Credentials() {
-    }
-}
-
-class SSHClientRemote
+public class SSHClientRemote
 {
     private final JSch jsch = new JSch();
     private static final int SSH_PORT_DEFAULT = 22;
@@ -109,6 +93,7 @@ class SSHClientRemote
         return new SSHExecChannel(session, outStream, errStream);
     }
 
+    // TODO: Use SSH connection pool
     public String execCommand(String command) throws InterruptedException {
         try (final SSHSession session = openSession(username, password, host);
              final SSHExecChannel channel = openChannel(session))
@@ -143,7 +128,7 @@ class SSHClientRemote
             String result = execCommand("nmcli d wifi connect " + apName + " password " + password);
             return true;
         } catch (Exception exc) {
-            // exc.printStackTrace(); // TODO: Handle exception
+            exc.printStackTrace(); // TODO: Handle exception
             return false;
         }
     }
@@ -157,38 +142,5 @@ class SSHClientRemote
             // exc.printStackTrace(); // TODO: Handle exception
             return false;
         }
-    }
-}
-
-
-public class WiFiManagerRemote
-{
-    public static void main(String[] args) throws InterruptedException
-    {
-        // SSHClientRemote client = new SSHClientRemote(Credentials.ROOT_USER, Credentials.PASSWORD, Credentials.HOST_2);
-        SSHClientRemote client = new SSHClientRemote(Credentials.CSL_USER, Credentials.CSL_USER, Credentials.CSL_HOST);
-
-        // String output = client.execCommand("duf");
-        // String output = client.execCommand("ps axf");
-        // String output = client.execCommand("nmcli d wifi list");
-
-        client.isClientConnected("18:f0:e4:1f:b2:84", "wlan1");
-        client.isClientConnected("18:f0:e4:1f:b2:84", "wlan1");
-
-
-        // String output = client.execCommand("ps axf | grep ssh");
-
-        // System.out.println(output);
-
-        /*
-        System.out.println("Unikie: " + client.CheckIsConnectedToAccessPoint("wlp0s20f3", "Unikie"));
-        System.out.println("comms_sleeve#6027: " + client.CheckIsConnectedToAccessPoint("wlp0s20f3", "comms_sleeve#6027"));
-
-        client.ConnectToWiFiAccessPoint("comms_sleeve#6027", "ssrcdemo");
-        // client.ConnectToWiFiAccessPoint("Unikie", "AbuDhabiUnikie-2022");
-
-        System.out.println("Unikie: " + client.CheckIsConnectedToAccessPoint("wlp0s20f3", "Unikie"));
-        System.out.println("comms_sleeve#6027: " + client.CheckIsConnectedToAccessPoint("wlp0s20f3", "comms_sleeve#6027"));
-        */
     }
 }
