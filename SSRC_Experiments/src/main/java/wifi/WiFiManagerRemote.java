@@ -125,17 +125,27 @@ class SSHClientRemote
 
     // TODO: Refactor ????
     public Boolean CheckIsConnectedToAccessPoint(String interfaceName,
-                                                 String apName) throws InterruptedException {
-        String result = execCommand("iw " + interfaceName + " link");
-        return Arrays.stream(result.split("\n")).filter(e -> e.contains("SSID") && e.contains(apName)).
-                map(String::trim).findFirst().isPresent();
+                                                 String apName) {
+        try {
+            String result = execCommand("iw " + interfaceName + " link");
+            return Arrays.stream(result.split("\n")).filter(e -> e.contains("SSID") && e.contains(apName)).
+                    map(String::trim).findFirst().isPresent();
+        } catch (Exception exc) {
+            // exc.printStackTrace(); // TODO: Handle exception
+            return false;
+        }
     }
 
     // TODO: Refactor
     public Boolean ConnectToWiFiAccessPoint(String apName,
-                                            String password) throws InterruptedException {
-        String result = execCommand("nmcli d wifi connect " + apName + " password " + password);
-        return true;
+                                            String password) {
+        try {
+            String result = execCommand("nmcli d wifi connect " + apName + " password " + password);
+            return true;
+        } catch (Exception exc) {
+            // exc.printStackTrace(); // TODO: Handle exception
+            return false;
+        }
     }
 
     public Boolean isClientConnected(String clientMacAddress,
