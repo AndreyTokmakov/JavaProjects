@@ -96,7 +96,7 @@ public class SSHClient
     }
 
     public static void main(String[] args) throws InterruptedException {
-        SSHClient client = new SSHClient(Credentials.ROOT_USER, Credentials.PASSWORD, Credentials.HOST_T14_SECOND);
+        SSHClient client = new SSHClient(Credentials.CSL_USER, Credentials.CSL_PASSWORD, Credentials.CSL_HOST);
         // client.execCommand("duf");
         client.execCommand("pwd");
     }

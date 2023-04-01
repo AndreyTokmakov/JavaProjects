@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Optional;
 import java.util.StringTokenizer;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 // https://wireless.wiki.kernel.org/en/users/documentation/iw
@@ -18,8 +19,11 @@ public class WIFIManager
         try {
             final Process process = processBuilder.start();
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            if (0 != process.waitFor())  // TODO: Use timeout??
-                throw new RuntimeException("Wait for process failed");
+            BufferedReader errors = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+
+            // TODO: Add error handling? Debug it?
+            if (!process.waitFor(5, TimeUnit.SECONDS))  // TODO: Use timeout??
+                throw new RuntimeException("Wait for process failed: '" + cmd + "'. Error: " + errors.lines().toList());
 
             // int code = process.exitValue()); // TODO: Check code
             List<String> lines = reader.lines().toList();
@@ -76,8 +80,11 @@ public class WIFIManager
     public Boolean ConnectToWiFiAccessPoint(String apName, String password)
     {
         final List<String> result = this.exec(List.of("nmcli", "d", "wifi", "connect", apName, "password", password));
-        return result.stream().anyMatch(s -> s.contains("successfully activated"));
 
+        System.out.println("nmcli d wifi connect " +apName + " password " + password);
+        System.out.println(result);
+
+        return result.stream().anyMatch(s -> s.contains("successfully activated"));
     }
 
     public static void main(String[] args)

@@ -22,8 +22,8 @@ public class SMTPService {
     public void SendEmailTest(final BuildView build) throws IOException
     {
         final String destAddress = "andtokm@yandex.ru";
-        final String srcAddress = "andtokmtest@yandex.ru";
-        final String username = "andtokmtest@yandex.ru";
+        final String srcAddress = "andtokm@yandex.ru";
+        final String username = "andtokm@yandex.ru";
         final String password = "ziudjagaggggggggg";
         
     	/*
@@ -39,7 +39,7 @@ public class SMTPService {
         props.put("mail.smtp.auth", String.valueOf(configuration.isAuthorizationRequired()));
         props.put("mail.smtp.port", configuration.getSmtpPort());
         props.put("mail.smtp.socketFactory.port", configuration.getSocketFactoryPort());
-        props.put("mail.smtp.socketFactory.class", configuration.getSocketFactoryClass());
+        // props.put("mail.smtp.socketFactory.class", configuration.getSocketFactoryClass());
         props.put("mail.smtp.socketFactory.fallback", String.valueOf(configuration.getSocketFactoryFallback()));
 
         Session session = Session.getInstance(props, new javax.mail.Authenticator() {

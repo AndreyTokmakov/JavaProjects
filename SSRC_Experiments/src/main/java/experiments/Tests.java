@@ -39,33 +39,6 @@ public class Tests
         return false;
     }
 
-    public static Boolean ConnectToCSLWiFiAccessPointRemote(SSHClientRemote sshClient)
-    {
-        // TODO: Logging
-        System.out.println("Connecting from " + clientMAC + " to " + cslWiFiAPName);
-
-        if (!sshClient.CheckIsConnectedToAccessPoint(clientWiFiInterface, cslWiFiAPName))
-        {
-            System.err.println("Not connected now. Connecting.....");
-
-            if (!sshClient.ConnectToWiFiAccessPoint(cslWiFiAPName, cslWiFiAPPassword)) {
-                System.err.println("Failed to connect to '" + cslWiFiAPName + "' Access Point");
-                return false;
-            }
-        }
-
-        if (!sshClient.CheckIsConnectedToAccessPoint(clientWiFiInterface, cslWiFiAPName)) {
-            System.err.println("Client is still not connected to '" + cslWiFiAPName + "' Access Point");
-            return false;
-        }
-
-        if (!sshClient.isClientConnected(clientMAC, cslWiFiInterface))  {
-            System.err.println("Client " + clientMAC + " is not connected to CSL at '" + cslWiFiInterface + "'");
-            return false;
-        }
-        return true;
-    }
-
     public static Boolean ConnectToCSLWiFiAccessPoint(WIFIManager mgr,
                                                       SSHClientRemote sshClient)
     {
@@ -108,12 +81,26 @@ public class Tests
         }
     }
 
-    public static void main(String[] args)
+
+    public static void Check_IsClientConnected()
+    {
+        final SSHClientRemote cslClient = new SSHClientRemote(Credentials.CSL_USER,
+                Credentials.CSL_USER, Credentials.CSL_HOST);
+
+        final String max4Mac = "18:f0:e4:1f:b2:84";
+        final Boolean result = cslClient.isClientConnected(max4Mac, cslWiFiInterface);
+
+        System.out.println(result);
+
+    }
+
+    public static void FullTest()
     {
         System.out.println("0. Starting test");
         SSHClientRemote cslClient = new SSHClientRemote(Credentials.CSL_USER, Credentials.CSL_USER, Credentials.CSL_HOST);
         SSHClientRemote clientLaptopSecond = new SSHClientRemote(Credentials.ROOT_USER, Credentials.PASSWORD, Credentials.HOST_T14_SECOND);
         WIFIManager mgr = new WIFIManager();
+
 
         System.out.println("1. Establish the WiFi connected with CSL AccessPoint");
         if (!ConnectToCSLWiFiAccessPoint(mgr, cslClient)) {
@@ -137,5 +124,11 @@ public class Tests
         // TODO: Check Disconnection local
 
         System.out.println("OK. Test passed");
+    }
+
+    public static void main(String[] args)
+    {
+        Check_IsClientConnected();
+        // FullTest();
     }
 }

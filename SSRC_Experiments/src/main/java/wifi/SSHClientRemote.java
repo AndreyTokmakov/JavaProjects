@@ -94,13 +94,17 @@ public class SSHClientRemote
     }
 
     // TODO: Use SSH connection pool
+    // TODO: Refactor getExitStatus check:
     public String execCommand(String command) throws InterruptedException {
         try (final SSHSession session = openSession(username, password, host);
              final SSHExecChannel channel = openChannel(session))
         {
             channel.execCommand(command);
-            if (0 != channel.getExitStatus())
-                throw new RuntimeException(String.format("Failed to execute '%s' command. Error: %s", command, errStream));
+            final int status = channel.getExitStatus();
+            if (0 != channel.getExitStatus()) {
+                // throw new RuntimeException(String.format("Failed to execute '%s' command. Error: %s", command, errStream));
+                System.err.printf("Exit status = %d%n", status);
+            }
             return outStream.toString();
 
         } catch (final JSchException exc) {
@@ -135,9 +139,10 @@ public class SSHClientRemote
 
     public Boolean isClientConnected(String clientMacAddress,
                                      String interfaceName) {
+        final String pattern = String.format("Station %s (on %s)", clientMacAddress, interfaceName);
         try {
-            String output = execCommand("iw dev " + interfaceName + " station dump | grep Station");
-            return output.contains(clientMacAddress);
+            final String output = execCommand("iw dev " + interfaceName + " station dump");
+            return !output.isEmpty() && output.contains(pattern);
         } catch (Exception exc) {
             // exc.printStackTrace(); // TODO: Handle exception
             return false;

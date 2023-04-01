@@ -41,7 +41,7 @@ public class TCPClientJson {
 	public void Run() {
 		try {
 			bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-	        while (true == run) {
+	        while (run) {
 	        	System.out.print("> ");
 	            String command = bufferedReader.readLine();
 	            String response = HandleCommand(command);
@@ -139,10 +139,10 @@ public class TCPClientJson {
 			return "Incorrect syntat. Expected : connect IP:PORT";
 
 		String result = "";
-		String tmp[] = params.split(":");
+		String[] tmp = params.split(":");
 		
 		String ip = tmp[0];
-		int port  = Integer.valueOf(tmp[1]);
+		int port  = Integer.parseInt(tmp[1]);
 		
 		System.out.println("Connecting to " + ip + ":" + port + "...");
 		
@@ -174,9 +174,6 @@ public class TCPClientJson {
 			this.socket = new Socket(ip, port);
 			this.outputStream = socket.getOutputStream();
 			socketReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-		} catch (UnknownHostException e) {
-			e.printStackTrace();
-			return false;
 		} catch (IOException e) {
 			e.printStackTrace();
 			return false;

@@ -32,7 +32,7 @@ public class TCPClient
     public void Run() {
         try {
             bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-            while (true == run) {
+            while (run) {
                 System.out.print("> ");
                 String command = bufferedReader.readLine();
                 String response = HandleCommand(command);
@@ -54,13 +54,13 @@ public class TCPClient
     /** Handle command : **/
     protected String HandleCommand(String command)  {
         String result = "";
-        if (false == connected && true == command.contains("connect ") && true == command.contains(":"))
+        if (!connected && command.contains("connect ") && command.contains(":"))
             result = HandleConnect(command);
-        else if (true == connected && true == command.contains("disconnect"))
+        else if (connected && command.contains("disconnect"))
             result = HandleDisconnect(command);
-        else if (false == connected && true == command.contains("quit"))
+        else if (!connected && command.contains("quit"))
             result = HandleQuit(command);
-        else if (true == connected && true != command.contains("disconnect"))
+        else if (connected && !command.contains("disconnect"))
             result = HandleCommandToServer(command);
         else
             result = "Handle command error : " + command;
@@ -88,10 +88,10 @@ public class TCPClient
 
         int pos = command.indexOf("connect ");
         String ipPortStr = command.substring(pos + 8, command.length());
-        String tmp[] = ipPortStr.split(":");
+        String[] tmp = ipPortStr.split(":");
 
         String ip = tmp[0];
-        int port  = Integer.valueOf(tmp[1]);
+        int port  = Integer.parseInt(tmp[1]);
 
         System.out.println("Connecting to " + ip + ":" + port + "...");
 

@@ -81,6 +81,10 @@ public class Data_Time_Tests {
 	public void GetCurrentTime() {
 		{
 			final LocalDateTime timestamp = LocalDateTime.now();
+			System.out.println(timestamp);
+		}
+		{
+			final LocalDateTime timestamp = LocalDateTime.now();
 			System.out.println(formatter.format(timestamp));
 		}
 		{

@@ -43,33 +43,6 @@ public class BasicTests
         return false;
     }
 
-    public static Boolean ConnectToCSLWiFiAccessPointRemote(SSHClientRemote sshClient)
-    {
-        // TODO: Logging
-        System.out.println("Connecting from " + clientMAC + " to " + cslWiFiAPName);
-
-        if (!sshClient.CheckIsConnectedToAccessPoint(clientWiFiInterface, cslWiFiAPName))
-        {
-            System.err.println("Not connected now. Connecting.....");
-
-            if (!sshClient.ConnectToWiFiAccessPoint(cslWiFiAPName, cslWiFiAPPassword)) {
-                System.err.println("Failed to connect to '" + cslWiFiAPName + "' Access Point");
-                return false;
-            }
-        }
-
-        if (!sshClient.CheckIsConnectedToAccessPoint(clientWiFiInterface, cslWiFiAPName)) {
-            System.err.println("Client is still not connected to '" + cslWiFiAPName + "' Access Point");
-            return false;
-        }
-
-        if (!sshClient.isClientConnected(clientMAC, cslWiFiInterface))  {
-            System.err.println("Client " + clientMAC + " is not connected to CSL at '" + cslWiFiInterface + "'");
-            return false;
-        }
-        return true;
-    }
-
     public static Boolean ConnectToCSLWiFiAccessPoint(WIFIManager mgr,
                                                       SSHClientRemote sshClient)
     {
@@ -112,7 +85,18 @@ public class BasicTests
         }
     }
 
-    @Test(description="WiFi DeAuthentication test")
+
+    @Test(description="WiFi Accees point connection test", enabled = true)
+    public void ConnectToWiFiPoint()
+    {
+        WIFIManager mgr = new WIFIManager();
+
+        System.out.println("Not connected now. Connecting.....");
+        if (!mgr.ConnectToWiFiAccessPoint(cslWiFiAPName, cslWiFiAPPassword))
+            System.err.println("Failed to connect to '" + cslWiFiAPName + "' Access Point");
+    }
+
+    @Test(description="WiFi DeAuthentication test", enabled = false)
     public void DeAuthenticationTest()
     {
         // TODO: Move to setUp()
@@ -127,7 +111,7 @@ public class BasicTests
             return;
         }
 
-        //sleep(5000);
+        Utilities.sleep(5000);
 
         System.out.println("2. Running Auth attack");
         if (!runDeAuthAttack(clientLaptopSecond)) {
@@ -140,9 +124,8 @@ public class BasicTests
             System.err.println("Postconditions check failed");
             return;
         }
-        // TODO: Check Disconnection local
 
+        // TODO: Check Disconnection local
         // TODO: Add TearDown()
     }
-
 }

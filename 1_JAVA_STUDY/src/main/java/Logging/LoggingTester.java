@@ -131,7 +131,7 @@ public class LoggingTester {
 		Handler fileHandler = null;
 		Handler consoleHandler = null;
 		try {
-			fileHandler = new FileHandler("src//Logging//trace.log");
+			fileHandler = new FileHandler("/home/andtokm/DiskS/Temp/logs/trace.log");
 			consoleHandler = new ConsoleHandler();
 		} catch (SecurityException e) {
 			e.printStackTrace();
