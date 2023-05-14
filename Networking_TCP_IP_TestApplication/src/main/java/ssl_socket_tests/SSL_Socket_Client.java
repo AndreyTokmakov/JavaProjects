@@ -16,32 +16,38 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 
+import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManagerFactory;
 
 final class SSLSocketClient {
 	/** Protocols list: **/
-	private static final String[] protocols = new String[]{"TLSv1.3"};
+	private static final String[] protocols = new String[] { "TLSv1.3" };
 	
 	/** Cipher suites: **/
-    private static final String[] cipher_suites = new String[]{"TLS_AES_128_GCM_SHA256"};
+    private static final String[] cipher_suites = new String[] { "TLS_AES_128_GCM_SHA256" };
     
-    public void sendRequest() throws Exception {
+    public void sendRequest() throws Exception
+    {
         SSLSocket socket = null;
         PrintWriter out = null;
         BufferedReader in = null;
-        
+
+
         try {
             SSLSocketFactory factory = (SSLSocketFactory) SSLSocketFactory.getDefault();
-            socket = (SSLSocket) factory.createSocket("google.com", 443);
-            
+
+            //socket = (SSLSocket) factory.createSocket("google.com", 443);
+            socket = (SSLSocket) factory.createSocket("127.0.0.1", 52525);
+
             socket.setEnabledProtocols(protocols);
             socket.setEnabledCipherSuites(cipher_suites);
             socket.startHandshake();
 
             out = new PrintWriter(new BufferedWriter( new OutputStreamWriter(socket.getOutputStream())));
 
-            out.println("GET / HTTP/1.0");
+            out.println("GET /version.json HTTP/1.0");
             out.println();
             out.flush();
 

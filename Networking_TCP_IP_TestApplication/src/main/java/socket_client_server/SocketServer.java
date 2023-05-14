@@ -3,12 +3,15 @@ package socket_client_server;
 import java.net.*;
 import java.io.*;
 
-public class SocketServer { 
-  public void run() {
+public class SocketServer
+{
+  public void runWithTimeout(int timeout)
+  {
 	try {
 		int serverPort = 52525;
 		ServerSocket serverSocket = new ServerSocket(serverPort);
-		serverSocket.setSoTimeout(10000); 
+		serverSocket.setSoTimeout(timeout);
+
 		while(true) {
 			System.out.println("Waiting for client on port " + serverSocket.getLocalPort() + "..."); 
 
@@ -22,9 +25,6 @@ public class SocketServer {
 			toClient.println("Thank you for connecting to " + server.getLocalSocketAddress() + "\nGoodbye!"); 
 		}
 	}
-	catch(UnknownHostException ex) {
-		ex.printStackTrace();
-	}
 	catch(IOException e){
 		e.printStackTrace();
 	}
@@ -32,6 +32,6 @@ public class SocketServer {
 	
   public static void main(String[] args) {
 	  SocketServer srv = new SocketServer();
-		srv.run();
+		srv.runWithTimeout(10000);
   }
 }

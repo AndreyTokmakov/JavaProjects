@@ -1,43 +1,38 @@
 package servers;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.InetAddress;
+import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.Date;
 
-public class SocketServer {
-  public void run() {
-	try {
-		int serverPort = 52525;
-		InetAddress host = InetAddress.getByName("localhost"); 
-		System.out.println("Connecting to server on port " + serverPort); 
+public class SocketServer
+{
+	private static final int PORT = 52525;
 
-		Socket socket = new Socket(host,serverPort); 
-		//Socket socket = new Socket("127.0.0.1", serverPort);
-		System.out.println("Just connected to " + socket.getRemoteSocketAddress()); 
-		PrintWriter toServer = new PrintWriter(socket.getOutputStream(),true);
-		BufferedReader fromServer = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-		toServer.println("Hello from " + socket.getLocalSocketAddress()); 
-		String line = fromServer.readLine();
-		System.out.println("Client received: " + line + " from Server");
-		toServer.close();
-		fromServer.close();
-		socket.close();
+  	public void run()
+  	{
+		try (ServerSocket serverSocket = new ServerSocket(PORT)) {
+			System.out.println("Server is listening on port " + PORT);
+			while (true) {
+				final Socket clientSocket = serverSocket.accept();
+				System.out.println("New client connected: " + clientSocket.getRemoteSocketAddress());
+
+				try (final OutputStream output = clientSocket.getOutputStream();
+					 final PrintWriter writer = new PrintWriter(output, true)) {
+					writer.println(new Date());
+				}
+			}
+
+		} catch (IOException ex) {
+			System.err.println("Server exception: " + ex.getMessage());
+			ex.printStackTrace();
+		}
+  	}
+
+	public static void main(String[] args) {
+		SocketServer server = new SocketServer();
+		server.run();
 	}
-	catch(UnknownHostException ex) {
-		ex.printStackTrace();
-	}
-	catch(IOException e){
-		e.printStackTrace();
-	}
-	
-  }
-	
-  public static void main(String[] args) {
-	  SocketServer client = new SocketServer();
-	  client.run();
-  }
 }
