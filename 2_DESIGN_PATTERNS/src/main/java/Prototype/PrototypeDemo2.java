@@ -24,7 +24,7 @@ interface Prototype {
 }
 
 class PrototypeModule {
-	private static List<Prototype> prototypes = new ArrayList<>();
+	private static final List<Prototype> prototypes = new ArrayList<>();
 	
 	public static void addPrototype(Prototype p) {
 		prototypes.add(p);
@@ -42,7 +42,7 @@ class PrototypeModule {
 }
 
 class PrototypeAlpha implements Prototype {
-	private String name = "AlphaVersion";
+	private final String name = "AlphaVersion";
 
 	@Override
 	public Prototype clone() {
@@ -61,7 +61,7 @@ class PrototypeAlpha implements Prototype {
 }
 
 class PrototypeBeta implements Prototype {
-	private String name = "BetaVersion";
+	private final String name = "BetaVersion";
 
 	@Override
 	public Prototype clone() {
@@ -80,7 +80,7 @@ class PrototypeBeta implements Prototype {
 }
 
 class ReleasePrototype implements Prototype {
-	private String name = "ReleaseCandidate";
+	private final String name = "ReleaseCandidate";
 	
 	@Override
 	public Prototype clone() {
