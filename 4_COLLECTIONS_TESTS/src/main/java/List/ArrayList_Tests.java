@@ -418,7 +418,8 @@ public class ArrayList_Tests {
 		System.out.println("\nResult:" + list1);
 	}
 	
-	public void TrimToSize() throws Exception {
+	public void TrimToSize() throws Exception
+	{
 		// creating an Empty Integer ArrayList 
 		ArrayList<Integer> numbers = new ArrayList<Integer>(9); 
 
@@ -438,9 +439,55 @@ public class ArrayList_Tests {
         System.out.println("Capacity = " + this.getCapacity(numbers));
 	}
 
-	////////////////////////////////////////////////////////////////////
-	
-	public static void main(String[] args) throws Exception {
+
+	public void swapElements()
+	{
+		ArrayList<String> list = new ArrayList<String>(Arrays.asList(
+				"Value1", "Value2", "Value3", "Value4", "Value5"
+		));
+		System.out.println(list);
+
+		Collections.swap(list, 0, 4);
+		System.out.println(list);
+	}
+
+	public void swapElements_CustomClass()
+	{
+		ArrayList<TestClass> list = new ArrayList<TestClass>(Arrays.asList(
+				new TestClass("One", 1),
+				new TestClass("Two", 2),
+				new TestClass("Three", 3),
+				new TestClass("Four", 4),
+				new TestClass("Five", 5)
+		));
+		System.out.println(list);
+
+		Collections.swap(list, 0, 4);
+		System.out.println(list);
+	}
+
+	public void moveElementsToFront()
+	{
+		final ArrayList<TestClass> list = new ArrayList<TestClass>(Arrays.asList(
+				new TestClass("One", 1),
+				new TestClass("Two", 2),
+				new TestClass("Three", 3),
+				new TestClass("Four", 4),
+				new TestClass("Five", 5)
+		));
+		System.out.println(list);
+
+		int indexToMove = 4;
+		final TestClass element = list.get(indexToMove);
+		list.remove(indexToMove);
+		list.add(0,element);
+
+		System.out.println(list);
+	}
+
+
+	public static void main(String[] args) throws Exception
+	{
 		ArrayList_Tests tests = new ArrayList_Tests();
 		
 		// tests.CreateList();
@@ -449,7 +496,11 @@ public class ArrayList_Tests {
 		// tests.Remove_Last();
 		// tests.RemoveIf();
 		// tests.RemoveAll();
-			
+
+		// tests.swapElements();
+		// tests.swapElements_CustomClass();
+		tests.moveElementsToFront();
+
 		
 		// tests.ContainsAll();
 		// tests.DeleteFromList();

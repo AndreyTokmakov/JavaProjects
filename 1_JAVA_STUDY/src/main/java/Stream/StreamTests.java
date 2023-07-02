@@ -171,6 +171,9 @@ public class StreamTests {
 	public static void StreamToList() {
 		List<String> list = new ArrayList<String>(Arrays.asList("Value1", "Value1", "Value1", "Value2", "Value2", "Value2"));
 		List<String> newList = list.stream().collect(Collectors.toList());
+		// List<String> newList = list.stream().toList();
+
+		System.err.println(newList.getClass());
 		newList.forEach(print_strings);
 	}
 	
@@ -512,9 +515,10 @@ public class StreamTests {
 
 	}
 	
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException
+	{
 		
-		Create_Stream();
+		//Create_Stream();
 		// Create_IntStream();
 		// Create_Infinite();
 		// Create_Range();
@@ -547,7 +551,7 @@ public class StreamTests {
 
 		// firstMatch();
 			
-		// StreamToList();
+		StreamToList();
 		// forEachOrdered();
 		
 		// Iterate();

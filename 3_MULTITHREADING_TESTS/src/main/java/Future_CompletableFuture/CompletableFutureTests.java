@@ -16,7 +16,8 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
-class CompletableFutureTester {
+class CompletableFutureTester
+{
 	
 	public void SimpleTest() throws InterruptedException, ExecutionException {
 		CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
@@ -30,6 +31,27 @@ class CompletableFutureTester {
 		});
 		
 		future.get();
+	}
+
+	public void SimpleTest_ThenAccept() throws InterruptedException, ExecutionException
+	{
+		CompletableFuture<String> future = CompletableFuture.supplyAsync(() -> {
+			try {
+				System.out.println("Asynchronous task: started");
+				TimeUnit.SECONDS.sleep(1);
+				System.out.println("Asynchronous task: done");
+			} catch (InterruptedException ex) {
+				// throw new IllegalStateException(ex);
+				ex.printStackTrace();
+			}
+			return "First result";
+		});
+
+		future.thenAccept(res -> System.out.println("Result: " + res));
+
+		System.out.println("Main thread 1");
+		try { TimeUnit.SECONDS.sleep(2); } catch (InterruptedException ignored) { }
+		System.out.println("Main thread 2");
 	}
 	
 	
@@ -59,6 +81,7 @@ public class CompletableFutureTests {
 
 	public static void main(String[] args) throws InterruptedException, ExecutionException {
 		// tests.SimpleTest();
-		tests.Collection_Future();
+		tests.SimpleTest_ThenAccept();
+		// tests.Collection_Future();
 	}
 }
