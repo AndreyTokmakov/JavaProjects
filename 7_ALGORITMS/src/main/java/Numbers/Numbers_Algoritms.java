@@ -2,8 +2,11 @@ package Numbers;
 
 import java.math.BigInteger;
 import java.util.Arrays;
+import java.util.HashSet;
 
-public class Numbers_Algoritms {
+
+public class Numbers_Algoritms
+{
 
     // In the Gregorian calendar, a year is a leap year in two cases:
     // either it is a multiple of 4, but it is not a multiple of 100, or it is a multiple of 400.
@@ -110,12 +113,38 @@ public class Numbers_Algoritms {
         System.out.println();
     }
 
-    public static void main(String[] args) {
+    private final static class FindFirstRepeatingElement
+    {
+        private static int solutionOne(int[] numbers)
+        {
+            int min = -1;
+            final HashSet<Integer> set = new HashSet<>();
+            for (int idx = numbers.length - 1; idx >= 0; idx--)  {
+                if (!set.add(numbers[idx]))
+                    min = idx;
+            }
+
+            return -1 == min ? -1 : numbers[min];
+        }
+
+        public static void test()
+        {
+            final int[] arr = { 10, 5, 3, 4, 3, 5, 6 };
+            int result = solutionOne(arr);
+
+            System.out.println(result);
+        }
+    }
+
+    public static void main(String[] args)
+    {
         // ReverseNumber();
         // leapYearCount(1234);
         // Factorial();
         // MergeArraysTests();
 
-        calc("abc");
+        // calc("abc");
+
+        FindFirstRepeatingElement.test();
     }
 }
