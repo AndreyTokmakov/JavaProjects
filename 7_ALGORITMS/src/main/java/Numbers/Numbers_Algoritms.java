@@ -3,6 +3,7 @@ package Numbers;
 import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 
 
 public class Numbers_Algoritms
@@ -136,6 +137,70 @@ public class Numbers_Algoritms
         }
     }
 
+    private final static class FindCommonElements_3_SortedArrays
+    {
+        static int[] listToArray(final List<Integer> list)
+        {
+            return list.parallelStream().mapToInt(Integer::intValue).toArray();
+        }
+
+        private static void solutionOne(final List<Integer> ar1,
+                                        final List<Integer> ar2,
+                                        final List<Integer> ar3)
+        {
+            // Iterate through three arrays while all arrays have elements
+            for (int i = 0, j = 0, k = 0; i < ar1.size() && j < ar2.size() && k < ar3.size(); /** **/ ) {
+                // If x = y and y = z, print any of them and move ahead in all arrays
+                if (ar1.get(i) == ar2.get(j) && ar2.get(j) == ar3.get(k)) {
+                    System.out.print(ar1.get(i) + " ");
+                    i++;
+                    j++;
+                    k++;
+                }
+
+                else if (ar1.get(i) < ar2.get(j)) // x < y
+                    i++;
+                else if (ar2.get(j) < ar3.get(k)) // y < z
+                    j++;
+                else                       // We reach here when x > y and z < y, i.e., z is smallest
+                    k++;
+            }
+        }
+
+        static void solutionTwo(int[] ar1, int[] ar2, int[] ar3)
+        {
+            for (int i = 0, j = 0, k = 0; i < ar1.length && j < ar2.length && k < ar3.length; /** **/) {
+                if (ar1[i] == ar2[j] && ar2[j] == ar3[k]) {
+                    System.out.print(ar1[i] + " ");
+                    i++;
+                    j++;
+                    k++;
+                }
+
+                else if (ar1[i] < ar2[j]) // x < y
+                    i++;
+                else if (ar2[j] < ar3[k]) // y < z
+                    j++;
+                else                       // We reach here when x > y and z < y, i.e., z is smallest
+                    k++;
+            }
+        }
+
+        public static void test()
+        {
+            List<Integer> array1 = Arrays.asList(1, 5, 10, 20, 40, 80);
+            List<Integer> array2 = Arrays.asList(6, 7, 20, 80, 100);
+            List<Integer> array3 = Arrays.asList(3, 4, 15, 20, 30, 70, 80, 120);
+
+            System.out.print("Common elements are ");
+            solutionOne(array1, array2, array3);
+
+            System.out.print("\nCommon elements are ");
+            solutionTwo(listToArray(array1), listToArray(array2), listToArray(array3));
+        }
+    }
+
+
     public static void main(String[] args)
     {
         // ReverseNumber();
@@ -145,6 +210,8 @@ public class Numbers_Algoritms
 
         // calc("abc");
 
-        FindFirstRepeatingElement.test();
+        // FindFirstRepeatingElement.test();
+
+        FindCommonElements_3_SortedArrays.test();
     }
 }

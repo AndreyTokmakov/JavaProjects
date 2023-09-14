@@ -13,8 +13,8 @@ package CyclicBarrier_Tests;
 import java.util.concurrent.*;
 
 class MyThread implements Runnable {
-    private CyclicBarrier barrier;
-    private String name;
+    private final CyclicBarrier barrier;
+    private final String name;
 
     public MyThread(CyclicBarrier c, String n) {
 		this.barrier = c;
@@ -27,9 +27,7 @@ class MyThread implements Runnable {
 			System.out.println(name + " waiting .....");
 			barrier.await();
 			System.out.println(name + " done!");
-		} catch (BrokenBarrierException exc) {
-		    System.out.println(exc);
-		} catch (InterruptedException exc) {
+		} catch (BrokenBarrierException | InterruptedException exc) {
 		    System.out.println(exc);
 		}
     }
@@ -64,7 +62,7 @@ public class BarrierDemo {
 		new MyThread(cb, "Z");	
 	}
 	
-    public static void main(String args[])
+    public static void main(String[] args)
     {
     	// Test1();
     	Test2();

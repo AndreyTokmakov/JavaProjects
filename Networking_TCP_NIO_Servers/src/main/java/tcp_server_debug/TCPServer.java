@@ -16,13 +16,12 @@ import java.util.Iterator;
 public class TCPServer {
 	
 	private static final int BUFFER_SIZE = 1024;
-	
 	private final static int DEFAULT_PORT = 52525;
 	private final static String HOST_ADDRESS = "127.0.0.1";
 	
 	// The buffer into which we'll read data when it's available
-	private ByteBuffer readBuffer = ByteBuffer.allocate(BUFFER_SIZE);
-	private Selector selector;
+	private final ByteBuffer readBuffer = ByteBuffer.allocate(BUFFER_SIZE);
+	private final Selector selector;
 	private InetSocketAddress socketAddress = null;
 	private long loopTime;
 	private long numMessages = 0;
@@ -46,7 +45,7 @@ public class TCPServer {
 	                selectedKeys.remove();
 	                
 	                /** **/
-	                if (false == key.isValid()) {
+	                if (!key.isValid()) {
 	                    continue;
 	                }
 	                
@@ -67,13 +66,16 @@ public class TCPServer {
 	}
 	
 	private void accept(SelectionKey key) throws IOException {
-	    ServerSocketChannel serverSocketChannel = (ServerSocketChannel) key.channel();
-	    SocketChannel socketChannel = serverSocketChannel.accept();
-	    socketChannel.configureBlocking(false);
-	    socketChannel.setOption(StandardSocketOptions.SO_KEEPALIVE, true);
-	    socketChannel.setOption(StandardSocketOptions.TCP_NODELAY, true);
-	    socketChannel.register(selector, SelectionKey.OP_READ);
-	    // System.out.println("Client is connected");
+		try (final ServerSocketChannel serverSocketChannel = (ServerSocketChannel) key.channel())
+		{
+			SocketChannel socketChannel = serverSocketChannel.accept();
+			socketChannel.configureBlocking(false);
+			socketChannel.setOption(StandardSocketOptions.SO_KEEPALIVE, true);
+			socketChannel.setOption(StandardSocketOptions.TCP_NODELAY, true);
+			socketChannel.register(selector, SelectionKey.OP_READ);
+
+			// System.out.println("Client is connected");
+		}
 	}
 	
 	private void read(SelectionKey key) throws IOException {
@@ -92,7 +94,7 @@ public class TCPServer {
 		    }
 		    String data = new String(readBuffer.array()).trim();
 	    	System.out.println("'" + data + "'");
-		    
+
 	    } catch (IOException e) {
 	        key.cancel();
 	        socketChannel.close();
@@ -100,9 +102,9 @@ public class TCPServer {
 	        return;
 	    }
 
-	
+
 	    socketChannel.register(selector, SelectionKey.OP_WRITE);
-	
+
 	    numMessages++;
 	    if (numMessages % 10000 == 0) {
 	        long elapsed = System.currentTimeMillis() - loopTime;

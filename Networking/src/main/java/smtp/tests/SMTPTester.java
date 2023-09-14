@@ -22,7 +22,7 @@ public class SMTPTester {
 	public static void MailTest()
 	{
 		final String username = "andtokm@mail.ru";
-		final String password = "ziudjaga";
+		final String password = "ziudjagaggggggggg";
 
 		Properties props = new Properties();
 		props.put("mail.smtp.auth", "false");
@@ -198,7 +198,7 @@ public class SMTPTester {
 		//MailTest();
 		GmailSend("andtokm",
                 "ziudjagaggggggggg",
-                "andtokm@yandex.ru",
+                "andtokm@gmail.com",
                 "",
                 "TEST_TITLE",
                 "TEST_MESSAGE");
