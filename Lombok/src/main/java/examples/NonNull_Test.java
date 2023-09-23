@@ -25,6 +25,7 @@ class NonNullExample extends Something {
 	}
 }
 
+
 public class NonNull_Test {
 
 	public static void main(String ... args) throws IOException {

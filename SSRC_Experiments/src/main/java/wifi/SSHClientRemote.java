@@ -94,16 +94,16 @@ public class SSHClientRemote
     }
 
     // TODO: Use SSH connection pool
-    // TODO: Refactor getExitStatus check:
     public String execCommand(String command) throws InterruptedException {
         try (final SSHSession session = openSession(username, password, host);
              final SSHExecChannel channel = openChannel(session))
         {
             channel.execCommand(command);
-            final int status = channel.getExitStatus();
-            if (0 != channel.getExitStatus()) {
+
+            final int code = channel.getExitStatus();
+            if (0 != code) {
                 // throw new RuntimeException(String.format("Failed to execute '%s' command. Error: %s", command, errStream));
-                System.err.printf("Exit status = %d%n", status);
+                System.out.println("CODE = " + code);
             }
             return outStream.toString();
 
@@ -130,6 +130,7 @@ public class SSHClientRemote
                                             String password) {
         try {
             String result = execCommand("nmcli d wifi connect " + apName + " password " + password);
+            // System.out.println(result);
             return true;
         } catch (Exception exc) {
             exc.printStackTrace(); // TODO: Handle exception

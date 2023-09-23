@@ -34,8 +34,8 @@ class CoffeeFlavour {
 interface Order {
     void serve();
 
-    public static Order valueOf(final String flavourName,
-                                int tableNumber) {
+    static Order valueOf(final String flavourName,
+                         int tableNumber) {
         CoffeeFlavour flavour = CoffeeFlavour.intern(flavourName);
         return () -> System.out.println("Serving " + flavour + " to table " + tableNumber);
     }

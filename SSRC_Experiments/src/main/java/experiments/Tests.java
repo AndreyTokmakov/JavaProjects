@@ -39,6 +39,33 @@ public class Tests
         return false;
     }
 
+    public static Boolean ConnectToCSLWiFiAccessPointRemote(SSHClientRemote sshClient)
+    {
+        // TODO: Logging
+        System.out.println("Connecting from " + clientMAC + " to " + cslWiFiAPName);
+
+        if (!sshClient.CheckIsConnectedToAccessPoint(clientWiFiInterface, cslWiFiAPName))
+        {
+            System.err.println("Not connected now. Connecting.....");
+
+            if (!sshClient.ConnectToWiFiAccessPoint(cslWiFiAPName, cslWiFiAPPassword)) {
+                System.err.println("Failed to connect to '" + cslWiFiAPName + "' Access Point");
+                return false;
+            }
+        }
+
+        if (!sshClient.CheckIsConnectedToAccessPoint(clientWiFiInterface, cslWiFiAPName)) {
+            System.err.println("Client is still not connected to '" + cslWiFiAPName + "' Access Point");
+            return false;
+        }
+
+        if (!sshClient.isClientConnected(clientMAC, cslWiFiInterface))  {
+            System.err.println("Client " + clientMAC + " is not connected to CSL at '" + cslWiFiInterface + "'");
+            return false;
+        }
+        return true;
+    }
+
     public static Boolean ConnectToCSLWiFiAccessPoint(WIFIManager mgr,
                                                       SSHClientRemote sshClient)
     {
@@ -128,7 +155,7 @@ public class Tests
 
     public static void main(String[] args)
     {
-        Check_IsClientConnected();
-        // FullTest();
+        // Check_IsClientConnected();
+        FullTest();
     }
 }

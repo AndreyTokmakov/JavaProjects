@@ -92,8 +92,9 @@ public class BasicTests
         WIFIManager mgr = new WIFIManager();
 
         System.out.println("Not connected now. Connecting.....");
-        if (!mgr.ConnectToWiFiAccessPoint(cslWiFiAPName, cslWiFiAPPassword))
+        if (!mgr.ConnectToWiFiAccessPoint(cslWiFiAPName, cslWiFiAPPassword)) 
             System.err.println("Failed to connect to '" + cslWiFiAPName + "' Access Point");
+
     }
 
     @Test(description="WiFi DeAuthentication test", enabled = false)
@@ -128,4 +129,5 @@ public class BasicTests
         // TODO: Check Disconnection local
         // TODO: Add TearDown()
     }
+
 }

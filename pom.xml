@@ -65,6 +65,7 @@
         <module>Serialization</module>
         <module>SSRC_Experiments</module>
         <module>ObjectsPools</module>
+        <module>NATS_Messaging</module>
     </modules>
 
     <properties>

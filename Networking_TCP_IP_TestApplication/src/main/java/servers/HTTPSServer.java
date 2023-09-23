@@ -31,9 +31,9 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpsExchange;
 
-// TODO: Create JKS
-// keytool -genkey -keystore keystore.jks -alias ssl -keyalg RSA -sigalg SHA256withRSA -validity 365 -keysize 2048
-
+/**
+ * @author a.tokmakov
+ **/
 public class HTTPSServer {
 	
 	  public static class MyHandler implements HttpHandler {
@@ -73,13 +73,13 @@ public class HTTPSServer {
 	        }
 	    }
 
-	    public static void main(String[] args) throws Exception
-		{
-			String host = "0.0.0.0";
-			// String host = "data.browser.mail.ru";
-			int port  = 52525;
+	    public static void main(String[] args) throws Exception {
 
 	        try {
+	        	String host = "0.0.0.0";
+	        	//String host = "data.browser.mail.ru";
+	        	int port  = 8443;
+	        	
 	            // setup the socket address
 	            InetSocketAddress address = new InetSocketAddress(host, port);
 
@@ -97,15 +97,15 @@ public class HTTPSServer {
 	            */
 	            
                 // initialize the keystore
-                char[] password = "123456".toCharArray();
-                KeyStore ks = KeyStore.getInstance("JKS");
-                String keyStoreFile = "/home/andtokm/DiskS/ProjectsUbuntu/SSL/keystore.jks";
+                final String password = "password";
+				final String keyStoreFile = "/home/andtokm/Temp/Java/KeyStore.jks";
+				final KeyStore ks = KeyStore.getInstance("JKS");
                 FileInputStream fis = new FileInputStream(keyStoreFile);
-                ks.load(fis, password);
+                ks.load(fis, password.toCharArray());
 
 	            // setup the key manager factory
 	            KeyManagerFactory kmf = KeyManagerFactory.getInstance("SunX509");
-	            kmf.init(ks, password);
+	            kmf.init(ks, password.toCharArray());
 
 	            // setup the trust manager factory
 	            TrustManagerFactory tmf = TrustManagerFactory.getInstance("SunX509");
@@ -137,8 +137,9 @@ public class HTTPSServer {
 	            httpsServer.start();
 
 	        } catch (Exception exception) {
-	            System.out.println("Failed to create HTTPS server on port " + port + " of localhost");
+	            System.out.println("Failed to create HTTPS server on port " + 443 + " of localhost");
 	            exception.printStackTrace();
+
 	        }
 	    }
 
