@@ -2,7 +2,7 @@ package Decorator;
 
 
 /** The interface Coffee defines the functionality of Coffee implemented by decorator **/
-interface Coffee {
+interface ICoffee {
     // Returns the cost of the coffee
     public double getCost();
 
@@ -12,7 +12,7 @@ interface Coffee {
 
 
 /** Extension of a simple coffee without any extra ingredients **/
-class SimpleCoffee implements Coffee {
+class SimpleCoffee implements ICoffee {
     @Override
     public double getCost() {
         return 1;
@@ -26,10 +26,10 @@ class SimpleCoffee implements Coffee {
 
 
 /** Abstract decorator class - note that it implements Coffee interface **/
-abstract class CoffeeDecorator implements Coffee {
-    private final Coffee decoratedCoffee;
+abstract class CoffeeDecorator implements ICoffee {
+    private final ICoffee decoratedCoffee;
 
-    public CoffeeDecorator(Coffee coffee) {
+    public CoffeeDecorator(ICoffee coffee) {
         this.decoratedCoffee = coffee;
     }
 
@@ -47,7 +47,7 @@ abstract class CoffeeDecorator implements Coffee {
 
 /** Decorator WithMilk mixes milk into coffee. **/
 class WithMilk extends CoffeeDecorator {
-    public WithMilk(Coffee coffee) {
+    public WithMilk(ICoffee coffee) {
         super(coffee);
     }
 
@@ -66,7 +66,7 @@ class WithMilk extends CoffeeDecorator {
 
 // Decorator WithSprinkles mixes sprinkles onto coffee.
 class WithSprinkles extends CoffeeDecorator {
-    public WithSprinkles(Coffee coffee) {
+    public WithSprinkles(ICoffee coffee) {
         super(coffee);
     }
 
@@ -84,12 +84,12 @@ class WithSprinkles extends CoffeeDecorator {
 
 public class CoffeeDecoratorDemo
 {
-    public static void printInfo(Coffee c) {
+    public static void printInfo(ICoffee c) {
         System.out.println(c.getClass().getName() + " | Cost: " + c.getCost() + "; Ingredients: " + c.getIngredients());
     }
 
     public static void main(String[] args) {
-        Coffee c = new SimpleCoffee();
+        ICoffee c = new SimpleCoffee();
         printInfo(c);
 
         c = new WithMilk(c);
