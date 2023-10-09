@@ -395,7 +395,7 @@ public class Future_Tests {
 		Future_Tests tests = new Future_Tests();
 		
 		// tests.CompletalbeFutureTest();
-		 tests.RunSynch_Task();
+		// tests.RunSynch_Task();
 		// tests.Future_ComplexTest();
 		// tests.SimpleTest_0();
 		// tests.SimpleTest_Lambda_Executor();
@@ -410,7 +410,7 @@ public class Future_Tests {
 		// tests.SimpleTest_ThenCompose();
 		// tests.SimpleTest_ThenCompose_CheckThreads();
 		
-		// tests.CompletalbeFuture_SimpleTest();
+		tests.CompletalbeFuture_SimpleTest();
 		// tests.CompletalbeFuture_SupplyAsync();
 		// tests.CompletalbeFuture_SupplyAsync_Lambda();
 		// tests.CompletalbeFuture_SupplyAsync_ThenApply();

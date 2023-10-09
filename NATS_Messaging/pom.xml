@@ -38,7 +38,8 @@
                 <version>3.1.0</version>
                 <configuration>
                     <!--mainClass>ssl_socket_tests.SSLSocketServer</mainClass-->
-                    <mainClass>consumers.Consumer</mainClass>
+                    <!--mainClass>consumers.Consumer</mainClass-->
+                    <mainClass>consumers.NatsConsumer</mainClass>
                 </configuration>
             </plugin>
         </plugins>
