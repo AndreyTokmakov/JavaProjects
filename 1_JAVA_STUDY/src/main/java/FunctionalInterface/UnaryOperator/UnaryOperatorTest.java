@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.UnaryOperator;
+import java.util.stream.Stream;
 
 public class UnaryOperatorTest {
 	
@@ -14,8 +15,19 @@ public class UnaryOperatorTest {
     }
     
 	public void ToUpperCase() {
-		UnaryOperator<String> up = s -> s.toUpperCase();
-		System.out.print(up.apply("Java 8"));
+        {
+            UnaryOperator<String> toUpper = s -> s.toUpperCase();
+            System.out.println(toUpper.apply("Java 8") + "\n");
+        }
+
+        {
+            UnaryOperator<String> toUpper = String::toUpperCase;
+
+            Stream<String> names = Stream.of("one", "two", "three");
+            Stream<String> namesUpper = names.map(toUpper);
+
+            namesUpper.forEach(System.out::println);
+        }
 	}
 	
 	public void Mult() {
@@ -58,12 +70,13 @@ public class UnaryOperatorTest {
         System.out.println(result); // [2, 4, 6, 8, 10, 12, 14, 16, 18, 20]
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args)
+    {
 		UnaryOperatorTest tests = new UnaryOperatorTest();
 		// tests.UnaryOperator_TEST();
-		// tests.ToUpperCase();
+		tests.ToUpperCase();
 		// tests.Mult();
 		// tests.Doube_List();;
-		tests.Call_Func();
+		// tests.Call_Func();
 	}
 }
