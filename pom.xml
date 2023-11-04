@@ -44,6 +44,7 @@
         <module>InfluxDB</module>
         <module>Caching</module>
         <module>Database_Tests_Project</module>
+        <module>FalseSharing_BenchMark</module>
         <module>Google_Guava</module>
         <module>Google_Protobuff</module>
         <module>Ignite</module>

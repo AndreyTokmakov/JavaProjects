@@ -49,13 +49,13 @@ import org.apache.kafka.common.errors.UnknownTopicOrPartitionException;
 
 class KafkaAdminTester {
 	/** Test topics list: **/
-	private final static List<String> topics = new ArrayList<String>(Arrays.asList("tests"));
+	private final static List<String> topics = new ArrayList<String>(List.of("tests"));
 	
 	/** Kafka brokers list: **/
-	// private final static List<String> nodes = new ArrayList<String>(Arrays.asList("127.0.0.1:9092"));
+	// private final static List<String> nodes = new ArrayList<String>(Arrays.asList("192.168.101.2:9092"));
 
 	/** Kafka brokers list: 1601-TNS **/
-	private final static List<String> nodes = new ArrayList<String>(Arrays.asList("10.62.180.106"));
+	private final static List<String> nodes = new ArrayList<String>(List.of("192.168.101.2:9092"));
 
 	
 	/** The administrative client for Kafka, which supports managing and inspecting topics, brokers, configurations and ACLs: **/
@@ -63,7 +63,7 @@ class KafkaAdminTester {
 	
 	KafkaAdminTester() {
 		Properties config = new Properties();
-		config.put(CommonClientConfigs.BOOTSTRAP_SERVERS_CONFIG, nodes.toString().replace("[", "").replace("]", ""));
+		config.put(CommonClientConfigs.BOOTSTRAP_SERVERS_CONFIG, nodes);
         
         this.kafkaAdmin = Admin.create(config);
 	}
@@ -78,7 +78,7 @@ class KafkaAdminTester {
 	public void createTopic() throws ExecutionException, InterruptedException {
 		System.out.println("Topics: " + kafkaAdmin.listTopics().listings().get());
 		
-		NewTopic newTopic = new NewTopic("cpx-tpn-presence-Event-Loop-Local", 1, (short) 1);
+		NewTopic newTopic = new NewTopic("events", 1, (short) 1);
 		kafkaAdmin.createTopics(Collections.singleton(newTopic));
 
 		System.out.println("Topics: " + kafkaAdmin.listTopics().listings().get());
@@ -204,10 +204,10 @@ public class AdminKafkaTests {
 		// kafkaTester.getTopics();
 		// kafkaTester.getTopics_Deprecated();
 		
-		 kafkaTester.createTopic();
+		// kafkaTester.createTopic();
 		// kafkaTester.deleteTopic();
 		
-		// kafkaTester.getNodes();
+		kafkaTester.getNodes();
 		// kafkaTester.getNodesConfigs();
 		
 		// kafkaTester.getConsumers();

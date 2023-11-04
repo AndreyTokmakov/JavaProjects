@@ -29,8 +29,10 @@ class JIconLabel extends JLabel {
 	}
 
 	public JIconLabel() {
-		this.iconOnline  = CreateImageIcon("online.png");
-		this.iconOffline = CreateImageIcon("offline.png");
+		this.iconOnline  = CreateImageIcon(
+                "/home/andtokm/DiskS/ProjectsUbuntu/JavaProjects/Kafka/src/main/java/viewer/online.png");
+		this.iconOffline = CreateImageIcon(
+                "/home/andtokm/DiskS/ProjectsUbuntu/JavaProjects/Kafka/src/main/java/viewer/offline.png");
 		this.setPreferredSize(new Dimension(90, 17));
 		this.setIcon(iconOnline);
 		this.setIconTextGap(5);

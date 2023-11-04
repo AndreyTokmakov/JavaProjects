@@ -87,93 +87,12 @@ public class Consumer implements Runnable {
 		/* */
 		this.textField = responseField;
 		this.statusBar = statusBar;
-		
-		/**** 1682: ****/
-		// nodes.add("10.62.182.96:9092");   // DSP : ptf01-t03-dsp01.lab.nordigy.ru
-		// nodes.add("10.62.182.111:9092");  // TNS : ptf01-t03-tns01.lab.nordigy.ru 
-		
-		/**** 1600: ****/
-		// nodes.add("10.62.176.171:9092");  // DSP : ptf01-t01-dsp01.lab.nordigy.ru
-		// nodes.add("10.62.180.105:9092");  // TNS : ptf01-t01-tns01.lab.nordigy.ru
-		
-		/**** 1601: ****/ 
-		// nodes.add("10.62.180.106:9092");  // TNS : ptf01-t02-tns01.lab.nordigy.ru
-		// nodes.add("10.62.176.212:9092");  // DSP : ptf01-t02-dsp01.lab.nordigy.ru
-		 
-		/** 557 **/
-		// pop1
-		// nodes.add("10.62.16.80:9092");
-		// nodes.add("10.62.16.82:9092");
-		// nodes.add("10.62.16.83:9092");
-		
-		// nodes.add("10.62.138.73:9092"); // fun04-c01-dsp01.lab.nordigy.ru
-		nodes.add("10.62.80.50:9092"); // TNS - 557
-			 
-		/**** 1098 ****/
-		// nodes.add("10.56.21.16:9092");  // ssp01-c01-tns01.lab.nordigy.ru
-		// nodes.add("10.56.21.17:9092");  // ssp01-c01-tns02.lab.nordigy.ru
-		// nodes.add("10.56.21.18:9092");  // ssp01-c01-tns03.lab.nordigy.ru
-		
 
-		/*************** Calls DSP topics ************************/
+		nodes.add("192.168.101.2:9092");
 
-		// topics.add("call-sessions_local");
-		// topics.add("call-sessions_remote");
-		// topics.add("rmx-to-cns-events_local");
-		// topics.add("adg-to-cns-events_local");
-		// topics.add("missed-and-incoming-calls_local");
-		// topics.add("aggregated-status_local");
+		topics.add("events");
 
 
-		// topics.add("csg-subscription-events_local");
-		
-		/*************** ADT topics ************************/
-		
-		/*
-		topics.add("adt-to-adg-events_local");
-		topics.add("adt-to-adg-events_remote");
-		topics.add("adt-to-csg-events_local");
-		topics.add("adt-to-csg-events_remote");
-		topics.add("adt-to-cns-grants-events_local");
-		topics.add("adt-to-cns-grants-events_remote");
-		topics.add("adt-to-cns-events_local");
-		topics.add("adt-to-cns-events_remote");
-		topics.add("adt-to-cns-extension-changes-events_remote");
-		topics.add("adt-to-cns-extension-changes-events_local");
-		topics.add("adt-to-dsh-events_local");
-		topics.add("adt-to-dsh-events_remote");
-		topics.add("adt-to-cpx-events_local");
-		topics.add("adt-to-cpx-events_remote");
-		topics.add("adt-to-tpg-events_remote");
-		topics.add("adt-to-tpg-events_local");
-		topics.add("adt-to-tsx-events_remote");
-		topics.add("adt-to-tsx-events_local");
-		*/
-		
-		/*************** TNS topic ************************/
-		// topics.add("BXX_Configuration_Notifications_global");
-		topics.add("Call_Session_Notifications_local");
-		// topics.add("Call_Action_Notifications_local");
-		// topics.add("DND_Status_Notifications_local");
-		
-		/*************** high priority topics ************************/
-		// topics.add("apns_high_priority");
-		// topics.add("fcm_high_priority");
-		// topics.add("pubnub_high_priority");
-		// topics.add("webhook_high_priority");
-		// topics.add("wsg_high_priority");
-		// topics.add("apns_high_priority");
-
-		/*************** low priority topics ************************/
-
-		/*
-		topics.add("pubnub_low_priority");
-		topics.add("webhook_low_priority");
-		topics.add("fcm_low_priority");
-		topics.add("wsg_low_priority");
-		topics.add("apns_low_priority");
-		*/
-		
 		/* */
 	    properties.put(CommonClientConfigs.GROUP_ID_CONFIG, this.group);
 		properties.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);

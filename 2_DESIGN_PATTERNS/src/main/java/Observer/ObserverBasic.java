@@ -9,7 +9,9 @@ interface IObserver {
 
 interface IObservable {
     IObserver addObserver(IObserver observer);
+
     IObserver removeObserver(IObserver observer);
+
     void notifyObservers();
 }
 

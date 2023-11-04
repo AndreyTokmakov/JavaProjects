@@ -23,8 +23,8 @@ import org.apache.kafka.common.serialization.StringSerializer;
 class TestProducer {
 	
 	public void sendMessage() {
-		final String message = "{test_message}", topic = "tests";
-		final String server = "127.0.0.1:9092";
+		final String message = "{test_message}", topic = "events";
+		final String server = "192.168.101.2:9092";
 		
 		/*
 		System.out.println("Sending message to 127.0.0.1:9092:");
