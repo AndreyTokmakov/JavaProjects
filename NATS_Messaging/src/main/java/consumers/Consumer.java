@@ -12,7 +12,8 @@ public class Consumer
     public static final Integer NATS_PORT = 4222;
     public static final Integer NATS_MGMT_PORT = 8222;
     public static final String channelName = "nats.demo.service";
-    private static final String defaultServer = "nats://localhost:" + NATS_PORT;
+    public static final String natsHost = "192.168.101.2";
+    private static final String defaultServer = "nats://" + natsHost + ":" + NATS_PORT;
 
     private static void consumeAsync() throws IOException, InterruptedException
     {

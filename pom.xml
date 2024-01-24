@@ -67,6 +67,7 @@
         <module>SSRC_Experiments</module>
         <module>ObjectsPools</module>
         <module>NATS_Messaging</module>
+        <module>Telegram</module>
     </modules>
 
     <properties>

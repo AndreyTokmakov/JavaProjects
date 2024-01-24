@@ -67,7 +67,7 @@ class Tester {
 	
 	
 	public void AdditionslFields() {
-		EmployeeRecordEx emp = new EmployeeRecordEx (1l, "Lokesh", "Gupta", "howtodoinjava@gmail.com", 38);
+		EmployeeRecordEx emp = new EmployeeRecordEx (1L, "Lokesh", "Gupta", "howtodoinjava@gmail.com", 38);
          
         System.out.println(emp.id());
         System.out.println(emp.email());
@@ -76,7 +76,7 @@ class Tester {
 	}
 	
 	public void CreateWithConstructor() {
-		EmployeeRecordCtor emp = new EmployeeRecordCtor (1l, "Lokesh", "Gupta", "howtodoinjava@gmail.com", 11);
+		EmployeeRecordCtor emp = new EmployeeRecordCtor (1L, "Lokesh", "Gupta", "howtodoinjava@gmail.com", 11);
          
         System.out.println(emp.id());
         System.out.println(emp.email());

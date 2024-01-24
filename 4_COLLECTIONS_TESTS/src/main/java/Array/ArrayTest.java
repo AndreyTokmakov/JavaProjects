@@ -110,15 +110,15 @@ class Tests {
 	
 	public void CompareUnsigned() 
 	{ 
-		int intArr[]  = { 10, 20, 15, 22, 35 }; 
-		int intArr1[] = { 10, 15, 22 }; 
+		int[] intArr = { 10, 20, 15, 22, 35 };
+		int[] intArr1 = { 10, 15, 22 };
 		System.out.println("Compare: " + Arrays.compareUnsigned(intArr, intArr1)); 
 		System.out.println("Compare: " + Arrays.compareUnsigned(intArr1, intArr)); 
 	}
 	
 	public void CopyOf() 
 	{ 
-        int intArr[] = { 10, 20, 15, 22, 35 }; 
+        int[] intArr = { 10, 20, 15, 22, 35 };
         System.out.println("Integer Array: " + Arrays.toString(intArr)); 
         System.out.println("New Arrays by copyOf:"); 
         System.out.println("Integer Array: " + Arrays.toString(Arrays.copyOf(intArr, 10))); 
@@ -133,11 +133,11 @@ class Tests {
 	} 
 	
 	public void DeepEquals() {
-        int intArr [][] = {{ 10, 20, 15, 22, 35 }}; 
-        int intArr1[][] = {{ 10, 15, 22 }}; 
+        int[][] intArr = {{ 10, 20, 15, 22, 35 }};
+        int[][] intArr1 = {{ 10, 15, 22 }};
         
-        int intArr2[][] = {{ 10, 15, 22 }}; 
-        int intArr3[][] = {{ 22, 15, 10 }}; 
+        int[][] intArr2 = {{ 10, 15, 22 }};
+        int[][] intArr3 = {{ 22, 15, 10 }};
         
         System.out.println("Integer Arrays on comparison 1: " + Arrays.deepEquals(intArr, intArr1));
         System.out.println("Integer Arrays on comparison 2: " + Arrays.deepEquals(intArr2, intArr3));
@@ -145,7 +145,7 @@ class Tests {
 	}
 	
     public void DeepHashCode() { 
-        int intArr[][] = { { 10, 20, 15, 22, 35 } }; 
+        int[][] intArr = { { 10, 20, 15, 22, 35 } };
         System.out.println("Integer Array: " + Arrays.deepHashCode(intArr)); 
     } 
 	

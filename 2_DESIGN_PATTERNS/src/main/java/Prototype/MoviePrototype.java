@@ -1,17 +1,18 @@
 package Prototype;
 
 
+import lombok.Getter;
+
+import java.util.EnumMap;
+
 interface IPrototype extends Cloneable {
     IPrototype clone() throws CloneNotSupportedException;
 }
 
+@Getter
 class Movie implements IPrototype
 {
     private String name;
-
-    public String getName() {
-        return name;
-    }
 
     public void setName(String name) {
         this.name = name;
@@ -29,13 +30,10 @@ class Movie implements IPrototype
     }
 }
 
+@Getter
 class Album implements IPrototype
 {
     private String name;
-
-    public String getName() {
-        return name;
-    }
 
     public void setName(String name) {
         this.name = name;
@@ -53,13 +51,10 @@ class Album implements IPrototype
     }
 }
 
+@Getter
 class Show implements IPrototype
 {
     private String name = null;
-
-    public String getName() {
-        return name;
-    }
 
     public void setName(String name) {
         this.name = name;
@@ -79,24 +74,25 @@ class Show implements IPrototype
 
 class PrototypeFactory
 {
-    public static class ModelType
-    {
-        public static final String MOVIE = "movie";
-        public static final String ALBUM = "album";
-        public static final String SHOW = "show";
+
+    public enum ModelType {
+        Movie,
+        Album,
+        Show
     }
-    private static final java.util.Map<String , IPrototype> prototypes =
-            new java.util.HashMap<String , IPrototype>();
+
+    private static final EnumMap<ModelType, IPrototype> prototypes =
+            new EnumMap<ModelType , IPrototype>(ModelType.class);
 
     static
     {
-        prototypes.put(ModelType.MOVIE, new Movie());
-        prototypes.put(ModelType.ALBUM, new Album());
-        prototypes.put(ModelType.SHOW, new Show());
+        prototypes.put(ModelType.Movie, new Movie());
+        prototypes.put(ModelType.Album, new Album());
+        prototypes.put(ModelType.Show, new Show());
     }
 
-    public static IPrototype getInstance(final String s) throws CloneNotSupportedException {
-        return ((IPrototype) prototypes.get(s)).clone();
+    public static IPrototype getInstance(ModelType type) throws CloneNotSupportedException {
+        return ((IPrototype) prototypes.get(type)).clone();
     }
 }
 
@@ -106,13 +102,13 @@ public class MoviePrototype
     {
         try
         {
-            String moviePrototype = PrototypeFactory.getInstance(PrototypeFactory.ModelType.MOVIE).toString();
+            String moviePrototype = PrototypeFactory.getInstance(PrototypeFactory.ModelType.Movie).toString();
             System.out.println(moviePrototype);
 
-            String albumPrototype = PrototypeFactory.getInstance(PrototypeFactory.ModelType.ALBUM).toString();
+            String albumPrototype = PrototypeFactory.getInstance(PrototypeFactory.ModelType.Album).toString();
             System.out.println(albumPrototype);
 
-            String showPrototype = PrototypeFactory.getInstance(PrototypeFactory.ModelType.SHOW).toString();
+            String showPrototype = PrototypeFactory.getInstance(PrototypeFactory.ModelType.Show).toString();
             System.out.println(showPrototype);
 
         }
