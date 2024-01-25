@@ -1,4 +1,4 @@
-package bot;
+package simple_bot;
 
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 

@@ -11,24 +11,26 @@
 
     <artifactId>Telegram</artifactId>
 
+    <properties>
+        <telegrambots.version>6.9.7.0</telegrambots.version>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.telegram</groupId>
             <artifactId>telegrambots</artifactId>
-            <version>6.9.7.0</version>
+            <version>${telegrambots.version}</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.telegram/telegrambots-abilities -->
         <dependency>
             <groupId>org.telegram</groupId>
             <artifactId>telegrambots-abilities</artifactId>
-            <version>6.9.7.0</version>
+            <version>${telegrambots.version}</version>
         </dependency>
-
-        <!--dependency>
+        <dependency>
             <groupId>org.telegram</groupId>
             <artifactId>telegrambots-spring-boot-starter</artifactId>
-            <version>6.7.0</version>
-        </dependency-->
+            <version>${telegrambots.version}</version>
+        </dependency>
     </dependencies>
 
 </project>
