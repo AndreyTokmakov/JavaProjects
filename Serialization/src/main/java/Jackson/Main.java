@@ -32,7 +32,8 @@ public class Main
     static void PrintPretty() throws JsonProcessingException
     {
         ObjectMapper mapper = new ObjectMapper();
-        Article article = new Article(1L, "Test Title", Collections.singletonList("Test Tag"));
+        // Article article = new Article(1L, "Test Title", Collections.singletonList("Test Tag", "Demo"));
+        Article article = new Article(1L, "Test Title", List.of("Test Tag", "Demo"));
         String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(article);
         System.out.println(json);
     }
@@ -48,7 +49,7 @@ public class Main
     public static void main(String[] args) throws JsonProcessingException
     {
         // WriteValue();
-        // PrintPretty();
+        PrintPretty();
         // ReadingFromString();
     }
 }

@@ -39,7 +39,8 @@ class CacheTester {
 		System.out.println("dataObject = " + dataObject);
 	}
 	
-	public void Get_If_Present() {
+	public void Get_If_Present()
+	{
 		Cache<String, DataObject> cache = Caffeine.newBuilder()
 				  .expireAfterWrite(1, TimeUnit.MINUTES)
 				  .maximumSize(100)
@@ -128,14 +129,13 @@ public class Cache_Testing {
 	/** **/
 	private final static CacheTester tester = new CacheTester();
 	
-	public static void main(String[] args) {
-		
+	public static void main(String[] args)
+	{
 		// tester.EmptyCacheTest();
 		// tester.AddOneEntry();
 		 tester.Get_If_Present();
 		
 		// tester.Objects_LifeTime_Expire();
 		// tester.Objects_LifeTime_Expire2();
-
 	}
 }
