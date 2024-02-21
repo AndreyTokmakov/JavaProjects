@@ -10,4 +10,12 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>1_JAVA_STUDY</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcpkix-jdk18on</artifactId>
+            <version>1.76</version>
+        </dependency>
+    </dependencies>
+
 </project>

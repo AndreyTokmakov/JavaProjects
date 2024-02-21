@@ -153,9 +153,19 @@ public class SSLKeys {
 		System.out.println(publicKey2);
 	}
 
-	public void TestKeys() {
-		//final String publicStrOrigin = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAlVgPempiojRJNjCD+z2adTIU9O6FzWjb83tY3T3dsRrIbPkm0SZGrokzf2YHHIXLZrMjTw3QYNH6QfcsCLzExUvgHEs5sn7M2UHLv8T7tG7S5eiCxOLdxK7iGA3jMrUtGQRq55dK9pe2P5v4JW8OnWzImb9nL5Oq8970UXK4hceuGD1y5VbPYSVl3ffYNQ78RZa4qA9vY+DfChUN0p+sEjndfSm8YSWPTTePQcRfe2wQXagMyHAbBLDKpIvo/V4S41RXUACYhM5ukudLrdSMDem5N7YR8reJ2yxtbZUqdNs02HhjAfsGnwbbkOKGWAlq1rwVAKPUystC7uMst3e/NwIDAQAB";
-		final String publicStrOrigin = "AAAAB3NzaC1yc2EAAAADAQABAAABAQDqHPjwbjs14b12gSFdeDNiE9cvqrY94kEjhQJZCljfhEapU5O5mDcBqyRbJ2ZYzZrEiyIvCJDQrBzrWjJzt+bBZntzSbmVGhf31DScIKUqzox3mMN5Wxy3JTctiC/PCNQdTjQhsm6AtsOlLsZs3dKdk1NHs5MYSOwU6ioEwBSFhUrcN7qHp/tOIbWYb2Jd81mtJkLs0fIGqqJhjbrHr1wxGetZRRJCTwsO04h5d+olzQSh4R4W9eVXlQmSzHz0/GelpfC2EA07U25xR+OkBpcH2wvmtMo01fq+ufAkuTgP36G0SMpjEvmWLD8um5vtIZfykYqm/26i4dpnQWFvjsE7";
+	public void TestKeys()
+	{
+		// final String publicStrOrigin = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAlVgPempiojRJNjCD+z2ad
+		// TIU9O6FzWjb83tY3T3dsRrIbPkm0SZGrokzf2YHHIXLZrMjTw3QYNH6QfcsCLzExUvgHEs5sn7M2UHLv8T7tG7S5eiCxOLdxK
+		// 7iGA3jMrUtGQRq55dK9pe2P5v4JW8OnWzImb9nL5Oq8970UXK4hceuGD1y5VbPYSVl3ffYNQ78RZa4qA9vY+DfChUN0p+sEjn
+		// dfSm8YSWPTTePQcRfe2wQXagMyHAbBLDKpIvo/V4S41RXUACYhM5ukudLrdSMDem5N7YR8reJ2yxtbZUqdNs02HhjAfsGnwbb
+		// kOKGWAlq1rwVAKPUystC7uMst3e/NwIDAQAB";
+
+		final String publicStrOrigin = "AAAAB3NzaC1yc2EAAAADAQABAAABAQDqHPjwbjs14b12gSFdeDNiE9cvqrY94kEjhQJZC" +
+				"ljfhEapU5O5mDcBqyRbJ2ZYzZrEiyIvCJDQrBzrWjJzt+bBZntzSbmVGhf31DScIKUqzox3mMN5Wxy3JTctiC/PCNQdTj" +
+				"Qhsm6AtsOlLsZs3dKdk1NHs5MYSOwU6ioEwBSFhUrcN7qHp/tOIbWYb2Jd81mtJkLs0fIGqqJhjbrHr1wxGetZRRJCTwsO" +
+				"04h5d+olzQSh4R4W9eVXlQmSzHz0/GelpfC2EA07U25xR+OkBpcH2wvmtMo01fq+ufAkuTgP36G0SMpjEvmWLD8um5vt" +
+				"IZfykYqm/26i4dpnQWFvjsE7";
 		
 		
 		final Base64.Encoder encoder = Base64.getEncoder();

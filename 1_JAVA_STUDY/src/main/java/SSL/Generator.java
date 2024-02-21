@@ -18,31 +18,38 @@ import java.security.spec.X509EncodedKeySpec;
 import javax.crypto.KeyGenerator;
 
 public class Generator {
-	public static void main(String args[]) {
-		Generator adam = new Generator();
+	public static void main(String[] args)
+	{
+		final String path = "/home/andtokm/DiskS/Temp/Folder_For_Testing/TestKeys";
+		Generator generator = new Generator();
+		generator.generatePrivateAndPublicKey(path);
+	}
+
+	private void generatePrivateAndPublicKey(String dstPath)
+	{
 		try {
 			SecureRandom secureRandom = new SecureRandom();
 			int keyBitSize = 256;
 
 			KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
 			keyGenerator.init(keyBitSize, secureRandom);
-			
-			String path = "R:\\Documents\\sshKeys\\TestKeys";
- 
+
+
+
 			KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
 			keyPairGenerator.initialize(2048);
-			
+
 			final KeyPair keyPair = keyPairGenerator.genKeyPair();
- 
+
 			System.out.println("Generated Key Pair");
-			adam.dumpKeyPair(keyPair);
-			adam.SaveKeyPair(path, keyPair);
- 
-			KeyPair loadedKeyPair = adam.LoadKeyPair(path, "RSA");
+			this.dumpKeyPair(keyPair);
+			this.SaveKeyPair(dstPath, keyPair);
+
+			KeyPair loadedKeyPair = this.LoadKeyPair(dstPath, "RSA");
 			System.out.println("Loaded Key Pair");
-			adam.dumpKeyPair(loadedKeyPair);
-		} catch (Exception e) {
-			e.printStackTrace();
+			this.dumpKeyPair(loadedKeyPair);
+		} catch (final Exception exc) {
+			exc.printStackTrace();
 			return;
 		}
 	}
@@ -56,11 +63,11 @@ public class Generator {
 	}
  
 	private String getHexString(byte[] b) {
-		String result = "";
-		for (int i = 0; i < b.length; i++) {
-			result += Integer.toString((b[i] & 0xff) + 0x100, 16).substring(1);
-		}
-		return result;
+		StringBuilder result = new StringBuilder();
+        for (byte value : b) {
+            result.append(Integer.toString((value & 0xff) + 0x100, 16).substring(1));
+        }
+		return result.toString();
 	}
  
 	public void SaveKeyPair(String path, KeyPair keyPair) throws IOException {

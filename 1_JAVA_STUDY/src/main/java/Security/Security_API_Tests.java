@@ -205,8 +205,8 @@ public class Security_API_Tests {
 	public static void main(String[] args) throws Exception {
 		Tester tester = new Tester();
 		
-		// tester.KeyPairGenerator();
+		tester.KeyPairGenerator();
 		// tester.Signature();
-		tester.AES_Encryption_Decryption();
+		// tester.AES_Encryption_Decryption();
 	}
 }
