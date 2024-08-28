@@ -10,12 +10,4 @@
     <name>Archetype - ObjectsPools</name>
     <url>http://maven.apache.org</url>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-pool2</artifactId>
-            <version>${apache.commons.pool2.version}</version>
-        </dependency>
-    </dependencies>
-
 </project>
