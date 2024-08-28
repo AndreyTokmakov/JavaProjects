@@ -46,14 +46,14 @@ class ConstructorExample2 {
 
 @ToString
 @NoArgsConstructor
-class NoArgsExample {
+class NoArgsExample
+{
 	@NonNull 
 	private String description = "Test";
 }
 
-//------------------------ Tests: ---------------------------//
-public class Constructors {
-	
+public class Constructors
+{
 	protected static void NoArgsTest() {
 		NoArgsExample example = new NoArgsExample();
 		

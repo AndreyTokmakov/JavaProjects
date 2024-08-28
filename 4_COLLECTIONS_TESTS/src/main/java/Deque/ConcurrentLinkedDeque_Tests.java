@@ -3,7 +3,7 @@ package Deque;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
 class AddTask implements Runnable { 
-    private ConcurrentLinkedDeque<String> list;
+    private final ConcurrentLinkedDeque<String> list;
  
     public AddTask(ConcurrentLinkedDeque<String> list) {
         this.list = list;
@@ -19,7 +19,7 @@ class AddTask implements Runnable {
 }
 
 class RemoveTask implements Runnable {
-    private ConcurrentLinkedDeque<String> list;
+    private final ConcurrentLinkedDeque<String> list;
  
     public RemoveTask(ConcurrentLinkedDeque<String> list) {
         this.list = list;

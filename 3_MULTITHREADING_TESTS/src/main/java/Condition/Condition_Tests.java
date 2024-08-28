@@ -41,7 +41,7 @@ public class Condition_Tests {
 
 
 final class MessageProducer implements Runnable {
-	private Message message;
+	private final Message message;
 	private final List<String> msgs = new ArrayList<String>();
 	private final static int PUSH_MESSAGE_DELAY = 1000;
 
@@ -85,7 +85,8 @@ final class MessageConsumer implements Runnable{
 }
 
 
-final class Message {
+final class Message
+{
 	final private Lock lock = new ReentrantLock();
 	final private Condition producedMsg  = lock.newCondition(); 
 	//final private Condition consumedMsg = lock.newCondition(); 
@@ -98,7 +99,7 @@ final class Message {
 	public void viewMessage() {
 		lock.lock();
 		try {
-			while (false == hasMessages) { // --> no new message wait for new message
+			while (!hasMessages) { // --> no new message wait for new message
 				System.out.println("[" + new Date() + "]: Waitig for new messages...");
 				producedMsg.await();
 			}

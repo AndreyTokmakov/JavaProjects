@@ -10,11 +10,19 @@
 
 package Wrappers;
 
-public class Integer_Tests {
+public class Integer_Tests
+{
 	public static void main(String[] args) 
 	{
 		Integer value = 102;
-		
 		// System.out.println(value.);
+
+
+		Long pid = Long.valueOf("123");
+		if (pid == null) {
+			pid = 0L;
+		}
+
+		System.out.println(pid);
 	}
 }
