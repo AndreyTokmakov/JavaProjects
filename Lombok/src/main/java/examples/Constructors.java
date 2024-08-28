@@ -59,6 +59,7 @@ public class Constructors
 		
 		System.out.println(example);
 	}
+
 	
 	protected static void ArgsTest() {
 		ConstructorExample1 example = new ConstructorExample1("DESCRIPTION TEXT VALUE", 123);
