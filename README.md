@@ -13,4 +13,4 @@ export PATH=${JAVA_HOME}/bin:${M2_HOME}/bin:${PATH}
 
 
 >  mvn clean
->  mvn compiler:compile
+> 
