@@ -1,6 +1,8 @@
 package test_window;
 
-public class ApplicationMain 
+import javax.swing.*;
+
+public class ApplicationMain
 {
 
 	public static void main(String[] args) 
@@ -19,12 +21,11 @@ public class ApplicationMain
 	         */
 	        try 
 	        {
-	            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-	                if ("Windows".equals(info.getName())) {
-	                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-	                    break;
-	                }
-	            }
+				// javax.swing.UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+				javax.swing.UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+				// javax.swing.UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
+				// javax.swing.UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
+
 	        } 
 	        catch (ClassNotFoundException ex) 
 	        {

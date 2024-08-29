@@ -1,51 +1,43 @@
-package viewer.ui;
+package viewer;
 
-import java.awt.BorderLayout;
-
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Graphics;
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serial;
 
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 
-/** @class JLabel **/
-@SuppressWarnings("serial")
-class JIconLabel extends JLabel {
-	/** **/
+class JIconLabel extends JLabel
+{
 	private ImageIcon iconOnline = null;
-	/** **/
 	private ImageIcon iconOffline = null;
 
 	public JIconLabel(ImageIcon createImageIcon) {
 		super(createImageIcon);
 	}
 
-	public JIconLabel() {
+	public JIconLabel()
+    {
 		this.iconOnline  = CreateImageIcon(
-                "/home/andtokm/DiskS/ProjectsUbuntu/JavaProjects/Apache_Kafka/src/main/java/viewer/online.png");
+                "/home/andtokm/DiskS/ProjectsUbuntu/JavaProjects/Apache_Pulsar/src/main/resources/online.png");
 		this.iconOffline = CreateImageIcon(
-                "/home/andtokm/DiskS/ProjectsUbuntu/JavaProjects/Apache_Kafka/src/main/java/viewer/offline.png");
+                "/home/andtokm/DiskS/ProjectsUbuntu/JavaProjects/Apache_Pulsar/src/main/resources/offline.png");
 		this.setPreferredSize(new Dimension(90, 17));
 		this.setIcon(iconOnline);
 		this.setIconTextGap(5);
 	}
 	
-	public void SetOnline() {
+	public void SetOnline()
+    {
 		this.setIcon(iconOnline);
 		this.setText("Connected");
 		this.setToolTipText("Viewer is connected to the Kafka cluster.");
 	}
 	
-	public void SetOffline() {
+	public void SetOffline()
+    {
 		this.setIcon(iconOffline);
 		this.setText("Disconnected");
 		this.setToolTipText("Viewer is disconnected.");
@@ -63,24 +55,24 @@ class JIconLabel extends JLabel {
     }
 };
 
-/** @class SeparatorPanel **/
-class SeparatorPanel extends JPanel {
-	/** **/
+class SeparatorPanel extends JPanel
+{
+    @Serial
     private static final long serialVersionUID = 1L;
-	/** Left color : **/
-    private Color leftColor;
-	/** Right color : **/
-    private Color rightColor;
+    private final Color leftColor;
+    private final Color rightColor;
  
     /** SeparatorPanel class constructor : **/
-    public SeparatorPanel(Color leftColor, Color rightColor) {
+    public SeparatorPanel(Color leftColor, Color rightColor)
+    {
         this.leftColor = leftColor;
         this.rightColor = rightColor;
         setOpaque(false);
     }
  
     @Override
-    protected void paintComponent(Graphics g) {
+    protected void paintComponent(Graphics g)
+    {
         g.setColor(leftColor);
         g.drawLine(0, 0, 0, getHeight());
         g.setColor(rightColor);
@@ -88,34 +80,29 @@ class SeparatorPanel extends JPanel {
     }
 }
  
-/** @class JStatusBar **/
-public class JStatusBar extends JPanel {
 
+public class JStatusBar extends JPanel
+{
     @Serial
     private static final long serialVersionUID = 1L;
-    /** **/
     private JPanel leftPanel;
-    /** **/
     private JPanel rightPanel;
-    /** **/
-    private JIconLabel statusLabel = new JIconLabel();
-    /** **/
-    private JLabel dateLabel = new JLabel();
-    /** **/
-    private JLabel timeLabel = new JLabel();
-    /** **/
-    private JLabel nodesLabel = new JLabel();
-    /** **/
-    private JLabel rcvdStats = new JLabel();
+    private final JIconLabel statusLabel = new JIconLabel();
+    private final JLabel dateLabel = new JLabel();
+    private final JLabel timeLabel = new JLabel();
+    private final JLabel nodesLabel = new JLabel();
+    private final JLabel rcvdStats = new JLabel();
 
-    public JStatusBar() {
+    public JStatusBar()
+    {
         createPartControl();
+
+        statusLabel.setPreferredSize(new Dimension(110, 17));
 
         leftPanel.add(statusLabel);
         leftPanel.add(new SeparatorPanel(Color.GRAY, Color.WHITE));
-        
         leftPanel.add(nodesLabel);
-        
+
         rcvdStats.setHorizontalAlignment(JLabel.CENTER);
 	    this.addRightComponent(rcvdStats);
         
@@ -145,23 +132,22 @@ public class JStatusBar extends JPanel {
     	this.dateLabel.setText(text);
     }
     
-    public void SetStatusOnline() {	
-    	/** **/
+    public void SetStatusOnline()
+    {
     	this.statusLabel.SetOnline();
-    	/** **/
 		this.validate();
 		this.repaint();
     }
     
-    public void SetStatusOffline() {	
-    	/** **/
+    public void SetStatusOffline()
+    {
     	this.statusLabel.SetOffline();
-    	/** **/
 		this.validate();
 		this.repaint();
     }
     
-    protected void createPartControl() {    
+    protected void createPartControl()
+    {
         setLayout(new BorderLayout());
         setPreferredSize(new Dimension(getWidth(), 23));
  
@@ -178,14 +164,16 @@ public class JStatusBar extends JPanel {
         leftPanel.add(component);
     }
  
-    protected void addRightComponent(JComponent component) {
+    protected void addRightComponent(JComponent component)
+    {
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEADING, 5, 0));
         panel.add(new SeparatorPanel(Color.GRAY, Color.WHITE));
         panel.add(component);
         rightPanel.add(panel);
     }
     
-    protected ImageIcon CreateImageIcon(String iconImagePath) {
+    protected ImageIcon CreateImageIcon(String iconImagePath)
+    {
     	ImageIcon icon = null;
 		try {
 			BufferedImage img = ImageIO.read(new File(iconImagePath));
@@ -197,7 +185,8 @@ public class JStatusBar extends JPanel {
     }
  
     @Override
-    protected void paintComponent(Graphics g) {
+    protected void paintComponent(Graphics g)
+    {
         super.paintComponent(g);
  
         int y = 0;

@@ -416,12 +416,15 @@ public class KafkaViewerWindow extends JFrame
 	/** SetNimbusLookAndFeel - Initialize the WINDOWS like Look&Feel. **/
 	private static void SetNimbusLookAndFeel()  {
 		try {
+			javax.swing.UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+			/*
 			for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
 				if ("Windows".equals(info.getName())) {
 	 				UIManager.setLookAndFeel(info.getClassName());
 	 				break;
 	 			}
 	 		}
+	 		*/
 		} catch (ClassNotFoundException ex) {
 	           // java.util.logging.Logger.getLogger(MyJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 		} catch (InstantiationException ex) {

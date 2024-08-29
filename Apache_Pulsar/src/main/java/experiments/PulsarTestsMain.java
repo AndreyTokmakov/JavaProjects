@@ -8,14 +8,14 @@
 * @since   : Feb 13, 2021
 ****************************************************************************/
 
-import org.apache.pulsar.client.api.*;
+package experiments;
 
-import java.util.stream.IntStream;
+import org.apache.pulsar.client.api.*;
 
 
 public class PulsarTestsMain 
 {
-	private static final String SERVICE_URL = "pulsar://localhost:6650";
+	private static final String SERVICE_URL = "pulsar://192.168.101.2:6650";
 	private static final String TOPIC_NAME = "test-topic";
 
 	public static void main(String[] args) throws PulsarClientException
