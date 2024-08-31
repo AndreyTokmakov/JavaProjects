@@ -24,7 +24,7 @@ class Test2 {
 
 class Test1 {
 	
-	private static Test2 t2 = Test2.getInstance(); 
+	private final static Test2 t2 = Test2.getInstance();
 	
 	public Test1() {
 		System.out.println("Test1 class constructed()");
@@ -33,10 +33,7 @@ class Test1 {
 
 public class TestClassCreation {
 	public static void main(String[] args) {
-
-		
 		Test1 t = new Test1();
-		
 	}
 }
 

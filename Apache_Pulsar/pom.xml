@@ -21,6 +21,13 @@
             <version>3.3.1</version>
         </dependency>
 
+
+        <dependency>
+            <groupId>org.apache.pulsar</groupId>
+            <artifactId>pulsar-client-admin</artifactId>
+            <version>3.3.1</version>
+        </dependency>
+
     </dependencies>
 
 </project>

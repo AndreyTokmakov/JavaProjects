@@ -11,13 +11,12 @@
 package ClassLoader;
 
 class SomeTestClass {
-	
 }
 
-public class ClassLoaderTests {
+public class ClassLoaderTests
+{
 	public static void main(String[] args)
 	{
-
 		ClassLoader loader = ClassLoaderTests.class.getClassLoader();
 		System.out.println();
 		System.out.println(loader.getResource(SomeTestClass.class.getTypeName().replace('.', '/') + ".class"));
