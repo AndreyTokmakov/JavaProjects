@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 
 // https://pulsar.apache.org/docs/next/client-libraries-java-use/
@@ -16,35 +17,50 @@ public class ConsumerQueue
     private static final String TOPIC_NAME = "notifications";
     private static final String pulsarToken = "<REPLACE_WITH_PULSAR_TOKEN>";
 
-    private final static class Printer implements Runnable
+    private static class Task
     {
-        final BlockingDeque<Message<byte[]>> queue;
+        final protected BlockingDeque<Message<byte[]>> queue;
+        final protected AtomicBoolean stopFlag;
 
-        public Printer( BlockingDeque<Message<byte[]>> queue) {
+        public Task(BlockingDeque<Message<byte[]>> queue, AtomicBoolean stopFlag)
+        {
             this.queue = queue;
+            this.stopFlag = stopFlag;
+        }
+
+        protected boolean isStopRequested()
+        {
+            return !stopFlag.getAcquire();
+        }
+    }
+
+    private final static class Printer extends Task implements Runnable
+    {
+        public Printer(BlockingDeque<Message<byte[]>> queue, AtomicBoolean stopFlag) {
+            super(queue, stopFlag);
         }
 
         public void run()
         {
             Message<byte[]> msg = null;
-            while (true)
+            while (isStopRequested())
             {
                 try {
-                    msg = queue.take();
+                    msg = queue.poll(100, TimeUnit.MILLISECONDS);
+                    if (null != msg) {
+                        System.out.println(new String(msg.getData()));
+                    }
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
-                System.out.println(msg);
             }
         }
     }
 
-    private final static class PulsarConsumer implements Runnable
+    private final static class PulsarConsumer extends Task implements Runnable
     {
-        final BlockingDeque<Message<byte[]>> queue;
-
-        public PulsarConsumer( BlockingDeque<Message<byte[]>> queue) {
-            this.queue = queue;
+        public PulsarConsumer( BlockingDeque<Message<byte[]>> queue, AtomicBoolean stopFlag) {
+            super(queue, stopFlag);
         }
 
         public void run()
@@ -55,14 +71,16 @@ public class ConsumerQueue
                  final Consumer<byte[]> consumer = client.newConsumer()
                      .topic(TOPIC_NAME).subscriptionName("my-subscription").subscribe())
             {
-                while (true)
+                while (isStopRequested())
                 {
-                    Message<byte[]> msg = consumer.receive();
+                    Message<byte[]> msg = consumer.receive(1, TimeUnit.SECONDS);
                     try {
-                        queue.add(msg);
-                        consumer.acknowledge(msg);
+                        if (null != msg) {
+                            queue.add(msg);
+                            consumer.acknowledge(msg);
+                        }
                     } catch (Exception e) {
-                        // Message failed to process, redeliver later
+                        // Message failed to process, redFeliver later
                         consumer.negativeAcknowledge(msg);
                     }
                 }
@@ -73,15 +91,18 @@ public class ConsumerQueue
     }
 
 
-    public static void main(String[] args)
+    public static void main(String[] args) throws InterruptedException
     {
         final LinkedBlockingDeque<Message<byte[]>> messages = new LinkedBlockingDeque<Message<byte[]>>();
+        final AtomicBoolean stopFlag = new AtomicBoolean(false);
 
         final ExecutorService service = Executors.newFixedThreadPool(2);
+        service.submit(new PulsarConsumer(messages, stopFlag));
+        service.submit(new Printer(messages, stopFlag));
 
-        service.submit(new PulsarConsumer(messages));
-        service.submit(new Printer(messages));
+        TimeUnit.SECONDS.sleep(10);
 
-        // service.shutdown();
+        stopFlag.set(true);
+        service.shutdown();
     }
 }
