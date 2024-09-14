@@ -26,13 +26,16 @@ public class ViewerWindow extends JFrame implements java.awt.event.ActionListene
     @Serial
     private static final long serialVersionUID = -2686369381789468766L;
 
-    private final JTextArea responseField = new JTextArea(0, 0);
+    private final JTextArea textField = new JTextArea(0, 0);
+
+    protected JStatusBar statusBar = null;
 
     protected Thread timerThread = null;
-    protected JStatusBar statusBar = null;
-    private boolean isRunning = true;
-    private final SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, d MMM yyyy");
-    private final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss a");
+
+    // private boolean isRunning = true;
+    // private final SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, d MMM yyyy");
+    // private final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss a");
+
     private Point mousePoint = null;
 
     // FIXME: --> To enum ??
@@ -46,17 +49,17 @@ public class ViewerWindow extends JFrame implements java.awt.event.ActionListene
     {
         switch (evt.getActionCommand())
         {
-            case runConsumer :        this.RunConsumer();  break;
-            case stopConsumer:        this.StopConsumer(); break;
-            case consumerConfiguration: this.OpenServiceConfigurationWindow(); break;
-            case showTopicList:        this.GetTopics();     break;
+            case runConsumer :          RunConsumer();   break;
+            case stopConsumer:          StopConsumer();  break;
+            case consumerConfiguration: OpenServiceConfigurationWindow(); break;
+            case showTopicList:         GetTopics();     break;
             default: System.out.println(evt.getActionCommand()); break;
         }
     }
 
     public void HandleExit()
     {
-        isRunning = false;
+        // isRunning = false;
         System.exit(0);
     }
 
@@ -91,10 +94,10 @@ public class ViewerWindow extends JFrame implements java.awt.event.ActionListene
         JCheckBoxMenuItem miWordWrap = new JCheckBoxMenuItem("Word wrap");
         miWordWrap.setMnemonic(KeyEvent.VK_S);
         miWordWrap.setDisplayedMnemonicIndex(5);
-        miWordWrap.setSelected(responseField.getLineWrap());
+        miWordWrap.setSelected(textField.getLineWrap());
 
         miWordWrap.addItemListener((ItemEvent e) -> {
-            responseField.setLineWrap(e.getStateChange() == ItemEvent.SELECTED);
+            textField.setLineWrap(e.getStateChange() == ItemEvent.SELECTED);
         });
         menu.add(miWordWrap);
 
@@ -142,8 +145,10 @@ public class ViewerWindow extends JFrame implements java.awt.event.ActionListene
         return menu;
     }
 
-    private void RunConsumer() {
+    private void RunConsumer()
+    {
         // consumer.start();
+        textField.append("RunConsumer" +  "\n");
     }
 
     private void StopConsumer() {
@@ -186,12 +191,12 @@ public class ViewerWindow extends JFrame implements java.awt.event.ActionListene
         JMenuItem miClear = new JMenuItem("Clear");
         miClear.addActionListener((ActionEvent e) -> {
             // this.consumer.Clear();
-            responseField.setText("");
+            textField.setText("");
         });
         pmenu.add(miClear);
 
-        responseField.setComponentPopupMenu(pmenu);
-        responseField.addMouseMotionListener(MousePositionTracker());
+        textField.setComponentPopupMenu(pmenu);
+        textField.addMouseMotionListener(MousePositionTracker());
     }
 
 	/*
@@ -309,13 +314,13 @@ public class ViewerWindow extends JFrame implements java.awt.event.ActionListene
         this.setMinimumSize(new Dimension(1400, 900));
         this.setTitle(" Kafke event viewer");
 
-        JScrollPane spResponsePanel = new JScrollPane(responseField);
-        responseField.setBackground(new Color(15, 25, 35));
-        responseField.setForeground(new Color(225, 225, 225));
-        responseField.setCaretColor(Color.WHITE);
+        JScrollPane spResponsePanel = new JScrollPane(textField);
+        textField.setBackground(new Color(15, 25, 35));
+        textField.setForeground(new Color(225, 225, 225));
+        textField.setCaretColor(Color.WHITE);
 
         Font font = new Font("Times New Roman", Font.PLAIN, 14);
-        responseField.setFont(font);
+        textField.setFont(font);
 
         CreateMenu();
         CreateStatusBar();

@@ -13,19 +13,20 @@ package Concurrent_Collections;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
-public class ArrayBlockingQueue_Tests {
+public class ArrayBlockingQueue_Tests
+{
     public static void main(String[] args) throws InterruptedException 
     {
-        ArrayBlockingQueue<Integer> priorityBlockingQueue = new ArrayBlockingQueue<>(5);
+        ArrayBlockingQueue<Integer> blockingQueue = new ArrayBlockingQueue<>(5);
  
         // Producer thread
         new Thread(() ->  {
             int i = 0;
             try {
                 while (true) {
-                    priorityBlockingQueue.put(++i);
+                    blockingQueue.put(++i);
                     System.out.println("Added : " + i);
-                    Thread.sleep(TimeUnit.SECONDS.toMillis(1));
+                    TimeUnit.SECONDS.sleep(1);
                 }
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -37,9 +38,9 @@ public class ArrayBlockingQueue_Tests {
         new Thread(() -> {
             try {
                 while (true) {
-                    Integer poll = priorityBlockingQueue.take();
+                    Integer poll = blockingQueue.take();
                     System.out.println("Polled : " + poll);
-                    Thread.sleep(TimeUnit.SECONDS.toMillis(2));
+                    //TimeUnit.MILLISECONDS.sleep(1);
                 }
             } catch (InterruptedException e) {
                 e.printStackTrace();

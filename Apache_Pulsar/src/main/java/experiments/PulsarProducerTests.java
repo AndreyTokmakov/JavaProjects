@@ -13,24 +13,32 @@ package experiments;
 import org.apache.pulsar.client.api.*;
 
 
-public class PulsarTestsMain 
+public class PulsarProducerTests
 {
-	private static final String SERVICE_URL = "pulsar://192.168.101.2:6650";
-	private static final String TOPIC_NAME = "test-topic";
+	private static final String PULSAR_HOST = "localhost";
+	private static final String SERVICE_URL = String.format("pulsar://%s:6650", PULSAR_HOST);
+	private static final String TOPIC_NAME = "notifications";
+	private static final String pulsarToken = "<REPLACE_WITH_PULSAR_TOKEN>";
 
 	public static void main(String[] args) throws PulsarClientException
 	{
 		System.out.println("Apache_Pulsar");
 
 		// https://pulsar.apache.org/docs/next/client-libraries-producers/
-		try (final PulsarClient client = PulsarClient.builder().serviceUrl(SERVICE_URL).build())
+		try (final PulsarClient client = PulsarClient.builder()
+				.serviceUrl(SERVICE_URL)
+				// .authentication(AuthenticationFactory.token(pulsarToken))
+				.build())
 		{
-			final Producer<byte[]> producer = client.newProducer().topic(TOPIC_NAME)
-					.compressionType(CompressionType.LZ4).create();
+			try (final Producer<byte[]> producer = client.newProducer().topic(TOPIC_NAME)
+					.compressionType(CompressionType.LZ4).create())
+			{
+				MessageId messageId = producer.newMessage()
+						.value("my-sync-message".getBytes())
+						.send();
+			}
 
-			MessageId messageId = producer.newMessage()
-					.value("my-sync-message".getBytes())
-					.send();
+
 
 			/* Publish messages asynchronously:
 			producer.newMessage()
@@ -45,7 +53,5 @@ public class PulsarTestsMain
 		catch (Exception exc) {
 			System.err.println(exc.toString());
 		}
-
-
 	}
 }

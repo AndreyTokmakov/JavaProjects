@@ -10,7 +10,12 @@ import java.util.List;
 
 public class AdminTests
 {
-    private static final String SERVICE_URL = "http://localhost:8080";
+
+    // private static final String PULSAR_HOST = "192.168.101.2";
+    private static final String PULSAR_HOST = "0.0.0.0";
+
+    private static final String SERVICE_URL = String.format("pulsar://%s:6650", PULSAR_HOST);
+    private static final String PULSAR_ADMIN_URL = String.format("http://%s:8080", PULSAR_HOST);
     private static final String TOPIC_NAME = "test-topic";
 
     private static final String authPluginClassName = "com.org.MyAuthPluginClass";
@@ -47,7 +52,7 @@ public class AdminTests
                 // .authentication(authPluginClassName,authParams)
                 // .tlsTrustCertsFilePath(tlsTrustCertsFilePath)
                 // .allowTlsInsecureConnection(tlsAllowInsecureConnection)
-                .serviceHttpUrl(SERVICE_URL)
+                .serviceHttpUrl(PULSAR_ADMIN_URL)
                 .build())
         {
 
