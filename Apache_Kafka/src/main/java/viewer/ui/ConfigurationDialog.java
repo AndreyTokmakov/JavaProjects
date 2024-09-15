@@ -12,6 +12,7 @@ package viewer.ui;
 import java.awt.Container;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -28,7 +29,8 @@ import viewer.kafka.Consumer;
 public class ConfigurationDialog extends javax.swing.JDialog
 								 implements java.awt.event.ActionListener {
 	/** **/
-	private static final long serialVersionUID = -8781922424897818045L;
+	@Serial
+    private static final long serialVersionUID = -8781922424897818045L;
 	/** **/
 	private Container container = this.getContentPane();
 	/** **/

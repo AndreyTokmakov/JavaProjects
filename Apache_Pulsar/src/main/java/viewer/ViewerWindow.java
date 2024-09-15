@@ -42,7 +42,7 @@ public class ViewerWindow extends JFrame implements java.awt.event.ActionListene
     private static final String runConsumer   = "RunConsumerCommand";
     private static final String stopConsumer  = "StopConsumerCommand";
     private static final String showTopicList  = "ShowTopicListCommand";
-    private static final String consumerConfiguration  = "consumerConfiguration";
+    private static final String pulsarAdminDialog  = "pulsarAdminDialog";
 
 
     public void actionPerformed(ActionEvent evt)
@@ -51,7 +51,7 @@ public class ViewerWindow extends JFrame implements java.awt.event.ActionListene
         {
             case runConsumer :          RunConsumer();   break;
             case stopConsumer:          StopConsumer();  break;
-            case consumerConfiguration: OpenServiceConfigurationWindow(); break;
+            case pulsarAdminDialog:     openPulsarAdminDialog(); break;
             case showTopicList:         GetTopics();     break;
             default: System.out.println(evt.getActionCommand()); break;
         }
@@ -108,7 +108,7 @@ public class ViewerWindow extends JFrame implements java.awt.event.ActionListene
     {
         JMenu menu = new JMenu("Settings");
         {
-            AddMenuItem(menu, "Configure consumer", consumerConfiguration);
+            AddMenuItem(menu, "Pulsar Admin Dialog", pulsarAdminDialog);
         }
         return menu;
     }
@@ -246,9 +246,9 @@ public class ViewerWindow extends JFrame implements java.awt.event.ActionListene
         */
     }
 
-    protected void OpenServiceConfigurationWindow()
+    protected void openPulsarAdminDialog()
     {
-        // new ConfigurationDialog(this, "Consumer configuration", this.consumer).OpenDialog();
+        new AdminDialog(this, "Pulsar admin configuration").OpenDialog();
     }
 
     protected MouseMotionListener MousePositionTracker()
