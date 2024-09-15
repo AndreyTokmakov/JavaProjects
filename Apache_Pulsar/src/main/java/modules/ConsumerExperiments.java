@@ -1,42 +1,44 @@
-package experiments;
+package modules;
 
-import org.apache.pulsar.client.api.*;
+import lombok.Getter;
+import lombok.Setter;
+import org.apache.pulsar.client.api.Consumer;
+import org.apache.pulsar.client.api.Message;
+import org.apache.pulsar.client.api.PulsarClient;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-
-// https://pulsar.apache.org/docs/next/client-libraries-java-use/
-public class ConsumerQueue
+public class ConsumerExperiments
 {
-    private static final String PULSAR_HOST = "localhost";
-    private static final String SERVICE_URL = String.format("pulsar://%s:6650", PULSAR_HOST);
-    private static final String TOPIC_NAME = "notifications";
-    private static final String pulsarToken = "<REPLACE_WITH_PULSAR_TOKEN>";
-
-    private static class Task
+    private static class ConsumerBase
     {
         final protected BlockingDeque<Message<byte[]>> queue;
         final protected AtomicBoolean stopFlag;
 
-        public Task(BlockingDeque<Message<byte[]>> queue, AtomicBoolean stopFlag)
+        public ConsumerBase(BlockingDeque<Message<byte[]>> queue,
+                            AtomicBoolean stopFlag)
         {
             this.queue = queue;
             this.stopFlag = stopFlag;
         }
 
-        protected boolean isStopRequested()
+        public boolean isStopRequested()
         {
-            return !stopFlag.getAcquire();
+            return !stopFlag.getOpaque();
+        }
+
+        public void Stop()
+        {
+            stopFlag.setOpaque(true);
         }
     }
 
-    private final static class Printer extends Task implements Runnable
+    private final static class Printer extends ConsumerBase implements Runnable
     {
-        public Printer(BlockingDeque<Message<byte[]>> queue, AtomicBoolean stopFlag) {
+        public Printer(BlockingDeque<Message<byte[]>> queue,
+                       AtomicBoolean stopFlag)
+        {
             super(queue, stopFlag);
         }
 
@@ -57,19 +59,34 @@ public class ConsumerQueue
         }
     }
 
-    private final static class PulsarConsumer extends Task implements Runnable
+
+    @Getter
+    @Setter
+    private final static class PulsarConsumer extends ConsumerBase implements Runnable
     {
-        public PulsarConsumer(BlockingDeque<Message<byte[]>> queue, AtomicBoolean stopFlag) {
+        private final static int PULSAR_PORT = 6650;
+        private String topic;
+        private String pulsarHost;
+
+        public PulsarConsumer(BlockingDeque<Message<byte[]>> queue,
+                              AtomicBoolean stopFlag,
+                              String pulsarHost,
+                              String topic) {
             super(queue, stopFlag);
+            this.pulsarHost = pulsarHost;
+            this.topic = topic;
         }
 
         public void run()
         {
             try (final PulsarClient client = PulsarClient.builder()
-                     .serviceUrl(SERVICE_URL) // .authentication(AuthenticationFactory.token(pulsarToken))
-                     .build();
+                    .serviceUrl(String.format("pulsar://%s:%d", pulsarHost, PULSAR_PORT))
+                    //.authentication(AuthenticationFactory.token(pulsarToken))
+                    .build();
                  final Consumer<byte[]> consumer = client.newConsumer()
-                     .topic(TOPIC_NAME).subscriptionName("my-subscription").subscribe())
+                         .topic(topic)
+                         .subscriptionName("my-subscription")
+                         .subscribe())
             {
                 while (isStopRequested())
                 {
@@ -80,7 +97,6 @@ public class ConsumerQueue
                             consumer.acknowledge(msg);
                         }
                     } catch (Exception e) {
-                        // Message failed to process, redFeliver later
                         consumer.negativeAcknowledge(msg);
                     }
                 }
@@ -90,14 +106,15 @@ public class ConsumerQueue
         }
     }
 
-
     public static void main(String[] args) throws InterruptedException
     {
+        String topic = "notifications", pulsarHost = "localhost";
+
         final LinkedBlockingDeque<Message<byte[]>> messages = new LinkedBlockingDeque<Message<byte[]>>();
         final AtomicBoolean stopFlag = new AtomicBoolean(false);
 
         final ExecutorService service = Executors.newFixedThreadPool(2);
-        service.submit(new PulsarConsumer(messages, stopFlag));
+        service.submit(new PulsarConsumer(messages, stopFlag, pulsarHost, topic));
         service.submit(new Printer(messages, stopFlag));
 
         TimeUnit.SECONDS.sleep(10);
