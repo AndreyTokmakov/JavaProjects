@@ -5,8 +5,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 
 
-public class AdminDialog extends javax.swing.JDialog
-                         implements java.awt.event.ActionListener
+class AdminDialog extends javax.swing.JDialog
+                  implements java.awt.event.ActionListener
 {
     private Container container = this.getContentPane();
     private Frame parent = null;

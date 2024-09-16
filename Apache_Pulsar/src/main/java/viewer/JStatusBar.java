@@ -20,6 +20,7 @@ class JIconLabel extends JLabel
 
 	public JIconLabel()
     {
+        // TODO: Use relative path's ????
 		this.iconOnline  = CreateImageIcon(
                 "/home/andtokm/DiskS/ProjectsUbuntu/JavaProjects/Apache_Pulsar/src/main/resources/online.png");
 		this.iconOffline = CreateImageIcon(
@@ -33,7 +34,7 @@ class JIconLabel extends JLabel
     {
 		this.setIcon(iconOnline);
 		this.setText("Connected");
-		this.setToolTipText("Viewer is connected to the Kafka cluster.");
+		this.setToolTipText("Viewer is connected to the Pulsar cluster.");
 	}
 	
 	public void SetOffline()

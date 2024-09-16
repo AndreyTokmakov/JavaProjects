@@ -48,7 +48,8 @@ enum Environment
     }
 }
 
-public class Environment_Test {
+public class Environment_Test
+{
 	public static void main(String[] args) 
 	{
 		//Get all Enums

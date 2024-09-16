@@ -36,7 +36,8 @@ enum Gender {
     }
 }
 
-public class Gender_Tests {
+public class Gender_Tests
+{
 	public static void main(String[] args) 
 	{
 		Gender gender = Gender.fromCode("M");

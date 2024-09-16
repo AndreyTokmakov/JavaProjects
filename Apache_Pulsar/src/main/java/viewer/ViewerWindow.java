@@ -1,5 +1,8 @@
 package viewer;
 
+import modules.ConsumerExperiments;
+import org.apache.pulsar.client.api.Message;
+
 import javax.swing.*;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -15,11 +18,40 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.Serial;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Map;
+import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 
+class Printer extends ConsumerBase implements Runnable
+{
+    private final JTextArea textField;
+
+    public Printer(BlockingDeque<Message<byte[]>> queue,
+                   AtomicBoolean stopFlag, JTextArea textField)
+    {
+        super(queue, stopFlag);
+        this.textField = textField;
+    }
+
+    public void run()
+    {
+        Message<byte[]> msg = null;
+        while (isStopRequested())
+        {
+            try {
+                msg = queue.poll(100, TimeUnit.MILLISECONDS);
+                if (null != msg)
+                {
+                    // System.out.println(new String(msg.getData()));
+
+                    String messageStr = new String(msg.getData());
+                    textField.append(messageStr + '\n');
+                }
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+}
 
 public class ViewerWindow extends JFrame implements java.awt.event.ActionListener
 {
@@ -27,32 +59,31 @@ public class ViewerWindow extends JFrame implements java.awt.event.ActionListene
     private static final long serialVersionUID = -2686369381789468766L;
 
     private final JTextArea textField = new JTextArea(0, 0);
-
     protected JStatusBar statusBar = null;
-
     protected Thread timerThread = null;
 
-    // private boolean isRunning = true;
-    // private final SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, d MMM yyyy");
-    // private final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss a");
+    private final ExecutorService threadPool = Executors.newFixedThreadPool(2);
+    final LinkedBlockingDeque<Message<byte[]>> messages = new LinkedBlockingDeque<Message<byte[]>>();
+    final AtomicBoolean stopFlag = new AtomicBoolean(false);
 
     private Point mousePoint = null;
 
-    // FIXME: --> To enum ??
-    private static final String runConsumer   = "RunConsumerCommand";
-    private static final String stopConsumer  = "StopConsumerCommand";
-    private static final String showTopicList  = "ShowTopicListCommand";
-    private static final String pulsarAdminDialog  = "pulsarAdminDialog";
-
+    private enum Command
+    {
+        RunConsumer,
+        StopConsumer,
+        ShowTopicList,
+        OpenPulsarAdminDialog
+    }
 
     public void actionPerformed(ActionEvent evt)
     {
-        switch (evt.getActionCommand())
+        switch (Command.valueOf(evt.getActionCommand()))
         {
-            case runConsumer :          RunConsumer();   break;
-            case stopConsumer:          StopConsumer();  break;
-            case pulsarAdminDialog:     openPulsarAdminDialog(); break;
-            case showTopicList:         GetTopics();     break;
+            case Command.RunConsumer :          RunConsumer();   break;
+            case Command.StopConsumer:          StopConsumer();  break;
+            case Command.OpenPulsarAdminDialog: OpenPulsarAdminDialog(); break;
+            case Command.ShowTopicList:         GetTopics();     break;
             default: System.out.println(evt.getActionCommand()); break;
         }
     }
@@ -108,7 +139,7 @@ public class ViewerWindow extends JFrame implements java.awt.event.ActionListene
     {
         JMenu menu = new JMenu("Settings");
         {
-            AddMenuItem(menu, "Pulsar Admin Dialog", pulsarAdminDialog);
+            AddMenuItem(menu, "Pulsar Admin Dialog", Command.OpenPulsarAdminDialog.name());
         }
         return menu;
     }
@@ -125,9 +156,9 @@ public class ViewerWindow extends JFrame implements java.awt.event.ActionListene
     {
         JMenu menu = new JMenu("Commands");
         {
-            AddMenuItem(menu, "Start",       runConsumer);
-            AddMenuItem(menu, "Stop",        stopConsumer);
-            AddMenuItem(menu, "Show Topics", showTopicList);
+            AddMenuItem(menu, "Start",       Command.RunConsumer.name());
+            AddMenuItem(menu, "Stop",        Command.StopConsumer.name());
+            AddMenuItem(menu, "Show Topics", Command.ShowTopicList.name());
         } return menu;
     }
 
@@ -147,12 +178,24 @@ public class ViewerWindow extends JFrame implements java.awt.event.ActionListene
 
     private void RunConsumer()
     {
-        // consumer.start();
-        textField.append("RunConsumer" +  "\n");
+        String topic = "notifications", pulsarHost = "192.168.101.2";
+
+        stopFlag.setOpaque(false);
+        threadPool.submit(new ConsumerTask(messages, stopFlag, pulsarHost, topic));
+        threadPool.submit(new Printer(messages, stopFlag, textField));
+
+        // TODO: Disable 'Start' menu item
+        // TODO: Set some flag --> to check if consumer running
+
+        statusBar.SetStatusOnline();
     }
 
-    private void StopConsumer() {
-        // consumer.Stop();
+    private void StopConsumer()
+    {
+        stopFlag.setOpaque(true);
+
+        // TODO: Wait until stopped
+        statusBar.SetStatusOffline();
     }
 
     protected void CreateStatusBar()
@@ -200,7 +243,8 @@ public class ViewerWindow extends JFrame implements java.awt.event.ActionListene
     }
 
 	/*
-	public boolean HadleClickedLine(String lineText) {
+	public boolean HadleClickedLine(String lineText)
+	{
 		System.out.println(lineText);
 		try {
 			JSONObject json = (JSONObject)new JSONParser().parse(lineText);
@@ -246,7 +290,7 @@ public class ViewerWindow extends JFrame implements java.awt.event.ActionListene
         */
     }
 
-    protected void openPulsarAdminDialog()
+    protected void OpenPulsarAdminDialog()
     {
         new AdminDialog(this, "Pulsar admin configuration").OpenDialog();
     }

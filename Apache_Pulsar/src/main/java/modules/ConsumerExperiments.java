@@ -11,7 +11,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ConsumerExperiments
 {
-    private static class ConsumerBase
+    private static abstract class ConsumerBase
     {
         final protected BlockingDeque<Message<byte[]>> queue;
         final protected AtomicBoolean stopFlag;
