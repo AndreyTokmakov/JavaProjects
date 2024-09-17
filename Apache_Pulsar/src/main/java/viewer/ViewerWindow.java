@@ -53,6 +53,25 @@ class Printer extends ConsumerBase implements Runnable
     }
 }
 
+// TODO: Вынести системные логи куда то (логи Пульсара, ошибки и тд)
+//       в отдельную консоль
+// TODO: счётчики сообщений
+
+// TODO: Получить список топиков
+// TODO: Создавать нужные топики
+
+// TODO: Tools
+//       - Send Recovery ORDER
+//       - Send Commands
+//       - Viewer memory usage
+//       - Dump/Save all сщт
+
+// TODO: Анализ
+//       - Если получены сообщения из IN и OUT топиков --> иметь возможность проследить messages flow
+//       - Последний Message ID
+//       - Последний Order ID
+//       - Анализ количества Order-ов одного или другого типа
+
 public class ViewerWindow extends JFrame implements java.awt.event.ActionListener
 {
     @Serial
@@ -178,7 +197,9 @@ public class ViewerWindow extends JFrame implements java.awt.event.ActionListene
 
     private void RunConsumer()
     {
-        String topic = "notifications", pulsarHost = "192.168.101.2";
+        String pulsarHost = "192.168.101.2";
+        // String topic = "notifications";
+        String topic = "persistent://OPNX-V1/PRETRADE-ME/ORDER-IN-BTC/USDT";
 
         stopFlag.setOpaque(false);
         threadPool.submit(new ConsumerTask(messages, stopFlag, pulsarHost, topic));
