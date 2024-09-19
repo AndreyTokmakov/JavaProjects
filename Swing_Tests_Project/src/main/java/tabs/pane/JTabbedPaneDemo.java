@@ -85,19 +85,23 @@ class SelectCoursePanel extends JPanel {
     }
 }
 
-public class JTabbedPaneDemo {
-    public static void main(String args[]) throws Exception
+public class JTabbedPaneDemo
+{
+
+    private static void SetNimbusLookAndFeel()
     {
         try {
-            for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-                if ("Windows".equals(info.getName())) {
-                    UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (Exception ex) {
-            //java.util.logging.Logger.getLogger(MyJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            javax.swing.UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+        } catch (ClassNotFoundException | InstantiationException |
+                 IllegalAccessException | UnsupportedLookAndFeelException ex)
+        {
+            // java.util.logging.Logger.getLogger(MyJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+    }
+
+    public static void main(String args[]) throws Exception
+    {
+        SetNimbusLookAndFeel();
     	
         TabbedPane frame = new TabbedPane();
         frame.setSize(800, 800);
