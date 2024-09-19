@@ -21,10 +21,8 @@ class JIconLabel extends JLabel
 	public JIconLabel()
     {
         // TODO: Use relative path's ????
-		this.iconOnline  = CreateImageIcon(
-                "/home/andtokm/DiskS/ProjectsUbuntu/JavaProjects/Apache_Pulsar/src/main/resources/online.png");
-		this.iconOffline = CreateImageIcon(
-                "/home/andtokm/DiskS/ProjectsUbuntu/JavaProjects/Apache_Pulsar/src/main/resources/offline.png");
+		this.iconOnline  = CreateImageIcon("Apache_Pulsar/src/main/resources/online.png");
+		this.iconOffline = CreateImageIcon("Apache_Pulsar/src/main/resources/offline.png");
 		this.setPreferredSize(new Dimension(90, 17));
 		this.setIcon(iconOnline);
 		this.setIconTextGap(5);
@@ -49,8 +47,8 @@ class JIconLabel extends JLabel
 		try {
 			BufferedImage img = ImageIO.read(new File(iconImagePath));
 			icon = new ImageIcon(img);
-		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (final IOException ioException) {
+            ioException.printStackTrace();
 		}
 		return icon; 
     }
