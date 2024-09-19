@@ -48,6 +48,7 @@ class TabbedPane extends JFrame {
     }
 }
 
+
 /* Creating CoursePanel by extending JPanel */
 class CoursePanel extends JPanel {
 	private static final long serialVersionUID = 9174124986143135680L;
