@@ -1,8 +1,7 @@
-package viewer;
+package viewer_tabs;
 
 import lombok.Getter;
 import lombok.Setter;
-
 import org.apache.pulsar.client.api.Consumer;
 import org.apache.pulsar.client.api.Message;
 import org.apache.pulsar.client.api.PulsarClient;
@@ -39,7 +38,6 @@ public class ConsumerTask extends ConsumerBase implements Runnable
                      .subscriptionName("my-subscription")
                      .subscribe())
         {
-            System.out.println("Consuming from topics: " + topic);
             while (isStopRequested())
             {
                 Message<byte[]> msg = consumer.receive(1, TimeUnit.SECONDS);
