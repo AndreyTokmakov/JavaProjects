@@ -15,6 +15,7 @@ import java.util.Map;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+
 class Printer extends ConsumerBase implements Runnable
 {
     private final JTextArea textField;
@@ -48,11 +49,11 @@ class Printer extends ConsumerBase implements Runnable
 }
 
 @Getter
-class ConsumerTab extends JScrollPane
+class ConsumerTabPane extends JScrollPane
 {
     private final JTextArea textArea = new JTextArea(0, 0);
 
-    public ConsumerTab()
+    public ConsumerTabPane()
     {
         textArea.setBackground(new Color(15, 25, 35));
         textArea.setForeground(new Color(225, 225, 225));
@@ -63,36 +64,76 @@ class ConsumerTab extends JScrollPane
     }
 }
 
+// TODO: Raname
+class Metainfo
+{
+    @Getter
+    private final String topic;
+
+    @Getter
+    private final String pulsarHost;
+
+    public Thread consumerThread;
+    public Thread printerThread;
+    public ConsumerTabPane panel = new ConsumerTabPane();
+    public final LinkedBlockingDeque<Message<byte[]>> messages = new LinkedBlockingDeque<Message<byte[]>>();
+    public final AtomicBoolean stopFlag = new AtomicBoolean(false);
+
+    public Metainfo(String topic, String pulsarHost)
+    {
+        this.topic = topic;
+        this.pulsarHost = pulsarHost;
+        System.out.printf("Consumer(host: %s, topic: %s) created", pulsarHost , topic);
+    }
+
+    public void stop() throws InterruptedException
+    {
+        stopFlag.setRelease(true);
+        consumerThread.join(1000);
+        printerThread.join(1000);
+        System.out.printf("Consumer(host: %s, topic: %s) stopped", pulsarHost , topic);
+    }
+
+    public void start()
+    {
+        consumerThread = new Thread(new ConsumerTask(messages, stopFlag, pulsarHost, topic));
+        consumerThread.start();
+
+        printerThread = new Thread(new Printer(messages,  stopFlag, panel.getTextArea()));
+        printerThread.start();
+
+        System.out.printf("Consumer(host: %s, topic: %s) started", pulsarHost , topic);
+    }
+}
+
+
 class ConsumerManager
 {
     private final static String pulsarHost = "localhost";
 
-    private final static class Metainfo
-    {
-        public Thread consumerThread;
-        public Thread printerThread;
-        public ConsumerTab panel;
-        public final LinkedBlockingDeque<Message<byte[]>> messages = new LinkedBlockingDeque<Message<byte[]>>();
-        public final AtomicBoolean stopFlag = new AtomicBoolean(false);
-    }
+    private final Map<String, Metainfo> metaMap = new HashMap<String, Metainfo>();
 
     @Getter
     private final JTabbedPane tabs = new JTabbedPane(JTabbedPane.TOP, JTabbedPane.WRAP_TAB_LAYOUT);
-    private final Map<String, Metainfo> metaMap = new HashMap<String, Metainfo>();
 
     public void add(String topic)
     {
-        final Metainfo metainfo = new Metainfo();
-        metainfo.panel = new ConsumerTab();
-        metainfo.consumerThread = new Thread(
-                new ConsumerTask(metainfo.messages, metainfo.stopFlag, pulsarHost, topic));
-        metainfo.printerThread =  new Thread(
-                new Printer(metainfo.messages,  metainfo.stopFlag, metainfo.panel.getTextArea()));
-        metainfo.consumerThread.start();
-        metainfo.printerThread.start();
+        final Metainfo metainfo = new Metainfo(topic, pulsarHost);
+        metainfo.start();
 
         metaMap.put(topic, metainfo);
         tabs.add(topic, metainfo.panel);
+    }
+
+    public void remove(String topic) throws InterruptedException
+    {
+        Metainfo metainfo = metaMap.get(topic);
+        if (null == metainfo)
+            return;
+
+        metainfo.stop();
+        final int idx = tabs.indexOfTab(topic);
+        tabs.remove(idx);
     }
 }
 
@@ -148,7 +189,13 @@ public class ViewerWindow extends JFrame implements java.awt.event.ActionListene
         switch (Command.valueOf(evt.getActionCommand()))
         {
             case Command.RunConsumer :          RunConsumer();   break;
-            case Command.StopConsumer:          StopConsumer();  break;
+            case Command.StopConsumer:
+                try {
+                    StopConsumer();
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                break;
             case Command.OpenPulsarAdminDialog: OpenPulsarAdminDialog(); break;
             case Command.ShowTopicList:         GetTopics();     break;
             default: System.out.println(evt.getActionCommand()); break;
@@ -266,9 +313,17 @@ public class ViewerWindow extends JFrame implements java.awt.event.ActionListene
         statusBar.SetStatusOnline();
     }
 
-    private void StopConsumer()
+    private void StopConsumer() throws InterruptedException
     {
         stopFlag.setOpaque(true);
+
+        this.remove(consumerManager.getTabs());
+
+        // FIXME: will block UI
+        consumerManager.remove("notifications1");
+
+        this.add(consumerManager.getTabs());
+        repaint();
 
         // TODO: Wait until stopped
         statusBar.SetStatusOffline();
@@ -445,6 +500,8 @@ public class ViewerWindow extends JFrame implements java.awt.event.ActionListene
         this.setTitle("Pulsar Viewer");
 
         CreateMenu();
+
+        // TODO: ---> move to ConsumerTab
         CreatePopupMenu();
 
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
