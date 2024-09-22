@@ -5,7 +5,7 @@ import org.apache.pulsar.client.api.Message;
 import java.util.concurrent.BlockingDeque;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-abstract class ConsumerBase
+abstract public class ConsumerBase extends Thread
 {
     final protected BlockingDeque<Message<byte[]>> queue;
     final protected AtomicBoolean stopFlag;
