@@ -1,4 +1,4 @@
-package viewer_tabs;
+package viewer;
 
 import lombok.Getter;
 import org.apache.pulsar.client.api.Message;
@@ -82,7 +82,9 @@ class ConsumerTabPane extends JScrollPane
 
         {
             JMenuItem menuItem = new JMenuItem("Quit");
-            menuItem.addActionListener((ActionEvent e) -> System.exit(0));
+            menuItem.addActionListener((ActionEvent e) -> {
+                System.exit(0);
+            });
             ctxMenu.add(menuItem);
         }
 
@@ -177,11 +179,15 @@ class ConsumerBlock
 
 class ConsumerManager
 {
-    private final Map<String, ConsumerBlock> metaMap = new HashMap<String, ConsumerBlock>();
+    private final Map<String, ConsumerBlock> consumerBlocksMap = new HashMap<String, ConsumerBlock>();
+    private final Map<String, String> topicToTitleMap = new HashMap<String, String>();
+
     @Getter
     private final String pulsarHost;
+
     @Getter
     private final JTabbedPane tabs = new JTabbedPane(JTabbedPane.TOP, JTabbedPane.WRAP_TAB_LAYOUT);
+
     @Getter
     private final ViewerWindow viewerWindow;
 
@@ -192,25 +198,34 @@ class ConsumerManager
         this.viewerWindow = viewerWindow;
     }
 
-    private void removeTab(String title)
+    private void removeTab(String topic)
     {
+        final String title = topicToTitleMap.get(topic);
+        if (null == title)
+            return;
+
         final int idx = tabs.indexOfTab(title);
         if (-1 != idx) {
             tabs.remove(idx);
+            topicToTitleMap.remove(topic);
         }
     }
 
-    public void add(String topic)
+    public void add(String topic, String title)
     {
         final ConsumerBlock consumerBlock = new ConsumerBlock(pulsarHost, topic, viewerWindow).start();
 
-        metaMap.put(topic, consumerBlock);
-        tabs.add(topic, consumerBlock.panel);
+        topicToTitleMap.put(topic, title);
+        consumerBlocksMap.put(topic, consumerBlock);
+        tabs.add(title, consumerBlock.panel);
     }
 
     public void remove(String topic) throws InterruptedException
     {
-        final ConsumerBlock consumerBlock = metaMap.get(topic);
+
+        // TODO: Add mapping topic -> [topic, index?, tabTitle?  component]
+
+        final ConsumerBlock consumerBlock = consumerBlocksMap.get(topic);
         if (null != consumerBlock)
         {
             removeTab(topic);
@@ -219,10 +234,8 @@ class ConsumerManager
     }
 }
 
-
 // TODO: Main window menu
 //       - CLEAR --> удалять во всех окнах текст
-
 
 
 // TODO: Вынести системные логи куда то (логи Пульсара, ошибки и тд)
@@ -522,9 +535,11 @@ public class ViewerWindow extends JFrame implements java.awt.event.ActionListene
 
         CreateMenu();
 
-        consumerManager.add("notifications");
-        consumerManager.add("notifications1");
-        consumerManager.add("notifications2");
+        consumerManager.add("persistent://OPNX-V1/PRETRADE-ME/ORDER-IN-BTC/USDT", "IN-BTC/USDT");
+        consumerManager.add("persistent://OPNX-V1/ME-POSTTRADE/ORDER-OUT-BTC/USDT", "OUT-BTC/USDT");
+        consumerManager.add("persistent://OPNX-V1/ME-POSTTRADE/ORDER-OUT-BACKUP-BTC/USDT", "BACKUP-BTC/USDT");
+        consumerManager.add("persistent://OPNX-V1/PRETRADE-ME/CMD-IN", "CMD-IN");
+        consumerManager.add("non-persistent://OPNX-V1/ME-POSTTRADE/HEARTBEAT", "HEARTBEAT");
 
         this.add(consumerManager.getTabs());
         this.pack();

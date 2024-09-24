@@ -40,6 +40,7 @@
         <module>Apache_Projects_Tests</module>
         <module>Apache_Kafka</module>
         <module>Apache_Pulsar</module>
+        <module>Apache_Pulsar_TestViewer</module>
         <module>Apache_JCS</module>
         <module>Apache_Jetty</module>
         <module>Apache_Mina</module>
