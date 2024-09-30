@@ -273,7 +273,7 @@ public class StreamTests {
 
 	public static void Stream_Filter_ToList() {
 		List<String> list = new ArrayList<String>(Arrays.asList("Value1", "Value1", "Value1", "Value2", "Value2", "Value2"));
-		List<String> newList = list.stream().filter(entry -> true == entry.contains("e1")).collect(Collectors.toList());
+		List<String> newList = list.stream().filter(entry -> entry.contains("e1")).toList();
 		newList.forEach(print_strings);
 	}
 	

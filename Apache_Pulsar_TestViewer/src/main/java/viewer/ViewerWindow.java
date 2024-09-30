@@ -124,6 +124,18 @@ class ConsumerTabPane extends JScrollPane
             }
         };
     }
+
+    public void ClearTextArea() {
+        textArea.setText("");
+    }
+
+    public void setWorWrap(boolean enabled) {
+        textArea.setLineWrap(enabled);
+    }
+
+    public boolean getLineWrap() {
+        return textArea.getLineWrap();
+    }
 }
 
 class ConsumerBlock
@@ -174,6 +186,18 @@ class ConsumerBlock
         System.out.printf("Consumer(host: %s, topic: %s) started", pulsarHost , topic);
         return this;
     }
+
+    void Clear() {
+        panel.ClearTextArea();
+    }
+
+    void setWorWrap(boolean enabled) {
+        panel.setWorWrap(enabled);
+    }
+
+    public boolean getLineWrap() {
+        return panel.getLineWrap();
+    }
 }
 
 
@@ -222,15 +246,28 @@ class ConsumerManager
 
     public void remove(String topic) throws InterruptedException
     {
-
         // TODO: Add mapping topic -> [topic, index?, tabTitle?  component]
-
         final ConsumerBlock consumerBlock = consumerBlocksMap.get(topic);
         if (null != consumerBlock)
         {
             removeTab(topic);
             consumerBlock.stop();
         }
+    }
+
+    public void Clear()
+    {
+        consumerBlocksMap.values().forEach(ConsumerBlock::Clear);
+    }
+
+    public void SetWorWrap(boolean enable)
+    {
+        consumerBlocksMap.values().forEach(block -> block.setWorWrap(enable));
+    }
+
+    public boolean GetWorWrap()
+    {
+        return consumerBlocksMap.values().stream().allMatch( ConsumerBlock::getLineWrap);
     }
 }
 
@@ -263,6 +300,7 @@ class ConsumerManager
 public class ViewerWindow extends JFrame implements java.awt.event.ActionListener
 {
     private final static String pulsarHost = "192.168.101.2";
+    // private final static String pulsarHost = "0.0.0.0";
     private final JStatusBar statusBar = CreateStatusBar();
     private final ConsumerManager consumerManager = new ConsumerManager(pulsarHost, this);
 
@@ -271,7 +309,9 @@ public class ViewerWindow extends JFrame implements java.awt.event.ActionListene
         RunConsumer,
         StopConsumer,
         ShowTopicList,
-        OpenPulsarAdminDialog
+        OpenPulsarAdminDialog,
+        ClearAll,
+        WordWrap
     }
 
     public ViewerWindow()
@@ -300,10 +340,11 @@ public class ViewerWindow extends JFrame implements java.awt.event.ActionListene
     {
         switch (command)
         {
-            case Command.RunConsumer :          RunConsumer();   break;
+            case Command.RunConsumer :          RunConsumer();  break;
             case Command.StopConsumer:          StopConsumer();  break;
-            case Command.OpenPulsarAdminDialog: OpenPulsarAdminDialog(); break;
-            case Command.ShowTopicList:         GetTopics();     break;
+            case Command.OpenPulsarAdminDialog: OpenPulsarAdminDialog();  break;
+            case Command.ShowTopicList:         GetTopics();  break;
+            case Command.ClearAll:              ClearAllMessages();  break;
             default: throw new RuntimeException("");
         }
     }
@@ -346,15 +387,10 @@ public class ViewerWindow extends JFrame implements java.awt.event.ActionListene
         JCheckBoxMenuItem miWordWrap = new JCheckBoxMenuItem("Word wrap");
         miWordWrap.setMnemonic(KeyEvent.VK_S);
         miWordWrap.setDisplayedMnemonicIndex(5);
-
-        // FIXME
-        /*
-        final JTextArea textAreaOne = consumerPanels.get(0).getTextArea();
-        miWordWrap.setSelected(textAreaOne.getLineWrap());
+        miWordWrap.setSelected(consumerManager.GetWorWrap());
         miWordWrap.addItemListener((ItemEvent e) -> {
-            textAreaOne.setLineWrap(e.getStateChange() == ItemEvent.SELECTED);
+            consumerManager.SetWorWrap(e.getStateChange() == ItemEvent.SELECTED);
         });
-        */
         menu.add(miWordWrap);
 
         return menu;
@@ -387,6 +423,7 @@ public class ViewerWindow extends JFrame implements java.awt.event.ActionListene
             AddMenuItem(menu, "Start",       Command.RunConsumer, this);
             AddMenuItem(menu, "Stop",        Command.StopConsumer, this);
             AddMenuItem(menu, "Show Topics", Command.ShowTopicList, this);
+            AddMenuItem(menu, "Clear All",   Command.ClearAll, this);
         }
         return menu;
     }
@@ -495,6 +532,11 @@ public class ViewerWindow extends JFrame implements java.awt.event.ActionListene
         */
     }
 
+    protected void ClearAllMessages()
+    {
+        consumerManager.Clear();
+    }
+
     protected void OpenPulsarAdminDialog()
     {
         new AdminDialog(this, "Pulsar admin configuration").OpenDialog();
@@ -535,10 +577,17 @@ public class ViewerWindow extends JFrame implements java.awt.event.ActionListene
 
         CreateMenu();
 
-        consumerManager.add("persistent://OPNX-V1/PRETRADE-ME/ORDER-IN-BTC/USDT", "IN-BTC/USDT");
-        consumerManager.add("persistent://OPNX-V1/ME-POSTTRADE/ORDER-OUT-BTC/USDT", "OUT-BTC/USDT");
-        consumerManager.add("persistent://OPNX-V1/ME-POSTTRADE/ORDER-OUT-BACKUP-BTC/USDT", "BACKUP-BTC/USDT");
+        consumerManager.add("persistent://OPNX-V1/PRETRADE-ME/ORDER-IN-BTC/USDT", "ORDER-IN-BTC/USDT");
+        consumerManager.add("persistent://OPNX-V1/ME-POSTTRADE/ORDER-OUT-BTC/USDT", "ORDER-OUT-BTC/USDT");
+        consumerManager.add("persistent://OPNX-V1/ME-POSTTRADE/ORDER-OUT-BACKUP-BTC/USDT", "ORDER-BACKUP-BTC/USDT");
         consumerManager.add("persistent://OPNX-V1/PRETRADE-ME/CMD-IN", "CMD-IN");
+        consumerManager.add("persistent://OPNX-V1/ME-POSTTRADE/CMD-OUT", "CMD-OUT");
+        consumerManager.add("persistent://OPNX-V1/ME-WS/MD-SNAPSHOTS", "MD-SNAPSHOTS");
+        consumerManager.add("persistent://OPNX-V1/ME-WS/SNAPSHOTS", "SNAPSHOTS");
+        consumerManager.add("non-persistent://OPNX-V1/ME-WS/MD-SNAPSHOT-BTC/USDT", "MD-SNAPSHOT-BTC/USDT");
+        consumerManager.add("non-persistent://OPNX-V1/ME-WS/MD-DIFF-BTC/USDT", "MD-DIFF-BTC/USDT");
+        consumerManager.add("non-persistent://OPNX-V1/ME-WS/MD-BEST-BTC/USDT", "MD-BEST-BTC/USDT");
+        consumerManager.add("non-persistent://OPNX-V1/PRICE-SERVER/MARK-PRICE", "MARK-PRICE");
         consumerManager.add("non-persistent://OPNX-V1/ME-POSTTRADE/HEARTBEAT", "HEARTBEAT");
 
         this.add(consumerManager.getTabs());
