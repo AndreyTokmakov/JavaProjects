@@ -30,11 +30,19 @@ public class StringsTests {
 		System.out.println(reversed);
 	}
 	
-	public void SplitString() {
-		final String str = "TEST1 TEST2 TEST3";
-		List<String> str_list = Arrays.asList(str.split(" "));
-		
-		System.out.println(str_list);
+	public void SplitString()
+	{
+		{
+			final String str = "TEST1 TEST2 TEST3";
+			List<String> str_list = Arrays.asList(str.split(" "));
+			System.out.println(str_list);
+		}
+		{
+			final String str = "persistent://OPNX-V1/PRETRADE-ME/ORDER-IN-BTC/USDT";
+			List<String> str_list = Arrays.stream(str.split("/"))
+					.filter(s -> !s.isBlank()).skip(3).toList();
+			System.out.println(str_list);
+		}
 	}
 	
 	public void Join() {
@@ -144,15 +152,14 @@ public class StringsTests {
 		 System.out.println(str.split(":").length - 1);
 		 System.out.println(str.chars().filter(ch -> ch == ':').count());
 	 }
-	
-	//////////////////////////////////////////////////////////////////////
 
-	public static void main(String[] args) {
+	public static void main(String[] args)
+	{
 		StringsTests tests = new StringsTests();
 
 		// CountChars();
 		
-		// tests.SplitString();
+		tests.SplitString();
 
 		// tests.Join();
 
@@ -174,10 +181,5 @@ public class StringsTests {
 
 		// tests.Trim();
 		// tests.TrimRemoveSpaces();
-
-		String str = "return (string.indexOf(substring) != -1)";
-
-		System.out.println(str);
-		System.out.println(str.replace(" ", ""));
 	}
 }

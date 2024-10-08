@@ -9,40 +9,41 @@ import java.io.IOException;
 import java.io.Serial;
 
 
-class JIconLabel extends JLabel
+class IconLabel extends JLabel
 {
 	private ImageIcon iconOnline = null;
 	private ImageIcon iconOffline = null;
 
-	public JIconLabel(ImageIcon createImageIcon) {
+	public IconLabel(ImageIcon createImageIcon) {
 		super(createImageIcon);
 	}
 
-	public JIconLabel()
+	public IconLabel()
     {
         // TODO: Use relative path's ????
-		this.iconOnline  = CreateImageIcon("Apache_Pulsar_TestViewer/src/main/resources/online.png");
-		this.iconOffline = CreateImageIcon("Apache_Pulsar_TestViewer/src/main/resources/offline.png");
-		this.setPreferredSize(new Dimension(90, 17));
-		this.setIcon(iconOnline);
-		this.setIconTextGap(5);
+		iconOnline  = CreateImageIcon("Apache_Pulsar_TestViewer/src/main/resources/online.png");
+		iconOffline = CreateImageIcon("Apache_Pulsar_TestViewer/src/main/resources/offline.png");
+		setPreferredSize(new Dimension(90, 17));
+		setIcon(iconOnline);
+		setIconTextGap(5);
 	}
 	
 	public void SetOnline()
     {
-		this.setIcon(iconOnline);
-		this.setText("Connected");
-		this.setToolTipText("Viewer is connected to the Pulsar cluster.");
+		setIcon(iconOnline);
+		setText("Connected");
+		setToolTipText("Viewer is connected to the Pulsar cluster.");
 	}
 	
 	public void SetOffline()
     {
-		this.setIcon(iconOffline);
-		this.setText("Disconnected");
-		this.setToolTipText("Viewer is disconnected.");
+		setIcon(iconOffline);
+		setText("Disconnected");
+		setToolTipText("Viewer is disconnected.");
 	}
 	
-    protected ImageIcon CreateImageIcon(String iconImagePath) {
+    protected ImageIcon CreateImageIcon(String iconImagePath)
+    {
     	ImageIcon icon = null;
 		try {
 			BufferedImage img = ImageIO.read(new File(iconImagePath));
@@ -80,19 +81,17 @@ class SeparatorPanel extends JPanel
 }
  
 
-public class JStatusBar extends JPanel
+public class StatusBar extends JPanel
 {
-    @Serial
-    private static final long serialVersionUID = 1L;
     private JPanel leftPanel;
     private JPanel rightPanel;
-    private final JIconLabel statusLabel = new JIconLabel();
+    private final IconLabel statusLabel = new IconLabel();
     private final JLabel dateLabel = new JLabel();
     private final JLabel timeLabel = new JLabel();
     private final JLabel nodesLabel = new JLabel();
     private final JLabel rcvdStats = new JLabel();
 
-    public JStatusBar()
+    public StatusBar()
     {
         createPartControl();
 

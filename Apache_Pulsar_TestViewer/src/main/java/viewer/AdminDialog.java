@@ -10,8 +10,8 @@ class AdminDialog extends JDialog
 {
     private Container container = this.getContentPane();
     private Frame parent = null;
-    private JButton buttonOk = new JButton();
-    private JButton buttonCancel = new JButton();
+    private final JButton buttonOk = new JButton();
+    private final JButton buttonCancel = new JButton();
 
     /** Button texts: **/
     private static final String saveButtonText    = "Save";

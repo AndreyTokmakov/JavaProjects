@@ -299,9 +299,9 @@ class ConsumerManager
 
 public class ViewerWindow extends JFrame implements java.awt.event.ActionListener
 {
-    private final static String pulsarHost = "192.168.101.2";
-    // private final static String pulsarHost = "0.0.0.0";
-    private final JStatusBar statusBar = CreateStatusBar();
+    // private final static String pulsarHost = "192.168.101.2";
+    private final static String pulsarHost = "localhost";
+    private final StatusBar statusBar = CreateStatusBar();
     private final ConsumerManager consumerManager = new ConsumerManager(pulsarHost, this);
 
     private enum Command
@@ -471,9 +471,9 @@ public class ViewerWindow extends JFrame implements java.awt.event.ActionListene
         statusBar.SetStatusOffline();
     }
 
-    protected JStatusBar CreateStatusBar()
+    protected StatusBar CreateStatusBar()
     {
-        JStatusBar statusBar = new JStatusBar();
+        StatusBar statusBar = new StatusBar();
         statusBar.SetStatusOffline();
         return statusBar;
     }
@@ -577,16 +577,18 @@ public class ViewerWindow extends JFrame implements java.awt.event.ActionListene
 
         CreateMenu();
 
-        consumerManager.add("persistent://OPNX-V1/PRETRADE-ME/ORDER-IN-BTC/USDT", "ORDER-IN-BTC/USDT");
-        consumerManager.add("persistent://OPNX-V1/ME-POSTTRADE/ORDER-OUT-BTC/USDT", "ORDER-OUT-BTC/USDT");
-        consumerManager.add("persistent://OPNX-V1/ME-POSTTRADE/ORDER-OUT-BACKUP-BTC/USDT", "ORDER-BACKUP-BTC/USDT");
+        final String marketCode = "BTC-USDT";
+
+        consumerManager.add("persistent://OPNX-V1/PRETRADE-ME/ORDER-IN-"+ marketCode, "ORDER-IN-" + marketCode);
+        consumerManager.add("persistent://OPNX-V1/ME-POSTTRADE/ORDER-OUT-" + marketCode, "ORDER-OUT-" + marketCode);
+        consumerManager.add("persistent://OPNX-V1/ME-POSTTRADE/ORDER-OUT-BACKUP-" + marketCode, "ORDER-BACKUP-" + marketCode);
         consumerManager.add("persistent://OPNX-V1/PRETRADE-ME/CMD-IN", "CMD-IN");
         consumerManager.add("persistent://OPNX-V1/ME-POSTTRADE/CMD-OUT", "CMD-OUT");
         consumerManager.add("persistent://OPNX-V1/ME-WS/MD-SNAPSHOTS", "MD-SNAPSHOTS");
         consumerManager.add("persistent://OPNX-V1/ME-WS/SNAPSHOTS", "SNAPSHOTS");
-        consumerManager.add("non-persistent://OPNX-V1/ME-WS/MD-SNAPSHOT-BTC/USDT", "MD-SNAPSHOT-BTC/USDT");
-        consumerManager.add("non-persistent://OPNX-V1/ME-WS/MD-DIFF-BTC/USDT", "MD-DIFF-BTC/USDT");
-        consumerManager.add("non-persistent://OPNX-V1/ME-WS/MD-BEST-BTC/USDT", "MD-BEST-BTC/USDT");
+        consumerManager.add("non-persistent://OPNX-V1/ME-WS/MD-SNAPSHOT-" + marketCode, "MD-SNAPSHOT-" + marketCode);
+        consumerManager.add("non-persistent://OPNX-V1/ME-WS/MD-DIFF-" + marketCode, "MD-DIFF-" + marketCode);
+        consumerManager.add("non-persistent://OPNX-V1/ME-WS/MD-BEST-" + marketCode, "MD-BEST-" + marketCode);
         consumerManager.add("non-persistent://OPNX-V1/PRICE-SERVER/MARK-PRICE", "MARK-PRICE");
         consumerManager.add("non-persistent://OPNX-V1/ME-POSTTRADE/HEARTBEAT", "HEARTBEAT");
 

@@ -11,16 +11,24 @@
 package Map;
 
 import java.util.Map;
+import java.util.Optional;
+import java.util.OptionalInt;
 import java.util.concurrent.ConcurrentHashMap;
 
-class Worker {
+class Worker
+{
 	
-	public  void Create() {
+	public void Create()
+	{
 		Map<String, String> dict = new ConcurrentHashMap<String, String>(Map.of("Delhi", "24", "Mumbai", "32", "Chennai", "35", "Bangalore", "22"));
 		
 		for (Map.Entry<String, String> e : dict.entrySet()) {
 		  System.out.println(e.getKey() + " = " + e.getValue());
 		}
+
+		Optional<String> entry = Optional.ofNullable(dict.get("Dubai"));
+
+		System.out.println(entry);
 	}
 }
 
