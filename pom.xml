@@ -35,6 +35,7 @@
         <module>9_MATHEMATICAL_ALGORITHMS</module>
         <module>10_SecurityExperiments</module>
         <module>11_DataStructures</module>
+        <module>12_NewFeatures</module>
         <module>ActiveMQ</module>
         <module>Apache_Projects_Tests</module>
         <module>Apache_Kafka</module>
