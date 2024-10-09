@@ -21,7 +21,8 @@ import lombok.ToString;
 @Setter
 @ToString
 @Builder
-class Example {
+class Example
+{
     private String name;
     private int age;
 
@@ -30,8 +31,10 @@ class Example {
 }
 
 
-public class Builder_Tests {
-    public static void main(String[] args) {
+public class Builder_Tests
+{
+    public static void main(String[] args)
+    {
         Example example = Example.builder().name("Name").age(111).build();
 
         System.out.println(example.getAge());
