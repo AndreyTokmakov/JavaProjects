@@ -85,8 +85,8 @@ public class CommandParser
     {
         final String cmdString = "{\"action\":\"recovery\",\"timestamp\":\"1727433106\"," +
                 "\"pair\":\"BTC/USDT\", \"status\":\"BTC/READY\"}";
+        final CommandMessage<?> commandMessage = GsonUtil.GsonToBean(cmdString, CommandMessage.class);
 
-        CommandMessage<?> commandMessage = GsonUtil.GsonToBean(cmdString, CommandMessage.class);
         System.out.println(commandMessage);
         System.out.println("Pair: " + commandMessage.getPair());
         System.out.println("Timestamp: " + commandMessage.getTimestamp().getTime());

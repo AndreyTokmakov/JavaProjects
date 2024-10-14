@@ -2,9 +2,11 @@ package experiments;
 
 import org.apache.pulsar.client.api.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -15,8 +17,11 @@ public class ConsumerQueue
     // private static final String PULSAR_HOST = "localhost";
     private static final String PULSAR_HOST = "192.168.101.2";
     private static final String SERVICE_URL = String.format("pulsar://%s:6650", PULSAR_HOST);
-    private static final String TOPIC_NAME = "notifications";
     private static final String pulsarToken = "<REPLACE_WITH_PULSAR_TOKEN>";
+
+    // private static final String TOPIC_NAME = "notifications";
+    private static final String TOPIC_NAME = "persistent://OPNX-V1/ME-POSTTRADE/CMD-OUT";
+    // private static final String TOPIC_NAME = "non-persistent://OPNX-V1/ME-POSTTRADE/HEARTBEAT";
 
     private static class Task
     {
@@ -50,8 +55,11 @@ public class ConsumerQueue
                     message = queue.poll(100, TimeUnit.MILLISECONDS);
                     if (null != message)
                     {
-                        //String action = message.getProperty("action");
-                        //System.out.println("action = " + action);
+                        System.out.println("Properties:");
+                        for (final Map.Entry<String, String> entry: message.getProperties().entrySet()) {
+                            System.out.println("\t" + entry.getKey() + " = " + entry.getValue());
+                        }
+
                         System.out.println(new String(message.getData()));
                     }
                 } catch (InterruptedException e) {
@@ -73,7 +81,8 @@ public class ConsumerQueue
                      .serviceUrl(SERVICE_URL) // .authentication(AuthenticationFactory.token(pulsarToken))
                      .build();
                  final Consumer<byte[]> consumer = client.newConsumer()
-                     .topic(TOPIC_NAME).subscriptionName("my-subscription").subscribe())
+                         .topic(TOPIC_NAME)
+                         .subscriptionName("my-subscription_" +  LocalDateTime.now()).subscribe())
             {
                 while (isStopRequested())
                 {
