@@ -12,7 +12,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 // https://pulsar.apache.org/docs/next/client-libraries-java-use/
 public class ConsumerQueue
 {
-    private static final String PULSAR_HOST = "localhost";
+    // private static final String PULSAR_HOST = "localhost";
+    private static final String PULSAR_HOST = "192.168.101.2";
     private static final String SERVICE_URL = String.format("pulsar://%s:6650", PULSAR_HOST);
     private static final String TOPIC_NAME = "notifications";
     private static final String pulsarToken = "<REPLACE_WITH_PULSAR_TOKEN>";
@@ -42,13 +43,16 @@ public class ConsumerQueue
 
         public void run()
         {
-            Message<byte[]> msg = null;
+            Message<byte[]> message = null;
             while (isStopRequested())
             {
                 try {
-                    msg = queue.poll(100, TimeUnit.MILLISECONDS);
-                    if (null != msg) {
-                        System.out.println(new String(msg.getData()));
+                    message = queue.poll(100, TimeUnit.MILLISECONDS);
+                    if (null != message)
+                    {
+                        //String action = message.getProperty("action");
+                        //System.out.println("action = " + action);
+                        System.out.println(new String(message.getData()));
                     }
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
@@ -100,7 +104,7 @@ public class ConsumerQueue
         service.submit(new PulsarConsumer(messages, stopFlag));
         service.submit(new Printer(messages, stopFlag));
 
-        TimeUnit.SECONDS.sleep(10);
+        TimeUnit.SECONDS.sleep(60);
 
         stopFlag.set(true);
         service.shutdown();
