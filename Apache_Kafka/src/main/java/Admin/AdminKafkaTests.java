@@ -47,21 +47,15 @@ import org.apache.kafka.common.errors.TopicExistsException;
 import org.apache.kafka.common.errors.UnknownTopicOrPartitionException;
 
 
-class KafkaAdminTester
+class KafkaAdmin
 {
-	/** Test topics list: **/
 	private final static List<String> topics = new ArrayList<String>(List.of("tests"));
-	
-	/** Kafka brokers list: **/
-	// private final static List<String> nodes = new ArrayList<String>(Arrays.asList("192.168.101.2:9092"));
 
-	/** Kafka brokers list: 1601-TNS **/
-	private final static List<String> nodes = new ArrayList<String>(List.of("0.0.0.0:9092"));
+	private final static List<String> nodes = new ArrayList<String>(List.of("192.168.101.2:9092"));
 
-	/** The administrative client for Kafka, which supports managing and inspecting topics, brokers, configurations and ACLs: **/
 	private Admin kafkaAdmin = null;
 
-	public KafkaAdminTester()
+	public KafkaAdmin()
 	{
 		Properties config = new Properties();
 		config.put(CommonClientConfigs.BOOTSTRAP_SERVERS_CONFIG, nodes);
@@ -209,23 +203,18 @@ class KafkaAdminTester
 
 public class AdminKafkaTests
 {
-	private final static KafkaAdminTester kafkaTester = new KafkaAdminTester();
-	
 	public static void main(String[] args) throws InterruptedException, ExecutionException
 	{
-		kafkaTester.getTopics();
-		// kafkaTester.getTopics_Deprecated();
-		
-		// kafkaTester.createTopic();
-		// kafkaTester.deleteTopic();
-		
-		// kafkaTester.getNodes();
-		// kafkaTester.getNodesConfigs();
-		
-		// kafkaTester.getConsumers();
-		
-		// kafkaTester.getFeatures();
-		
-		// kafkaTester.TESTS();
+		final KafkaAdmin kafkaAdmin = new KafkaAdmin();
+
+		kafkaAdmin.getTopics();
+		// kafkaAdmin.getTopics_Deprecated();
+		// kafkaAdmin.createTopic();
+		// kafkaAdmin.deleteTopic();
+		// kafkaAdmin.getNodes();
+		// kafkaAdmin.getNodesConfigs();
+		// kafkaAdmin.getConsumers();
+		// kafkaAdmin.getFeatures();
+		// kafkaAdmin.TESTS();
 	}
 }
