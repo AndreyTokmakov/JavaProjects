@@ -299,8 +299,8 @@ class ConsumerManager
 
 public class ViewerWindow extends JFrame implements java.awt.event.ActionListener
 {
-    private final static String pulsarHost = "192.168.101.2";
-    // private final static String pulsarHost = "localhost";
+    // private final static String pulsarHost = "192.168.101.2";
+    private final static String pulsarHost = "localhost";
     private final StatusBar statusBar = CreateStatusBar();
     private final ConsumerManager consumerManager = new ConsumerManager(pulsarHost, this);
 

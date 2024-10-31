@@ -51,7 +51,8 @@ class KafkaAdmin
 {
 	private final static List<String> topics = new ArrayList<String>(List.of("tests"));
 
-	private final static List<String> nodes = new ArrayList<String>(List.of("192.168.101.2:9092"));
+	private final static List<String> nodes = new ArrayList<String>(List.of("0.0.0.0:9092"));
+	// private final static List<String> nodes = new ArrayList<String>(List.of("192.168.101.2:9092"));
 
 	private Admin kafkaAdmin = null;
 
