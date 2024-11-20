@@ -40,6 +40,7 @@ public class SerializationInjectionDemo
         }
     }
 
+
     public static void main(String[] args) throws FileNotFoundException
     {
         final SerializationInjectionDemo demo = new SerializationInjectionDemo();
