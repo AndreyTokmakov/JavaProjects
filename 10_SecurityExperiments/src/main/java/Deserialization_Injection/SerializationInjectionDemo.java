@@ -44,6 +44,7 @@ public class SerializationInjectionDemo
     public static void main(String[] args) throws FileNotFoundException
     {
         final SerializationInjectionDemo demo = new SerializationInjectionDemo();
+
         final User user = new User("John Dow");
         final EvilUser evilUser = new EvilUser("John Dow (Evil)");
 
@@ -53,8 +54,10 @@ public class SerializationInjectionDemo
         demo.SerializeUser_ToFile(user, userFilePath);
         demo.SerializeUser_ToFile(evilUser, userFilePathEvil);
 
-
-        Optional<User> restoredUser = demo.DeserializeUser_FromFile(userFilePathEvil);
+        Optional<User> restoredUser = demo.DeserializeUser_FromFile(userFilePath);
         restoredUser.ifPresent(System.out::println);
+
+        Optional<User> restoredUserHack = demo.DeserializeUser_FromFile(userFilePathEvil);
+        restoredUserHack.ifPresent(System.out::println);
     }
 }

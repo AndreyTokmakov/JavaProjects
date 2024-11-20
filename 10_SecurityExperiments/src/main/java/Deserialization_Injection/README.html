@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+      code { background-color: gray; color: blue; }
+    </style>
+</head>
+<body>
+https://foojay.io/today/top-security-flaws-hiding-in-your-code-right-now-and-how-to-fix-them/
+
+Deserialization injection
+Deserialization is the process of converting data from a serialized format (like a byte stream, string, or file) back into an object or data structure that a program can work with.
+
+Common usages of deserialization include data sent between APIs and Web services in the form of JSON structures, or in modern applications using RPC (Remote Procedure Calls) in the form of protobuf messages.
+
+Converting the message payload into an Object can involve serious vulnerabilities if no sanitizing or checking steps are implemented.
+
+<br><br><code>
+  protected void doGet(HttpServletRequest request, HttpServletResponse response) {
+      ServletInputStream servletIS = request.getInputStream();
+      ObjectInputStream  objectIS  = new ObjectInputStream(servletIS);
+      User user                 = (User) objectIS.readObject();
+    }
+  class User implements Serializable {
+      private static final long serialVersionUID = 1L;
+      private String name;
+
+      public User(String name) {
+          this.name = name;
+      }
+
+      public String getName() {
+          return name;
+      }
+  }
+</code><br><br>
+
+
+We can see here that we are using objectIS, a direct value coming from the user in the request input stream, and converting it to a new object.
+We expect that the value will always be one of the classes that our application uses. Sure, our client would never send anything else, right? Would they?
+
+But what if a malicious client is sending another class in the request?
+
+<br><br><code>
+public class Exploit implements Serializable {
+private static final long serialVersionUID = 1L;
+
+private void readObject(java.io.ObjectInputStream in) {
+// Malicious action: Delete a file
+try {
+Runtime.getRuntime().exec(new String[] { "/bin/sh", "-c", "rm -rf /tmp/vulnerable.txt"});
+} catch (Exception e) {
+e.printStackTrace();
+}
+}
+}
+</code><br><br>
+
+
+In this case, we have a class that deletes a file during the overridden readObject method, which will happen on the previous readObject call.
+The attacker only needs to serialize this class and send it to the API:
+
+<br><br><code>
+  Exploit exploit = new Exploit();
+  FileOutputStream fileOut = new FileOutputStream("exploit.ser");
+  ObjectOutputStream out = new ObjectOutputStream(fileOut);
+  out.writeObject(exploit);
+  ...
+  $ curl -X POST --data-binary @exploit.ser http://vulnerable-api.com/user
+</code><br><br>
+
+This will cause our call to fail with a class cast Exception, but this won't prevent it from executing the malicious code that happens before the cast.
+
+<br><br><code>
+  java.lang.ClassCastException: class org.vulnerable.Exploit cannot be cast to class org.vilojona.topsecurityflaws.deserialization.User
+</code><br><br>
+
+
+Fortunately, there’s an easy way to fix this. We need to check if the class to be deserialized is from one of the allowed types before creating the object.
+
+In the code below, we have created a new ObjectInputStream with the “resolveClass” method overridden containing a check on the class name. We use this new class, SecureObjectInputStream, to get the object stream. But we include an allowed list check before reading the stream into an object (User).
+
+
+<br><br><code>
+  public class SecureObjectInputStream extends ObjectInputStream {
+  private static final Set<String> ALLOWED_CLASSES = Set.of(User.class.getName());
+
+  public SecureObjectInputStream(InputStream inputStream) throws IOException {
+  super(inputStream);
+  }
+  @Override
+  protected Class<?> resolveClass(ObjectStreamClass osc) throws IOException, ClassNotFoundException {
+  if (!ALLOWED_CLASSES.contains(osc.getName())) {
+  throw new InvalidClassException("Unauthorized deserialization", osc.getName());
+  }
+  return super.resolveClass(osc);
+  }
+  }
+  ...
+  public class RequestProcessor {
+  protected void doGet(HttpServletRequest request, HttpServletResponse response) {
+  ServletInputStream servletIS = request.getInputStream();
+  ObjectInputStream  objectIS  = new SecureObjectInputStream(servletIS);
+  User input                 = (User) objectIS.readObject();
+  }
+  }
+</code><br><br>
+
+</body>
+</html>
