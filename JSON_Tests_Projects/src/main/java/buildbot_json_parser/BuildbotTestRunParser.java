@@ -62,7 +62,7 @@ public class BuildbotTestRunParser implements IRequestParser {
 	
 	protected String getStringParamValue(final JSONObject jsonRoot, 
 										 final String paramName) throws MessageFormatExeption {
-	    if (false == jsonRoot.containsKey(paramName)) {
+	    if (!jsonRoot.containsKey(paramName)) {
 	    	throw new MessageFormatExeption("Failed to find parameter " + paramName);
 	    }
 		try {
@@ -74,7 +74,7 @@ public class BuildbotTestRunParser implements IRequestParser {
 	
 	protected Boolean getBooleanParamValue(final JSONObject jsonRoot, 
 			 							   final String paramName) throws MessageFormatExeption {
-		if (false == jsonRoot.containsKey(paramName)) {
+		if (!jsonRoot.containsKey(paramName)) {
 			throw new MessageFormatExeption("Failed to find parameter " + paramName);
 		}
 		try {

@@ -48,9 +48,9 @@ public class BaseWindow extends JFrame
 	
 	// TODO: Make it one string
 	/** **/
-	private SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, d MMM yyyy");
+	private final SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, d MMM yyyy");
 	/** **/
-	private SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss a");
+	private final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss a");
 	
 	
 	

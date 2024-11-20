@@ -5,7 +5,7 @@ import org.eclipse.jetty.server.ServerConnector;
 
 import handlers.HelloHandler;
 
-/**A Jetty server with one connectors. **/
+/**A Jetty server with one connector. **/
 public class OneConnectorHTTP
 {
     public static void main( String[] args ) throws Exception  {

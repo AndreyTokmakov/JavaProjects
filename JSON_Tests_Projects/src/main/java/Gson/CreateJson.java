@@ -22,7 +22,8 @@ class Tests1 {
 		System.out.println(gson.toJson(collection));
 	}
 	
-	public void Map_To_Json() {
+	public void Map_To_Json()
+	{
 		Map<String, Object> map = new LinkedHashMap<>();
 		map.put("USD", 123);
 		map.put("EUR", 321);
@@ -33,8 +34,8 @@ class Tests1 {
 	
 	//---------------------------------------------------------------------------------------//
 	
-	public void Json_for_WireMock() {
-        
+	public void Json_for_WireMock()
+	{
         Map<String, Object> json = new LinkedHashMap<>();
         json.put("request", Map.of("method", "GET", "url", "/stubs/timeout"));
 

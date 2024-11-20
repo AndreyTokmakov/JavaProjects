@@ -96,7 +96,7 @@ public class JsonTester {
        //System.out.println(jsonStrin);
 
        JSONObject jsonObject = (JSONObject) (new JSONParser().parse(jsonStrin));
-       if (false == jsonObject.containsKey(workerNameParam)) {
+       if (!jsonObject.containsKey(workerNameParam)) {
 		   //throw new MessageFormatExeption("Failed to determine message type");
 		   System.out.println("Key " + workerNameParam + " do not exist");
        }
@@ -104,7 +104,7 @@ public class JsonTester {
        String workerName = (String)jsonObject.get(workerNameParam);
        System.out.println(workerName);
 
-       if (false == jsonObject.containsKey(startTimeParam)) {
+       if (!jsonObject.containsKey(startTimeParam)) {
 		   //throw new MessageFormatExeption("Failed to determine message type");
 		   System.out.println("Key " + startTimeParam + " do not exist");
        } else {
@@ -112,7 +112,7 @@ public class JsonTester {
 		   System.out.println(startTime);
        }
 
-       if (false == jsonObject.containsKey(endTimeParam)) {
+       if (!jsonObject.containsKey(endTimeParam)) {
 		   //throw new MessageFormatExeption("Failed to determine message type");
 		   System.out.println("Key " + endTimeParam + " do not exist");
        } else {

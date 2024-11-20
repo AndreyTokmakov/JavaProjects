@@ -12,17 +12,17 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.log4j.Log4j;
 
 @Log4j
-public class HelloHandler extends AbstractHandler {
-    private String greeting;
-    private String body;
+public class HelloHandler extends AbstractHandler
+{
+    private final String greeting;
+    private final String body;
 
     public HelloHandler()  {
     	this("HELLO");
 		log.info(this.getClass().getSimpleName() + " created!");
     }
 
-    public HelloHandler( String greeting )
-    {
+    public HelloHandler( String greeting ) {
         this(greeting, null);
     }
 
@@ -36,7 +36,8 @@ public class HelloHandler extends AbstractHandler {
 	public void handle(String target,
                        Request baseRequest,
 					   HttpServletRequest request,
-					   HttpServletResponse response) throws IOException, ServletException {
+					   HttpServletResponse response) throws IOException
+    {
         response.setContentType("text/html; charset=utf-8");
         response.setStatus(HttpServletResponse.SC_OK);
         PrintWriter out = response.getWriter();
