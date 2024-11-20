@@ -47,35 +47,33 @@ import org.apache.kafka.common.errors.TopicExistsException;
 import org.apache.kafka.common.errors.UnknownTopicOrPartitionException;
 
 
-class KafkaAdminTester {
-	/** Test topics list: **/
+class KafkaAdmin
+{
 	private final static List<String> topics = new ArrayList<String>(List.of("tests"));
-	
-	/** Kafka brokers list: **/
-	// private final static List<String> nodes = new ArrayList<String>(Arrays.asList("192.168.101.2:9092"));
 
-	/** Kafka brokers list: 1601-TNS **/
-	private final static List<String> nodes = new ArrayList<String>(List.of("192.168.101.2:9092"));
+	private final static List<String> nodes = new ArrayList<String>(List.of("0.0.0.0:9092"));
+	// private final static List<String> nodes = new ArrayList<String>(List.of("192.168.101.2:9092"));
 
-	
-	/** The administrative client for Kafka, which supports managing and inspecting topics, brokers, configurations and ACLs: **/
 	private Admin kafkaAdmin = null;
-	
-	KafkaAdminTester() {
+
+	public KafkaAdmin()
+	{
 		Properties config = new Properties();
 		config.put(CommonClientConfigs.BOOTSTRAP_SERVERS_CONFIG, nodes);
-        
+
         this.kafkaAdmin = Admin.create(config);
 	}
 	
-	public void getTopics() throws ExecutionException, InterruptedException {
+	public void getTopics() throws ExecutionException, InterruptedException
+	{
 		final ListTopicsResult topicList = kafkaAdmin.listTopics();
 		for (TopicListing topicListing : topicList.listings().get()) {
 			System.out.println(topicListing);
 		}
 	}
 	
-	public void createTopic() throws ExecutionException, InterruptedException {
+	public void createTopic() throws ExecutionException, InterruptedException
+	{
 		System.out.println("Topics: " + kafkaAdmin.listTopics().listings().get());
 		
 		NewTopic newTopic = new NewTopic("events", 1, (short) 1);
@@ -84,7 +82,8 @@ class KafkaAdminTester {
 		System.out.println("Topics: " + kafkaAdmin.listTopics().listings().get());
 	}
 	
-	public void deleteTopic() throws ExecutionException, InterruptedException {
+	public void deleteTopic() throws ExecutionException, InterruptedException
+	{
 		System.out.println("Topics: " + kafkaAdmin.listTopics().listings().get());
 		
 		Collection<String> topics = Collections.singleton("my-new-topic");
@@ -94,7 +93,8 @@ class KafkaAdminTester {
 		System.out.println("Topics: " + kafkaAdmin.listTopics().listings().get());
 	}
 	
-	public void getTopics_Deprecated() throws ExecutionException, InterruptedException {
+	public void getTopics_Deprecated() throws ExecutionException, InterruptedException
+	{
 		Properties config = new Properties();
 		config.put(CommonClientConfigs.BOOTSTRAP_SERVERS_CONFIG, nodes.toString().replace("[", "").replace("]", ""));
 		
@@ -107,13 +107,15 @@ class KafkaAdminTester {
 		}
 	}
 	
-	public void getNodes() throws InterruptedException, ExecutionException {
+	public void getNodes() throws InterruptedException, ExecutionException
+	{
 		KafkaFuture<Collection<Node>> nodesFuture = kafkaAdmin.describeCluster().nodes();
 		Collection<Node> nodes = nodesFuture.get();
 		System.out.println(nodes);
 	}
 	
-	public void getNodesConfigs() throws InterruptedException, ExecutionException {
+	public void getNodesConfigs() throws InterruptedException, ExecutionException
+	{
 		KafkaFuture<Collection<Node>> nodesFuture = kafkaAdmin.describeCluster().nodes();
 		Collection<Node> nodes = nodesFuture.get();
 
@@ -121,7 +123,8 @@ class KafkaAdminTester {
 			getNodeConfig(node);
 	}
 	
-	private void getNodeConfig(final Node node) throws InterruptedException, ExecutionException {
+	private void getNodeConfig(final Node node) throws InterruptedException, ExecutionException
+	{
 		System.out.println("-------- Node: " + node);
 		ConfigResource cfgResource = new ConfigResource(ConfigResource.Type.BROKER, String.valueOf(node.id()));
 		DescribeConfigsResult dcr = kafkaAdmin.describeConfigs(Collections.singleton(cfgResource));
@@ -132,7 +135,8 @@ class KafkaAdminTester {
         });
 	}
 	
-	public void getConsumers() throws InterruptedException, ExecutionException {
+	public void getConsumers() throws InterruptedException, ExecutionException
+	{
 		ListConsumerGroupsResult result = kafkaAdmin.listConsumerGroups();
 		
 		System.out.println("ConsumerGroupsListing: ");
@@ -141,14 +145,16 @@ class KafkaAdminTester {
 		}
 	}
 	
-	public void getFeatures() throws InterruptedException, ExecutionException {
+	public void getFeatures() throws InterruptedException, ExecutionException
+	{
 		DescribeFeaturesResult features = kafkaAdmin.describeFeatures();
 		FeatureMetadata featureMetadata = features.featureMetadata().get();
 		
 		System.out.println(featureMetadata);
 	}
 	
-	public void TESTS() throws InterruptedException, ExecutionException {
+	public void TESTS() throws InterruptedException, ExecutionException
+	{
 		// System.out.println("Topics: " + kafkaAdmin.listTopics().listings().get());
 		
 		
@@ -196,24 +202,20 @@ class KafkaAdminTester {
 	}
 }
 
-public class AdminKafkaTests {
-	/** Kakfa teste: **/
-	private final static KafkaAdminTester kafkaTester = new KafkaAdminTester();
-	
-	public static void main(String[] args) throws InterruptedException, ExecutionException {
-		// kafkaTester.getTopics();
-		// kafkaTester.getTopics_Deprecated();
-		
-		// kafkaTester.createTopic();
-		// kafkaTester.deleteTopic();
-		
-		kafkaTester.getNodes();
-		// kafkaTester.getNodesConfigs();
-		
-		// kafkaTester.getConsumers();
-		
-		// kafkaTester.getFeatures();
-		
-		// kafkaTester.TESTS();
+public class AdminKafkaTests
+{
+	public static void main(String[] args) throws InterruptedException, ExecutionException
+	{
+		final KafkaAdmin kafkaAdmin = new KafkaAdmin();
+
+		kafkaAdmin.getTopics();
+		// kafkaAdmin.getTopics_Deprecated();
+		// kafkaAdmin.createTopic();
+		// kafkaAdmin.deleteTopic();
+		// kafkaAdmin.getNodes();
+		// kafkaAdmin.getNodesConfigs();
+		// kafkaAdmin.getConsumers();
+		// kafkaAdmin.getFeatures();
+		// kafkaAdmin.TESTS();
 	}
 }

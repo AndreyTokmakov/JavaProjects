@@ -50,7 +50,7 @@ class Color {
 	/************ Factory constructor methods: *************/
 	
 	public static synchronized Color createColor(String colorName) {
-		if (false == Color.paletteCache.containsKey(colorName)) {
+		if (!Color.paletteCache.containsKey(colorName)) {
 			paletteCache.put(colorName, new Color(colorName));
 		}
 		return Color.paletteCache.get(colorName);

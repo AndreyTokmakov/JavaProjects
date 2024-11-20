@@ -50,6 +50,7 @@ public class ConsumerExperiments
                 try {
                     msg = queue.poll(100, TimeUnit.MILLISECONDS);
                     if (null != msg) {
+
                         System.out.println(new String(msg.getData()));
                     }
                 } catch (InterruptedException e) {
