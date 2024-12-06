@@ -98,7 +98,7 @@ class KafkaAdmin
 		Properties config = new Properties();
 		config.put(CommonClientConfigs.BOOTSTRAP_SERVERS_CONFIG, nodes.toString().replace("[", "").replace("]", ""));
 		
-		// Will be DEPRICATED
+		// Will be DEPRECATED
 		AdminClient adminClient = AdminClient.create(config);
 		final ListTopicsResult topicList = adminClient.listTopics();
 		

@@ -55,6 +55,7 @@
         <module>Lombok</module>
         <module>Networking_TCP_IP_TestApplication</module>
         <module>Networking_TCP_NettyTests</module>
+        <!--module>Networking_Akka</module-->
         <module>Networking_TCP_NIO_Servers</module>
         <module>PDF_TestProject</module>
         <module>Perfrormance_Benchmarks</module>
