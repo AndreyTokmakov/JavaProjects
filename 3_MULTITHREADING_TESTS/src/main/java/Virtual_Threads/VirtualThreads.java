@@ -30,5 +30,6 @@ public class VirtualThreads
 
         thread1.join();
         thread2.join();
+
     }
 }
