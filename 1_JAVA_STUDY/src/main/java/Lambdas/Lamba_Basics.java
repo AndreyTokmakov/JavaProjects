@@ -17,9 +17,9 @@ import java.util.function.IntSupplier;
 import java.util.function.LongSupplier;
 import java.util.function.Supplier;
 
-interface ICalculator<T> {
+interface ICalculator<T>
+{
 	public T operation(T x, T y);
-	
 	public default void info() {
 		System.out.println("ICalculator::info()");
 	}
@@ -61,9 +61,9 @@ public class Lamba_Basics {
 		calculator.info();
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args)
+	{
 		Lamba_Basics tests  = new Lamba_Basics();
-		
 		tests.Lambdas_Different_Types();
 		
 		// tests.Simple_Test();
