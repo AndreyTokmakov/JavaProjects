@@ -14,7 +14,8 @@ import java.util.OptionalInt;
 
 public class OptionalInt_Tests {
 
-	public static void main(String[] args) {
+	public static void main(String[] args)
+	{
 		OptionalInt optInt1 = null;
 		
 		

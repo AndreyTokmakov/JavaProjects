@@ -137,7 +137,8 @@ public class Optional_Tests {
 		String defaultText = Optional.ofNullable(text).orElseThrow(IllegalArgumentException::new);
 	}
 	
-	public void Filter() {
+	public void Filter()
+	{
 		{
 		    Integer year = 2016;
 		    Optional<Integer> optYear = Optional.of(year);
@@ -220,7 +221,8 @@ public class Optional_Tests {
 		}
 	}
 	
-	public void IfPresentOrElse() {
+	public void IfPresentOrElse()
+	{
 		
         Optional<Integer> op_empty  = Optional.empty(); 
         Optional<String> op_string = Optional.of("Some_Text");
@@ -347,7 +349,7 @@ public class Optional_Tests {
 		// tests.IsPresent();
 		
 		// tests.IfPresent();
-		// tests.IfPresentOrElse();
+		tests.IfPresentOrElse();
 		
 		// tests.Handle_Return_Optional();
 		
