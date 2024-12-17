@@ -1,9 +1,24 @@
 package Optional;
 
+import lombok.Data;
+import lombok.NonNull;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
+
+@Data
+class Person
+{
+	@NonNull
+	private String name;
+
+	@NonNull
+	private List<String> favoriteColors;
+}
 
 public class Optional_Tests {
 	
@@ -268,14 +283,46 @@ public class Optional_Tests {
 	}
 	
 	
-	public void Map1() {
+	public void Map1()
+	{
 		final Optional<MyObject> nameOptional = Optional.of(new MyObject("12345"));
 		
 		System.out.println(nameOptional.get());
 		System.out.println("Name: " + nameOptional.map(MyObject::getName).orElse("Unnamed"));
 	}
+
+	public void Map_Colors()
+	{
+		final List<Person> people = Arrays.asList(
+				new Person("Alice", List.of("Red", "Blue")),
+				new Person("Bob", List.of("Green", "Yellow")),
+				new Person("Charlie", List.of("Purple"))
+		);
+		System.out.println(people);
+
+
+		List<List<String>> allFavoriteColors = people.stream()
+				.map(Person::getFavoriteColors)
+				.collect(Collectors.toList());
+
+		System.out.println(allFavoriteColors);
+	}
+
+	public void FlatMap_Colors()
+	{
+		final List<Person> people = Arrays.asList(
+				new Person("Alice", List.of("Red", "Blue")),
+				new Person("Bob", List.of("Green", "Yellow")),
+				new Person("Charlie", List.of("Purple"))
+		);
+		System.out.println(people);
+
+		final List<String> allFavoriteColors = people.stream()
+				.flatMap(person -> person.getFavoriteColors().stream())
+				.collect(Collectors.toList());
+		System.out.println(allFavoriteColors);
+	}
 	
-	/************* main ************ **/
 	public static void main(String[] args)
 	{
 		Optional_Tests tests = new Optional_Tests();
@@ -283,8 +330,8 @@ public class Optional_Tests {
 		// tests.FindMin_InArray();
 		
 		// tests.OrElse();
-		tests.CreateTests();
-		tests.CreateTests1();
+		// tests.CreateTests();
+		// tests.CreateTests1();
 		// tests.OrElseGet_vs_OrElse();
 		// tests.OrElseThrow();
 		
@@ -293,7 +340,10 @@ public class Optional_Tests {
 		
 		// tests.Map();
 		// tests.Map1();
-		
+
+		tests.Map_Colors();
+		tests.FlatMap_Colors();
+
 		// tests.IsPresent();
 		
 		// tests.IfPresent();
