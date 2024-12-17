@@ -324,6 +324,7 @@ public class Optional_Tests {
 				.collect(Collectors.toList());
 		System.out.println(allFavoriteColors);
 	}
+
 	
 	public static void main(String[] args)
 	{
