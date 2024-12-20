@@ -159,7 +159,7 @@ public class StringsTests {
 
 		// CountChars();
 		
-		tests.SplitString();
+		// tests.SplitString();
 
 		// tests.Join();
 
@@ -181,5 +181,10 @@ public class StringsTests {
 
 		// tests.Trim();
 		// tests.TrimRemoveSpaces();
+
+		String str1 = new String("12345");
+		String str2 = "12345";
+
+		System.out.println(str1 == str2);
 	}
 }

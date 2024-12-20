@@ -16,18 +16,20 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class ReadFromH2_Database {
-	private final static String same_process_url = "jdbc:h2:mem:test";
+public class ReadFromH2_Database
+{
+	private final static String local_in_memory_url = "jdbc:h2:mem:test";
 	private final static String remote_H2_url = "jdbc:h2:tcp://localhost:9092/mem:test";
 	private final static String user = "tester";
 	private final static String password = "12345";
 
 
-	public static void Read() throws SQLException {
+	public static void Read() throws SQLException
+	{
 		final String query = "SELECT * FROM unit_tests";
 		
-		try (Connection connetion = DriverManager.getConnection(remote_H2_url, user, password);
-			Statement statement = connetion.createStatement()) {
+		try (Connection connection = DriverManager.getConnection(local_in_memory_url, user, password);
+			Statement statement = connection.createStatement()) {
 
 			ResultSet result;
 			result = statement.executeQuery(query);
@@ -36,19 +38,31 @@ public class ReadFromH2_Database {
 				String name = result.getString("name");
 				System.out.println(id + ", " + name);
 			}
-			statement.close();
-			connetion.close();
 		} 
 		catch (SQLException exc) {
-			// Logger logger = Logger.getLogger(JH2Server.class.getName());
-			// logger.log(Level.SEVERE, ex.getMessage(), ex);
 			System.out.println(exc.getMessage());
+		}
+	}
+
+	public static void showDatabases() throws SQLException
+	{
+		final String query = "show databases;";
+
+		try (Connection connection = DriverManager.getConnection(local_in_memory_url, user, password);
+			 Statement statement = connection.createStatement())
+		{
+			ResultSet result = statement.executeQuery(query);
+			System.out.println(result.getString(1));
+		}
+		catch (SQLException exc) {
+			System.err.println(exc.getMessage());
 		}
 	}
 	
 	public static void main(String[] args) 
 			throws SQLException, ClassNotFoundException 
 	{
-		Read();
+		showDatabases();
+		// Read();
 	}
 }

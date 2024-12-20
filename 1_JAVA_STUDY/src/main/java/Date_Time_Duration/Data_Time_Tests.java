@@ -26,6 +26,8 @@ public class Data_Time_Tests {
 	private void LocalDateTime_Tests() {
 		final LocalDateTime endTimestamp = LocalDateTime.now();
 		System.out.println(endTimestamp);
+
+
 		
 		final Timestamp timestamp = Timestamp.valueOf(endTimestamp);
 		System.out.println(timestamp);
