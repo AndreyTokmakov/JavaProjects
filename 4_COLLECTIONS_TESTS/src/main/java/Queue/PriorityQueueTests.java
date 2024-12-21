@@ -3,8 +3,10 @@ package Queue;
 import java.util.Collections;
 import java.util.PriorityQueue;
 
-class Tests {
-	public void Create_ReverseOrder() {
+class Tests
+{
+	public void Create_ReverseOrder()
+	{
 		 PriorityQueue<Integer> ints = new PriorityQueue<Integer>(Collections.reverseOrder());
 		 ints.add(10);
 		 ints.add(20);
@@ -12,14 +14,15 @@ class Tests {
 		 ints.add(24);
 		 
 		 System.out.println("-------------------------- Contains:");
-		 ints.forEach((Integer entry) -> System.out.println(entry));
+		 ints.forEach(System.out::println);
 
 		 System.out.println("-------------------------- Poll:");
-		 while (false == ints.isEmpty())
+		 while (!ints.isEmpty())
 			 System.out.println(ints.poll());
 	}
 	
-	public void Create_Order() {
+	public void Create_Order()
+	{
 		 PriorityQueue<Integer> ints = new PriorityQueue<Integer>();
 		 
 		 ints.add(5);
@@ -32,22 +35,26 @@ class Tests {
 		 System.out.println();
 	}
 	
-	public void Poll() {
+	public void Poll()
+	{
 		 PriorityQueue<Integer> ints = new PriorityQueue<Integer>();
 		 ints.add(123);
 		 ints.add(33);
 		 ints.add(13);
 		 ints.add(134);
 
-		 while (false == ints.isEmpty()) {
+		 while (!ints.isEmpty()) {
 			 System.out.println(ints.poll());
 		 }
-		 
 	}
 }
 
-public class PriorityQueueTests {
-	public static void main(String[] args) {
+
+
+public class PriorityQueueTests
+{
+	public static void main(String[] args)
+	{
 		Tests tests = new Tests();
 		
 		// tests.Create_Order();

@@ -1,24 +1,10 @@
 package Optional;
 
-import lombok.Data;
-import lombok.NonNull;
-
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-
-
-@Data
-class Person
-{
-	@NonNull
-	private String name;
-
-	@NonNull
-	private List<String> favoriteColors;
-}
 
 public class Optional_Tests {
 	
@@ -37,7 +23,8 @@ public class Optional_Tests {
 	    	return null;
 	}
 	
-	public void Handle_Return_Optional() {
+	public void Handle_Return_Optional()
+	{
 		 Optional<String> val1 = getOptional(1);
 		 try {
 			 System.out.println(val1.orElse("No Value"));
@@ -154,21 +141,41 @@ public class Optional_Tests {
 		    System.out.println("Test1: " + test1 + "  " + test2);
 		}
 	}
+
+	public void BigDecimal_Optional_Convert_toString_IfPresent_And_GreaterZero()
+	{
+		// BigDecimal decimal = null;
+		BigDecimal quantity = BigDecimal.valueOf(3);
+
+		String result = Optional.ofNullable(quantity).
+				filter(v -> v.compareTo(BigDecimal.ZERO) > 0).map(BigDecimal::toString).orElse(null);
+		System.out.println(result);
+	}
+
+	public void BigDecimal_Optional_Convert_toString_IfPresent_And_GreaterZero_1()
+	{
+		// BigDecimal decimal = null;
+		BigDecimal quantity = BigDecimal.valueOf(0);
+
+		String result = Optional.ofNullable(quantity).
+				filter(v -> v.compareTo(BigDecimal.ZERO) > 0). // Get only if Grater than 0
+				map(v -> v.add(BigDecimal.valueOf(1))).        // Add 1
+				map(BigDecimal::toString).                               // --> String
+				orElse(null);
+		System.out.println(result);
+	}
 	
-	public void Tests() {
-		String text = null;
-		
-		Optional<String> optStr = Optional.ofNullable(text);
-		try {
-			System.out.println(optStr.get());
-		} catch (final Exception exc) {
-			System.out.println(exc);
-			System.out.println(optStr.orElse("Empty!"));
-		}
-		
-		System.out.println("isEmpty(): " + optStr.isEmpty());
-		System.out.println("isPresent(): " + optStr.isPresent());
-		System.out.println("hashCode(): " + optStr.hashCode());
+	public void Tests()
+	{
+		// BigDecimal decimal = 1;
+		BigDecimal decimal = BigDecimal.valueOf(1);
+
+		String result = Optional.ofNullable(decimal).
+				filter(v -> v.compareTo(BigDecimal.ZERO) > 0 ).
+				map(v -> v.add(BigDecimal.valueOf(1))).
+				map(BigDecimal::toString).
+				orElse(null);
+		System.out.println(result);
 	}
 	
 	public void IsPresent() {
@@ -232,7 +239,7 @@ public class Optional_Tests {
         	op_empty.ifPresentOrElse((v) -> { System.out.println( "Value is present, its: "+ v); }, 
 							   	 	 ( ) -> { System.out.println( "Value is empty"); }); 
         } catch (Exception e) { 
-            System.out.println(e); 
+            System.err.println(e);
         } 
         
         System.out.println("\nOptional: " + op_string); 
@@ -240,10 +247,22 @@ public class Optional_Tests {
         	op_string.ifPresentOrElse((v) -> { System.out.println( "Value is present, its: "+ v); }, 
 							   	 	 ( ) -> { System.out.println( "Value is empty"); }); 
         } catch (Exception e) { 
-            System.out.println(e); 
+            System.err.println(e);
         } 
-    } 
-	
+    }
+
+	private void modifyReturnedIfPresent(Integer intVar)
+	{
+		Integer result = Optional.ofNullable(intVar).map(v -> v + 1).orElse(null);
+		System.out.println(result);
+	}
+
+	public void ModifyReturned_Value_IfPresent()
+	{
+		modifyReturnedIfPresent(null);
+		modifyReturnedIfPresent(100);
+	}
+
 	private static final class MyObject {
 		private String name = "";
 		
@@ -285,47 +304,14 @@ public class Optional_Tests {
 	}
 	
 	
-	public void Map1()
-	{
+	public void Map1() {
 		final Optional<MyObject> nameOptional = Optional.of(new MyObject("12345"));
 		
 		System.out.println(nameOptional.get());
 		System.out.println("Name: " + nameOptional.map(MyObject::getName).orElse("Unnamed"));
 	}
-
-	public void Map_Colors()
-	{
-		final List<Person> people = Arrays.asList(
-				new Person("Alice", List.of("Red", "Blue")),
-				new Person("Bob", List.of("Green", "Yellow")),
-				new Person("Charlie", List.of("Purple"))
-		);
-		System.out.println(people);
-
-
-		List<List<String>> allFavoriteColors = people.stream()
-				.map(Person::getFavoriteColors)
-				.collect(Collectors.toList());
-
-		System.out.println(allFavoriteColors);
-	}
-
-	public void FlatMap_Colors()
-	{
-		final List<Person> people = Arrays.asList(
-				new Person("Alice", List.of("Red", "Blue")),
-				new Person("Bob", List.of("Green", "Yellow")),
-				new Person("Charlie", List.of("Purple"))
-		);
-		System.out.println(people);
-
-		final List<String> allFavoriteColors = people.stream()
-				.flatMap(person -> person.getFavoriteColors().stream())
-				.collect(Collectors.toList());
-		System.out.println(allFavoriteColors);
-	}
-
 	
+	/************* main ************ **/
 	public static void main(String[] args)
 	{
 		Optional_Tests tests = new Optional_Tests();
@@ -343,17 +329,18 @@ public class Optional_Tests {
 		
 		// tests.Map();
 		// tests.Map1();
-
-		tests.Map_Colors();
-		tests.FlatMap_Colors();
-
+		
 		// tests.IsPresent();
 		
 		// tests.IfPresent();
-		tests.IfPresentOrElse();
-		
+		// tests.IfPresentOrElse();
+		// tests.ModifyReturned_Value_IfPresent();
+
 		// tests.Handle_Return_Optional();
-		
-		// tests.Tests();
+		// tests.BigDecimal_Optional_Convert_toString_IfPresent_And_GreaterZero();
+		// tests.BigDecimal_Optional_Convert_toString_IfPresent_And_GreaterZero_1();
+
+		//tests.Tests();
+
 	}
 }
