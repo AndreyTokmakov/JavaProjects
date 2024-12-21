@@ -31,10 +31,22 @@ public class CollectionsTests {
 		System.out.println(numbers);
 	}
 	
-	public static void Fill() {
-		int ar[] = {2, 2, 1, 8, 3, 2, 2, 4, 2};
-        Arrays.fill(ar, 10);
-        System.out.println("Array completely filled" + " with 10\n" + Arrays.toString(ar));
+	public static void Fill()
+	{
+		{
+			int[] numbers = {0,0,0,0,0,0,0,0,0,0};
+			Arrays.fill(numbers, 10);
+			System.out.println("Array: " + Arrays.toString(numbers));
+		}
+
+		{
+			int[] numbers = {0,0,0,0,0,0,0,0,0,0};
+			Arrays.fill(numbers, 2, 8, 10);
+			System.out.println("Array: " + Arrays.toString(numbers));
+		}
+
+		// Array: [10, 10, 10, 10, 10, 10, 10, 10, 10, 10]
+		// Array: [0,  0,  10, 10, 10, 10, 10, 10,  0,  0]
 	}
 	
 	public static void BinarySearch() {
@@ -100,20 +112,19 @@ public class CollectionsTests {
 		
 	}
 	
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) throws Exception
+	{
 		// Min();
 		// Max();
+
+		Fill();
 		// Reverse();
-		
+
 		// BinarySearch();
 		// BinarySearch_ReverseOrder();
-		
 		// Frequency();
-		
 		// Enumeration();
-		
-		EmptyList();
-		
-// 		TEST();
+		// EmptyList();
+
 	}
 }
