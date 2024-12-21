@@ -10,7 +10,8 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Enumeration;
 
-public class CollectionsTests {
+public class CollectionsTests
+{
 	
 	public static void Min() {
 		final List<Integer> numbers = Arrays.asList(7,4,9,4,9,13,7,1);
