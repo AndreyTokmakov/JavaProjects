@@ -1,9 +1,13 @@
 package Singleton;
 
-class SingletonWithKeeper {
-    private SingletonWithKeeper() {}
+class SingletonWithKeeper
+{
+    private SingletonWithKeeper() {
+        System.out.println(this.getClass().getName() + " has been created");
+    }
 
-    private static class SingletonKeeper {
+    private static class SingletonKeeper
+    {
         private static final SingletonWithKeeper INSTANCE = new SingletonWithKeeper();
     }
 
@@ -13,8 +17,12 @@ class SingletonWithKeeper {
 }
 
 
-public class SingletonHolder {
-    public static void main(String[] args) {
+public class SingletonHolder
+{
+    public static void main(String[] args)
+    {
+        System.out.println("Starting application");
+
         SingletonWithKeeper s2 = SingletonWithKeeper.getInstance();
         SingletonWithKeeper s1 = SingletonWithKeeper.getInstance();
 

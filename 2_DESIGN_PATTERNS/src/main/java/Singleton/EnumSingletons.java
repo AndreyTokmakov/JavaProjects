@@ -10,7 +10,8 @@
 
 package Singleton;
 
-enum MySingleton {	
+enum MySingleton
+{
     INSTANCE;
 	
     MySingleton()

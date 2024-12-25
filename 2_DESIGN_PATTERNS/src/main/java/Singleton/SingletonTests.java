@@ -1,18 +1,17 @@
 package Singleton;
 
 
-/** @class Singleton : */
- class Singleton {
-	/** Singleton static instance. **/
+
+class Singleton
+{
 	private static Singleton __instance = null;
 
-	/** Singleton class constructor: **/
 	protected Singleton() {
 		System.out.println("Singleton created");
 	}
 
-	/**  **/
-	public static Singleton getInstance() {
+	public static Singleton getInstance()
+	{
 		if (null == Singleton.__instance) {
 			synchronized (Singleton.class) {
 				if (null == Singleton.__instance) {

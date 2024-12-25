@@ -577,18 +577,18 @@ public class ViewerWindow extends JFrame implements java.awt.event.ActionListene
 
         CreateMenu();
 
-        final String marketCode = "BTC-USDT";
         final String marketId = "1000000000001";
+        final String marketCode = "BTC-USDT";
 
-        // consumerManager.add("persistent://OPNX-V1/PRETRADE-ME/ORDER-IN-"+ marketCode, "ORDER-IN-" + marketCode);
-        // consumerManager.add("persistent://OPNX-V1/ME-POSTTRADE/ORDER-OUT-" + marketCode, "ORDER-OUT-" + marketCode);
-        // consumerManager.add("persistent://OPNX-V1/ME-POSTTRADE/ORDER-OUT-BACKUP-" + marketCode, "ORDER-BACKUP-" + marketCode);
+        consumerManager.add("persistent://OPNX-V1/PRETRADE-ME/ORDER-IN-"+ marketCode, "ORDER-IN-" + marketCode);
+        consumerManager.add("persistent://OPNX-V1/ME-POSTTRADE/ORDER-OUT-" + marketCode, "ORDER-OUT-" + marketCode);
+        consumerManager.add("persistent://OPNX-V1/ME-POSTTRADE/ORDER-OUT-BACKUP-" + marketCode, "ORDER-BACKUP-" + marketCode);
 
+        /*
         consumerManager.add("persistent://OPNX-V1/PRETRADE-ME/ORDER-IN-"+ marketId, "ORDER-IN-" + marketId);
         consumerManager.add("persistent://OPNX-V1/ME-POSTTRADE/ORDER-OUT-" + marketId, "ORDER-OUT-" + marketId);
         consumerManager.add("persistent://OPNX-V1/ME-POSTTRADE/ORDER-OUT-BACKUP-" + marketId, "ORDER-BACKUP-" + marketId);
-
-
+        */
 
         consumerManager.add("persistent://OPNX-V1/PRETRADE-ME/CMD-IN", "CMD-IN");
         consumerManager.add("persistent://OPNX-V1/ME-POSTTRADE/CMD-OUT", "CMD-OUT");

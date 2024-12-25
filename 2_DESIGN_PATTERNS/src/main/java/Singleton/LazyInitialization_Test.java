@@ -10,17 +10,16 @@
 
 package Singleton;
 
-class LazySingleton {
-	/** **/
+class LazySingleton
+{
 	private static LazySingleton INSTANCE = null;
 
-	/** LazySingleton class constructor: **/
 	protected LazySingleton() {
 		System.out.println("LazySingleton created");
 	}
 
-
-	public static LazySingleton getInstance() {
+	public static LazySingleton getInstance()
+	{
 		if (INSTANCE == null) {
 			synchronized (LazySingleton.class) {
 				if (INSTANCE == null) {
@@ -37,13 +36,13 @@ class LazySingleton {
 	}
 }
 
-public class LazyInitialization_Test {
+public class LazyInitialization_Test
+{
 	public static void main(String[] args) 
 	{
 		LazySingleton singleton = LazySingleton.getInstance();
 		System.out.println(singleton);
 		System.out.println(LazySingleton.getInstance());
 		System.out.println(LazySingleton.getInstance());
-
 	}
 }
