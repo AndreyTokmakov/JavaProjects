@@ -10,23 +10,27 @@
 
 package Singleton;
 
-enum MySingleton
+public class EnumSingletons
 {
-    INSTANCE;
-	
-    MySingleton()
-    {
-        System.out.println("MySingleton instance created!!");
-    }
-}
+	private enum SingletonImpl
+	{
+		Instance;
 
-public class EnumSingletons {
-	
+		SingletonImpl()
+		{
+			System.out.println(this.getClass().getName() + " created");
+		}
+	}
+
 	public static void main(String[] args) 
 	{
-	    System.out.println(MySingleton.INSTANCE);
-	    System.out.println(MySingleton.INSTANCE);
-	    System.out.println(MySingleton.INSTANCE);
-	    System.out.println(MySingleton.INSTANCE);
+		System.out.println("Starting application");
+
+		SingletonImpl s2 = SingletonImpl.Instance;
+		SingletonImpl s1 = SingletonImpl.Instance;
+
+		System.out.println(s1.hashCode());
+		System.out.println(s2.hashCode());
+		System.out.println(s2 == s1);
 	}
 }
