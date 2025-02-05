@@ -246,7 +246,10 @@ public class StreamTests {
 	public static void Distinct1() {
 		final List<String> ordered = Arrays.asList("a1", "a2", "a2", "a3", "a1", "a2", "a2");
 		
-		final List<String> l1 = ordered.stream().distinct().collect(Collectors.toList());
+		final List<String> l1 = ordered
+				.stream()
+				.distinct()
+				.collect(Collectors.toList());
 		System.out.println(l1);
 	}
 	
