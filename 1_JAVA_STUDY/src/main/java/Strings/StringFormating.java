@@ -1,8 +1,10 @@
 package Strings;
 
-public class StringFormating {
+public class StringFormating
+{
 
-	public static void main(String[] args) {
+	public static void main(String[] args)
+	{
 		System.out.println(String.format("|%s|", "Hello World"));
 		System.out.println(String.format("|%30s|", "Hello World"));
 		System.out.println(String.format("|%-30s|", "Hello World"));
