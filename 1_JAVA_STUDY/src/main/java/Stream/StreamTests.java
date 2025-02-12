@@ -167,16 +167,7 @@ public class StreamTests {
 			}
 		}
 	}
-	
-	public static void StreamToList() {
-		List<String> list = new ArrayList<String>(Arrays.asList("Value1", "Value1", "Value1", "Value2", "Value2", "Value2"));
-		List<String> newList = list.stream().collect(Collectors.toList());
-		// List<String> newList = list.stream().toList();
 
-		System.err.println(newList.getClass());
-		newList.forEach(print_strings);
-	}
-	
 
 	public static void Collect() {
 		final List<Integer> list = Arrays.asList(3, 5, 6);
@@ -553,8 +544,7 @@ public class StreamTests {
 		// FindFirst_OrElse();
 
 		// firstMatch();
-			
-		StreamToList();
+
 		// forEachOrdered();
 		
 		// Iterate();
