@@ -139,7 +139,8 @@ public class HashMap_Tests {
 					 .forEach(System.out::println);
 	}
 	
-	public static void Get() {
+	public static void Get()
+	{
 		final Map<String, String> tokens = Map.ofEntries(
 				Map.entry("1", "One"),
 				Map.entry("2", "Two"),
@@ -255,9 +256,9 @@ public class HashMap_Tests {
 	}
 	
 	
-	public static void main(String[] args) {
-		
-		Create();
+	public static void main(String[] args)
+	{
+		// Create();
 		
 		// Iterate_Tests();
 
@@ -273,7 +274,7 @@ public class HashMap_Tests {
 
 		// IncrementCounters();
 		
-		// Get();
+		Get();
 		// GetOrDefault();
 		
 		// GetOrDefault_Lambda();
