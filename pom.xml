@@ -65,6 +65,7 @@
         <module>Dependency_Injection</module>
         <module>JavaParser</module>
         <module>ParametersParsing</module>
+        <module>RateLimiterTests</module>
         <module>Serialization</module>
         <module>SSRC_Experiments</module>
         <module>ObjectsPools</module>
