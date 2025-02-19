@@ -4,7 +4,8 @@ import okhttp3.*;
 
 import java.io.IOException;
 
-public class HttpOkClientTests {
+public class HttpOkClientTests
+{
     private final static OkHttpClient client = new OkHttpClient();
 
     protected static void printHeaders(Response response) {
@@ -41,12 +42,12 @@ public class HttpOkClientTests {
         });
     }
 
-    public static void main(String ... params) throws IOException {
+    public static void main(String ... params) throws IOException
+    {
         System.out.println("HttpOk3 Tests.");
 
-        // simpleRequest("https://httpbin.org/get");
+        simpleRequest("https://httpbin.org/get");
         // requestAsync("https://httpbin.org/get");
-
-        simpleRequest("http://127.0.0.1:52525");
+        // simpleRequest("http://127.0.0.1:52525");
     }
 }
