@@ -62,7 +62,8 @@ final class PropertiesNames {
 }
 
 /** @class Configuration : */
-public class Configuration {
+public class Configuration
+{
 	/** Configuration static instance. **/
 	private static Configuration __instance = null;
 	/** Default configuration file name :**/
@@ -131,8 +132,9 @@ public class Configuration {
 		return null == value ? DefaultValues.smtpDefaultSocketFactoryFallback : Boolean.valueOf(value);
 	}	
 
-	////////////////////////////////////////////////////////////////////
- 	public static void main(String[] args) throws IOException {
+
+ 	public static void main(String[] args) throws IOException
+	{
  		Configuration config = Configuration.getConfiguration();
  		System.out.println(PropertiesNames.smtpHostParameterName + " = " + config.getSmtpHost());
  		System.out.println(PropertiesNames.mailDebugParameterName + " = " + config.isDebug());

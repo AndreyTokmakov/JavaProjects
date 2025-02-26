@@ -14,7 +14,7 @@ public class HtmlEmailSender {
         html_message += "<font color=red>Duke</font>";
 
         final String username = "andtokm@yandex.ru";
-        final String password = "ziudjagaggggggggg";
+        final String password = "";
 
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.yandex.ru");        

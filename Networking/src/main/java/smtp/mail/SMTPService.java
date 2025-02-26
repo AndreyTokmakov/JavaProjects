@@ -21,17 +21,11 @@ public class SMTPService {
 	 * @throws IOException  **/
     public void SendEmailTest(final BuildView build) throws IOException
     {
-        final String destAddress = "andtokm@yandex.ru";
-        final String srcAddress = "andtokm@yandex.ru";
-        final String username = "andtokm@yandex.ru";
-        final String password = "ziudjagaggggggggg";
-        
-    	/*
-        final String destAddress = "a.tokmakov@corp.mail.ru";
-        final String srcAddress = "browser-build@corp.mail.ru";
-        final String username = "browser-build@corp.mail.ru";
-        final String password = "umjkrfazivteqfme";
-		*/
+        final String destAddress = "";
+        final String srcAddress = "";
+        final String username = "";
+        final String password = "";
+
 
         Properties props = new Properties();
         props.put("mail.smtp.host", configuration.getSmtpHost());        
