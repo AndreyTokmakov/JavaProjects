@@ -76,7 +76,7 @@ public class SMTPTester {
         props.setProperty("mail.smtp.socketFactory.fallback", "false");
         props.setProperty("mail.smtp.port", "465");
         props.setProperty("mail.smtp.socketFactory.port", "465");
-        props.setProperty("mail.smtps.auth", "true");
+        props.setProperty("mail.smtp.auth", "true");
 
         /*
         If set to false, the QUIT command is sent and the connection is immediately closed. If set 
@@ -150,8 +150,8 @@ public class SMTPTester {
     
     public static void SendEmail_Yandex()
     {
-     	final String username = "andtokm@yandex.ru";
-        final String password = "ziudjagaggggggggg";
+     	final String username = "";
+        final String password = "";
 
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.yandex.ru");        
@@ -170,8 +170,8 @@ public class SMTPTester {
 
         try {
             Message message = new MimeMessage(session);
-            InternetAddress from = new InternetAddress("andtokm@yandex.ru");
-            InternetAddress to   = new InternetAddress("andtokm@yandex.ru");
+            InternetAddress from = new InternetAddress(username);
+            InternetAddress to   = new InternetAddress("andtokmtest1@gmail.com");
             
             String htmlMsg = "<h2>Java Mail Example</h2><p>hi there!</p>";
             
@@ -194,19 +194,18 @@ public class SMTPTester {
 	 * @throws MessagingException 
 	 * @throws AddressException 
 	 */
-	public static void main(String[] args) throws AddressException, MessagingException {
-		//MailTest();
-		GmailSend("andtokm",
-                "ziudjagaggggggggg",
-                "andtokm@gmail.com",
+	public static void main(String[] args) throws AddressException, MessagingException
+    {
+		// MailTest();
+
+        /*GmailSend("andtokmtest1",
+                "aDg4M9L9QNLqQGLrrUG87j_VCP9c",
+                "andtokmtest1@gmail.com",
                 "",
                 "TEST_TITLE",
-                "TEST_MESSAGE");
+                "TEST_MESSAGE");*/
 		
-		//SendEmail_MailRu();
-		// SendEmail_Yandex();
+		// SendEmail_MailRu();
+		SendEmail_Yandex();
 	}
-
-
-	
 }

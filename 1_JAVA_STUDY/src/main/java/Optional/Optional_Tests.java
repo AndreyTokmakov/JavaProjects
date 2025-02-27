@@ -333,7 +333,7 @@ public class Optional_Tests {
 		// tests.IsPresent();
 		
 		// tests.IfPresent();
-		// tests.IfPresentOrElse();
+		tests.IfPresentOrElse();
 		// tests.ModifyReturned_Value_IfPresent();
 
 		// tests.Handle_Return_Optional();
