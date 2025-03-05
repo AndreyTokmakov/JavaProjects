@@ -30,6 +30,17 @@ public class Stream_Collectors
         newList.forEach(System.out::println);
     }
 
+    public static void StreamToList_2()
+    {
+        List<Book> bookList = new ArrayList<>();
+        bookList.add(new Book("The Fellowship of the Ring", 1954, "0395489318"));
+        bookList.add(new Book("The Two Towers", 1954, "0345339711"));
+        bookList.add(new Book("The Return of the King", 1955, "0618129111"));
+
+        List<String> bookNames = bookList.stream().map(Book::getName).collect(Collectors.toList());
+        System.out.println(bookNames);
+    }
+
     public static void Stream2Map()
     {
         List<Book> bookList = new ArrayList<>();
@@ -47,6 +58,8 @@ public class Stream_Collectors
     public static void main(String[] args)
     {
         // StreamToList();
-        Stream2Map();
+        StreamToList_2();
+
+        // Stream2Map();
     }
 }

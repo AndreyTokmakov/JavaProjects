@@ -140,11 +140,31 @@ public class Data_Time_Tests {
 			System.out.println(listOfDates.size());     // 61
 		}
 	}
-	
-	public static void main(String[] args) throws ParseException {
+
+	public static void FromString_To_LocalDateTime_AndBack()
+	{
+		DateTimeFormatter DATE_FORMATTER = DateTimeFormatter
+				.ofPattern("yyyy-MM-dd HH:mm:ss").withZone(ZoneId.of("UTC+04:00"));
+
+		final String originalTimeString = "2025-03-05 17:12:52";
+		try {
+			LocalDateTime dateTime = LocalDateTime.parse(originalTimeString, formatter);
+			System.out.println(dateTime);
+
+			final String newTimeString = dateTime.format(formatter);
+
+			System.out.println(newTimeString);
+			System.out.println(originalTimeString);
+		} catch (DateTimeParseException parseException) {
+			System.err.println(parseException);
+		}
+	}
+
+	public static void main(String[] args) throws ParseException
+	{
 		Data_Time_Tests tests = new Data_Time_Tests();
 		
-		 tests.GetCurrentTime();
+		// tests.GetCurrentTime();
 		// tests.GetCurrentTime_Calendar();
 		// tests.CurrentTime_Date();
 		
@@ -164,6 +184,9 @@ public class Data_Time_Tests {
 		
 		
 		// tests.Get_All_Dates_Between_Two_Dates();
-	}
 
+		// System.out.println(LocalDateTime.now());
+
+		FromString_To_LocalDateTime_AndBack();
+	}
 }
