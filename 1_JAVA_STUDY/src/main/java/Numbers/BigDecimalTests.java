@@ -46,13 +46,23 @@ public class BigDecimalTests
         System.out.println(quantity);
     }
 
+    public static void Compare()
+    {
+        BigDecimal val1 = BigDecimal.valueOf(12345.6789000) ;
+        BigDecimal val2 = BigDecimal.valueOf(12345.6789) ;
+
+        System.out.println(val1 + " | " + val2);
+    }
+
     public static void main(String[] args)
     {
         // test1();
         // nullTest();
         // subtract();
 
-        Optional_Subtract();
-        Optional_Subtract2();
+        // Optional_Subtract();
+        // Optional_Subtract2();
+
+        Compare();
     }
 }
