@@ -48,10 +48,19 @@ public class BigDecimalTests
 
     public static void Compare()
     {
-        BigDecimal val1 = BigDecimal.valueOf(12345.6789000) ;
-        BigDecimal val2 = BigDecimal.valueOf(12345.6789) ;
+        BigDecimal val1 = BigDecimal.valueOf(11467.6399);
+        BigDecimal val2 = BigDecimal.valueOf(11467.6399).setScale(8);
 
-        System.out.println(val1 + " | " + val2);
+
+        if (val1.compareTo(val2) == 0) {
+            System.out.println(val1 + " and " + val2 + " are equal.");
+        }
+        else if (val1.compareTo(val2) == 1) {
+            System.out.println(val1 + " is greater than " + val2 + ".");
+        }
+        else {
+            System.out.println(val1 + " is lesser than " + val2 + ".");
+        }
     }
 
     public static void main(String[] args)

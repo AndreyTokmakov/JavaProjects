@@ -62,6 +62,16 @@ public class Optional_Tests {
 			}
 		}
 	}
+
+	public void String_Filter_Nulls()
+	{
+		final List<Optional<String>> list = List.of(Optional.of("One"), Optional.of("Two"),
+				Optional.of("Three"), Optional.empty(), Optional.of("Five")
+		);
+
+		List<String> strList = list.stream().filter(Optional::isPresent).map(Optional::get).toList();
+		System.out.println(strList);
+	}
 	
 	public void FindMin_InArray() {
 		ArrayList<Integer> numbers = new ArrayList<Integer>();
@@ -331,9 +341,11 @@ public class Optional_Tests {
 		// tests.Map1();
 		
 		// tests.IsPresent();
+
+		tests.String_Filter_Nulls();
 		
 		// tests.IfPresent();
-		tests.IfPresentOrElse();
+		// tests.IfPresentOrElse();
 		// tests.ModifyReturned_Value_IfPresent();
 
 		// tests.Handle_Return_Optional();

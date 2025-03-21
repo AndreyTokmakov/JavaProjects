@@ -421,7 +421,8 @@ public class StreamTests {
         list2.stream().map(String::toUpperCase).peek((e) -> System.out.print("[" + e + "] ")).collect(Collectors.toList());
 	}
 	
-	public static void Reduce() {
+	public static void Reduce()
+	{
 		int[] array = {3,5,10,15};
 		int sum = Arrays.stream(array).reduce(0, (x, y) -> x + y);
 		System.out.println("Sum:"+ sum);
@@ -430,18 +431,33 @@ public class StreamTests {
 		Optional<String> sentence = wordsStream.reduce((x, y) -> x + " " + y);
 		System.out.println(sentence.get());
 	}
-	
-	public static void Reduce2() {
-		Stream<Phone> phoneStream = Stream.of(new Phone("iPhone 6 S", 54000), 
-								              new Phone("Lumia 950", 45000),
-								              new Phone("Samsung Galaxy S 6", 40000),
-								              new Phone("LG G 4", 32000));
+
+	public static void Reduce1()
+	{
+		Stream<Phone> phoneStream = Stream.of(
+				new Phone("iPhone 6 S", 54000),
+				new Phone("Lumia 950", 45000),
+				new Phone("Samsung Galaxy S 6", 40000),
+				new Phone("LG G 4", 32000)
+		);
+
+		Integer sum = phoneStream.map(Phone::getPrice).reduce(0, Integer::sum);
+		System.out.println(sum); // 171000
+	}
+
+	public static void Reduce2()
+	{
+		Stream<Phone> phoneStream = Stream.of(
+				new Phone("iPhone 6 S", 54000),
+				new Phone("Lumia 950", 45000),
+				new Phone("Samsung Galaxy S 6", 40000),
+				new Phone("LG G 4", 32000)
+		);
 	 
-		int sum = phoneStream.reduce(0, (x,y)-> { if (y.getPrice()<50000)
-													return x + y.getPrice();
-				                    			  else 
-				                    				return x + 0;
-												},  (x, y)->x+y);
+		int sum = phoneStream.reduce(0, (x,y)-> {
+			if (y.getPrice() < 50000)
+				return x + y.getPrice();
+			else return x;}, Integer::sum);
 		System.out.println(sum); // 117000
 	}
 	
@@ -469,7 +485,7 @@ public class StreamTests {
 	          .forEach(e -> System.out.println("Key: "+ e.getKey() +", Value: "+ e.getValue()));
 	}
 	
-	public static void Limit() {
+	public static void 	Limit() {
 		List<Integer> numbers = new ArrayList<Integer>(Arrays.asList(1,2,3,4,5,6,7,8,9));
 		numbers.stream().limit(5).forEach(val -> System.out.println(val));
 		
@@ -563,6 +579,7 @@ public class StreamTests {
 		// Peek();
 		
 		// Reduce();
+		Reduce1();
 		// Reduce2();
 		
 		// Range();

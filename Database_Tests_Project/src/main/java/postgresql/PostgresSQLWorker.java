@@ -12,9 +12,9 @@ import java.sql.SQLException;
 
 public class PostgresSQLWorker {
 	//  Database credentials
-	static final String DB_URL = "jdbc:postgresql://127.0.0.1:5432/ecom";
+	static final String DB_URL = "jdbc:postgresql://0.0.0.0:5433/atc-backend";
 	static final String USER = "postgres";
-	static final String PASS = "ziudjaga";
+	static final String PASS = "postgres";
 	 
 	public static void main(String[] argv) {
 		System.out.println("Testing connection to PostgreSQL JDBC");
