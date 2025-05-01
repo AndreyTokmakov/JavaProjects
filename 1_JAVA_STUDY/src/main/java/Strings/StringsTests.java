@@ -45,9 +45,14 @@ public class StringsTests {
 		}
 	}
 	
-	public void Join() {
+	public void Join()
+	{
 		String result = String.join(" < ", "One", "Two", "Three", "Four", "Five");
 		System.out.println(result);
+
+
+		System.out.println( "[" + String.join(",", List.of()) + "]");
+		System.out.println( "[" + String.join(",", List.of("1", "2")) + "]");
 	}
 	
 	public void RegionMatches() {
@@ -161,7 +166,7 @@ public class StringsTests {
 		
 		// tests.SplitString();
 
-		// tests.Join();
+		tests.Join();
 
 		// tests.RegionMatches();
 		
@@ -182,9 +187,5 @@ public class StringsTests {
 		// tests.Trim();
 		// tests.TrimRemoveSpaces();
 
-		String str1 = new String("12345");
-		String str2 = "12345";
-
-		System.out.println(str1 == str2);
 	}
 }

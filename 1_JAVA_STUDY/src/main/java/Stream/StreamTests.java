@@ -1,5 +1,8 @@
 package Stream;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,27 +27,29 @@ import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
-class Phone {
-    private String name;
-    private int price;
-     
-    public Phone(String name, int price){
-        this.name=name;
-        this.price=price;
-    }
-     
-    public String getName() {
-        return name;
-    }
-     
-    public int getPrice() {
-        return price;
-    }
-}
+public class StreamTests
+{
+
+	private final static class Phone
+	{
+		private String name;
+		private int price;
+
+		public Phone(String name, int price){
+			this.name=name;
+			this.price=price;
+		}
+
+		public String getName() {
+			return name;
+		}
+
+		public int getPrice() {
+			return price;
+		}
+	}
 
 
-public class StreamTests {
-	
 	private final static Consumer<Integer> print_in_line = value -> System.out.printf(value + " ");
 	
 	private final static Consumer<String> print_strings = value -> System.out.println(value);
@@ -516,15 +521,45 @@ public class StreamTests {
 		System.out.println(list.get(0) + " " +  list.get(list.size() - 1));
 	}
 
+	@Data
+	@AllArgsConstructor
+	private final static class Allocation
+	{
+		String provider;
+		String asset;
+		int price = 0;
+	}
+
 	public static void TESTS_and_EXPERIMENTS() 
 	{
-		List<Integer> list = new ArrayList<Integer>(Arrays.asList(5,4,3,2,1));
-		test(list.stream(), new TestComparator<Integer>());
+		List<String> providers = List.of("OKX", "BINANCE", "DERIBIT");
+		List<Allocation> allocations = List.of(
+				new Allocation("OKX",  "BTC",1),
+				new Allocation("OKX",  "ETH",10),
+				//new Allocation("BINANCE",  "BTC",2),
+				new Allocation("DERIBIT",  "ETH",21)
+		);
 
 
+		/*
+		for (String balanceProvider: providers) {
+			String value = "";
+			for (Allocation allocation: allocations)  {
+				if (allocation.getProvider().equals(balanceProvider)) {
+					value = allocation.getAsset()+ "(" + allocation.getPrice() + ")";
+					break;
+				}
+			}
+			System.out.println(balanceProvider + " = " + value);
+		}*/
 
+		providers.forEach( bal -> {
+			String res = allocations.stream().filter(allocation -> allocation.getProvider().equals(bal))
+					.map( alloc -> String.format("%s (%s)", alloc.getAsset(), alloc.getPrice())).findFirst().orElse("");
+			System.out.println(bal + " = " + res);
+		});
 	}
-	
+
 	public static void main(String[] args) throws IOException
 	{
 		
@@ -579,7 +614,7 @@ public class StreamTests {
 		// Peek();
 		
 		// Reduce();
-		Reduce1();
+		// Reduce1();
 		// Reduce2();
 		
 		// Range();
@@ -589,6 +624,6 @@ public class StreamTests {
 		// Sorted_List();
 		// Sorted_Map();
 		
-		// TESTS_and_EXPERIMENTS();
+		TESTS_and_EXPERIMENTS();
 	}
 }

@@ -118,6 +118,11 @@ public class HashSet_Test {
 		// tests.Contains_FInd();
 		// tests.ToString();
 
-		tests.TESTS();
+		// tests.TESTS();
+
+
+		Set<String> set1 = Set.of("One", "Two", "Three");
+		System.out.println(set1.stream().sorted().toList());
+
 	}
 }

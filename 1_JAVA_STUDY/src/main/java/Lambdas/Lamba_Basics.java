@@ -17,16 +17,18 @@ import java.util.function.IntSupplier;
 import java.util.function.LongSupplier;
 import java.util.function.Supplier;
 
-interface ICalculator<T>
-{
-	public T operation(T x, T y);
-	public default void info() {
-		System.out.println("ICalculator::info()");
-	}
-}
 
-public class Lamba_Basics {
-	
+public class Lamba_Basics
+{
+	interface ICalculator<T>
+	{
+		public T operation(T x, T y);
+		public default void info() {
+			System.out.println("ICalculator::info()");
+		}
+	}
+
+
 	public void Lambdas_Different_Types() {
 		IntSupplier num = () -> 1;
 		System.out.println(num.getAsInt());

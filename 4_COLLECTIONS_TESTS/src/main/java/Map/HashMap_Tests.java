@@ -1,8 +1,12 @@
 package Map;
 
+import lombok.*;
+
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
+
+import lombok.Data;
 
 
 class Color {
@@ -254,7 +258,33 @@ public class HashMap_Tests {
 		}
 
 	}
-	
+
+	@Data
+	@RequiredArgsConstructor
+	private final static class Wrapper
+	{
+		@NonNull
+		private String name;
+		@NonNull
+		private Integer value;
+	}
+
+	public static void Test_Return_Value()
+	{
+		HashMap<String, Wrapper> map = new HashMap<String, Wrapper>();
+
+		//System.out.println(map);
+
+		Wrapper res = map.computeIfAbsent("One", s -> new Wrapper("Name1", 1));
+		System.out.println(res);
+
+		res.value += 1;
+
+		System.out.println(res);
+
+
+		System.out.println(map);
+	}
 	
 	public static void main(String[] args)
 	{
@@ -273,8 +303,10 @@ public class HashMap_Tests {
 		// VariousTests();
 
 		// IncrementCounters();
+
+		Test_Return_Value();
 		
-		Get();
+		// Get();
 		// GetOrDefault();
 		
 		// GetOrDefault_Lambda();

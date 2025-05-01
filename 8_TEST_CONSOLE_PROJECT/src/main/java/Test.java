@@ -4,6 +4,8 @@ import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Stream;
 
 public class Test
 {
@@ -45,15 +47,21 @@ public class Test
         }
     }
 
+    private static List<String> makeHeader(List<String> accounts) {
+        return Stream.of(List.of("Date", "Asset"), accounts).flatMap(List::stream).toList();
+    }
+
     public static void main(String[] args)
     {
         // interfaceTest();
         // Lombok_Getter_Setter();
 
-        ObjectImpl obj = new ObjectImpl();
-        if (obj instanceof IObject)
-        {
+        List<String> accounts = List.of("OKX", "Binance");
 
-        }
+        System.out.println(accounts);
+
+
+        //List<String> header = makeHeader(accounts);
+        //System.out.println(header);
     }
 }
