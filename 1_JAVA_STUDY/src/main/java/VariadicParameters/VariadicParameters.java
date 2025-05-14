@@ -1,5 +1,7 @@
 package VariadicParameters;
 
+import java.util.List;
+
 class Tester {
 	
 	protected int sumNumber(int ... args){
@@ -29,12 +31,25 @@ class Tester {
 		System.out.println();
 		handleParams(123, "Test", "One", "Two", "Three", "Four", "Five");
 	}
+
+	List<String> makeList(String ... args) {
+		return List.of(args);
+	}
+
+	void Pass_Variadic_to_Function()
+	{
+		var list = makeList("1", "2", "3");
+		System.out.println(list);
+	}
 }
 
 
-public class VariadicParameters {
-	public static void main(String[] args) {
+public class VariadicParameters
+{
+	public static void main(String[] args)
+	{
 		Tester tester = new Tester();
-		tester.Test();
+		// tester.Test();
+		tester.Pass_Variadic_to_Function();
 	}
 }

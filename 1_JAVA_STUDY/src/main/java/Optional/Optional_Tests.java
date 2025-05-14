@@ -1,5 +1,8 @@
 package Optional;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -294,7 +297,8 @@ public class Optional_Tests {
 		}
 	}
 	
-	public void Map() {
+	public void Map()
+	{
 		{
 			final List<String> companyNames = Arrays.asList("paypal", "oracle", "", "microsoft", "", "apple");
 			final Optional<List<String>> listOptional = Optional.of(companyNames);
@@ -314,11 +318,43 @@ public class Optional_Tests {
 	}
 	
 	
-	public void Map1() {
+	public void Map1()
+	{
 		final Optional<MyObject> nameOptional = Optional.of(new MyObject("12345"));
 		
 		System.out.println(nameOptional.get());
 		System.out.println("Name: " + nameOptional.map(MyObject::getName).orElse("Unnamed"));
+	}
+
+
+	@Data
+	@AllArgsConstructor
+	private final static class Wrapper {
+		String text;
+		Integer length;
+
+		public static Wrapper fromString(String str) {
+			return new Wrapper(str, str.length());
+		}
+	}
+
+
+	public void Map_To_Custom_Object()
+	{
+		final Optional<String> optStr = Optional.of("One");
+		// final Optional<String> optStr = Optional.empty();
+
+		Wrapper result = optStr.map(Wrapper::fromString).orElse(new Wrapper("", 0));
+		System.out.println(result);
+	}
+
+	public void Map_To_List()
+	{
+		final Optional<String> optStr = Optional.of("One");
+		// final Optional<String> optStr = Optional.empty();
+
+		List<String> result = optStr.map(s -> List.of(s, "111")).orElse(List.of("", ""));
+		System.out.println(result);
 	}
 	
 	/************* main ************ **/
@@ -339,10 +375,12 @@ public class Optional_Tests {
 		
 		// tests.Map();
 		// tests.Map1();
-		
+		tests.Map_To_List();
+		// tests.Map_To_Custom_Object();
+
 		// tests.IsPresent();
 
-		tests.String_Filter_Nulls();
+		// tests.String_Filter_Nulls();
 		
 		// tests.IfPresent();
 		// tests.IfPresentOrElse();

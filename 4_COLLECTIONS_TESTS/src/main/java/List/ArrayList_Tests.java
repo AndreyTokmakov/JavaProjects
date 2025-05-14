@@ -11,34 +11,33 @@ import java.util.StringJoiner;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
-
+import java.util.stream.Stream;
 import Utilities.Build;
 import Utilities.Person;
 import Utilities.TestClass;
 
 import java.lang.reflect.Field;
 
-class PersonComparer implements Comparator<Person> {
-    @Override
-    public int compare(Person p1, Person p2) {
-    	return p1.getName().compareTo(p2.getName());
-    }
-} 
 
-/** StringComparer class : **/
-class StringComparer implements Comparator<String> {
-    @Override
-    public int compare(String str1, String str2) {
-    	return str1.compareTo(str2);
-    }
-} 
+public class ArrayList_Tests
+{
+	class PersonComparer implements Comparator<Person> {
+		@Override
+		public int compare(Person p1, Person p2) {
+			return p1.getName().compareTo(p2.getName());
+		}
+	}
+
+	/** StringComparer class : **/
+	class StringComparer implements Comparator<String> {
+		@Override
+		public int compare(String str1, String str2) {
+			return str1.compareTo(str2);
+		}
+	}
 
 
-////////////////////////////////////////////////// TESTS CLASS ///////////////////////////////////////////////////////////
 
-public class ArrayList_Tests {
-	
-	
 	protected final Consumer<String> simplePrinter = (String value) -> System.out.println("  " + value);	
 	
 	public <U extends List<T>, T> 
@@ -485,10 +484,20 @@ public class ArrayList_Tests {
 		System.out.println(list);
 	}
 
+	public void Merge_Two_Lists_Into_One()
+	{
+		List<String> list1 = List.of("one", "two");
+		List<String> list2 = List.of("three", "two");
+
+		List<String> combined =  Stream.of(list1, list2).flatMap(List::stream).toList();
+		System.out.println(combined);
+	}
 
 	public static void main(String[] args) throws Exception
 	{
 		ArrayList_Tests tests = new ArrayList_Tests();
+
+		tests.Merge_Two_Lists_Into_One();
 		
 		// tests.CreateList();
 		
@@ -499,7 +508,7 @@ public class ArrayList_Tests {
 
 		// tests.swapElements();
 		// tests.swapElements_CustomClass();
-		tests.moveElementsToFront();
+		// tests.moveElementsToFront();
 
 		
 		// tests.ContainsAll();

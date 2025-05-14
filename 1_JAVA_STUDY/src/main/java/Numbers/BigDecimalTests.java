@@ -2,6 +2,7 @@ package Numbers;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.Optional;
 import java.util.OptionalInt;
 
@@ -63,6 +64,17 @@ public class BigDecimalTests
         }
     }
 
+    public static void Compare_2()
+    {
+        BigDecimal val1 = BigDecimal.valueOf(0.00);
+        BigDecimal val2 = BigDecimal.valueOf(0);
+        BigDecimal zero = BigDecimal.ZERO;
+
+        System.out.println(val1.compareTo(val2));
+        System.out.println(val1.compareTo(zero));
+
+    }
+
     public static void main(String[] args)
     {
         // test1();
@@ -72,6 +84,13 @@ public class BigDecimalTests
         // Optional_Subtract();
         // Optional_Subtract2();
 
-        Compare();
+        // Compare();
+        // Compare_2();
+
+        // System.out.println(BigDecimal.valueOf(0.1 * 3).setScale(2, RoundingMode.FLOOR));
+
+        BigDecimal val1 = BigDecimal.valueOf(11467.6399);
+        String str = String.format("Value = %s", val1);
+        System.out.println(str);
     }
 }
