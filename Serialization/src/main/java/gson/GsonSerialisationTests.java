@@ -41,7 +41,6 @@ public class GsonSerialisationTests
                 .create();
     }
 
-
     public static <T> Map<String, T> GsonToMaps(String gsonString) {
         return gson.fromJson(gsonString, new TypeToken<Map<String, T>>(){}.getType());
     }
