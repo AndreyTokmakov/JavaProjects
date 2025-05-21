@@ -4,10 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class Optional_Tests {
 	
@@ -132,9 +129,19 @@ public class Optional_Tests {
 		}
 	}
 	
-	public void OrElseThrow() {
+	public void OrElseThrow()
+	{
 		String text = null;
 		String defaultText = Optional.ofNullable(text).orElseThrow(IllegalArgumentException::new);
+	}
+
+	public void OrElseThrow_2()
+	{
+		Optional<String> optText = Optional.of("OK");
+		Optional<String> optTextEmpty  = Optional.empty();
+
+		String text = optTextEmpty.orElseThrow(() -> new RuntimeException("MIssing"));
+		System.out.println(text);
 	}
 	
 	public void Filter()
@@ -338,25 +345,50 @@ public class Optional_Tests {
 		}
 	}
 
-
 	public void Map_To_Custom_Object()
 	{
-		final Optional<String> optStr = Optional.of("One");
-		// final Optional<String> optStr = Optional.empty();
+		// final Optional<String> optStr = Optional.of("One");
+		final Optional<String> optStr = Optional.empty();
 
 		Wrapper result = optStr.map(Wrapper::fromString).orElse(new Wrapper("", 0));
 		System.out.println(result);
 	}
 
+	public void Map_To_Custom_Object_Empty()
+	{
+		final Optional<String> optStr = Optional.empty();
+		final Optional<String> optStrEmpty = Optional.of("One");
+
+		System.out.println(optStrEmpty.map(Wrapper::fromString));
+		System.out.println(optStr.map(Wrapper::fromString));
+	}
+
 	public void Map_To_List()
 	{
-		final Optional<String> optStr = Optional.of("One");
-		// final Optional<String> optStr = Optional.empty();
+		//final Optional<String> optStr = Optional.of("One");
+		final Optional<String> optStr = Optional.empty();
 
 		List<String> result = optStr.map(s -> List.of(s, "111")).orElse(List.of("", ""));
 		System.out.println(result);
 	}
-	
+
+
+	public void Map_Diff_Type_OfNullable()
+	{
+		final Map<String, Integer> mapping = Map.ofEntries(
+				Map.entry("One", 1),
+				Map.entry("Two", 2),
+				Map.entry("Three", 3)
+		);
+
+		String value = "Onse";
+		String result = Optional.ofNullable(mapping.get(value)).map(String::valueOf).orElse("Empty");
+		System.out.println(result);
+	}
+
+
+
+
 	/************* main ************ **/
 	public static void main(String[] args)
 	{
@@ -368,15 +400,19 @@ public class Optional_Tests {
 		// tests.CreateTests();
 		// tests.CreateTests1();
 		// tests.OrElseGet_vs_OrElse();
+
 		// tests.OrElseThrow();
-		
+		// tests.OrElseThrow_2();
+
 		// tests.Filter();
 		// tests.Filter_Tests();
 		
 		// tests.Map();
 		// tests.Map1();
-		tests.Map_To_List();
+		// tests.Map_To_List();
 		// tests.Map_To_Custom_Object();
+		tests.Map_To_Custom_Object_Empty();
+		// tests.Map_Diff_Type_OfNullable();
 
 		// tests.IsPresent();
 
@@ -390,7 +426,7 @@ public class Optional_Tests {
 		// tests.BigDecimal_Optional_Convert_toString_IfPresent_And_GreaterZero();
 		// tests.BigDecimal_Optional_Convert_toString_IfPresent_And_GreaterZero_1();
 
-		//tests.Tests();
+		// tests.Tests();
 
 	}
 }

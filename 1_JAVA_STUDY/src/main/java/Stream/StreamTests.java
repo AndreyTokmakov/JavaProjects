@@ -362,7 +362,7 @@ public class StreamTests
 			Map.entry("Three", "3")
 		);
 
-		final List<String> list = Arrays.asList("One","Two","Three");
+		final List<String> list = Arrays.asList("One","Two","Th5ree");
 		list.stream().map(tokens::get).forEach(System.out::println);
 	}
 	
@@ -602,7 +602,7 @@ public class StreamTests
 		// Limit();
 		
 		// Map();
-		// Map_FindValuesInMap();
+		Map_FindValuesInMap();
 
 		// FlatMap();
 		// FlatMap2();
@@ -624,6 +624,6 @@ public class StreamTests
 		// Sorted_List();
 		// Sorted_Map();
 		
-		TESTS_and_EXPERIMENTS();
+		// TESTS_and_EXPERIMENTS();
 	}
 }
