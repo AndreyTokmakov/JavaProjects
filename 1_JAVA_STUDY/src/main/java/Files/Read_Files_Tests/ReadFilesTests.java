@@ -18,13 +18,14 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
 class FileReaderTester {
 	/** Test filename: **/
-	private static final String fileName = "S:\\Temp\\Folder_For_Testing\\BUILD.gn";
+	private static final String fileName = "/home/andtokm/Documents/Binance/ssh_Key/ed25519.pem";
 	
 	protected void ReadLambdaTest_Stream() throws IOException {
 		try (final Stream<String> lines = Files.lines(Paths.get(FileReaderTester.fileName))) {
@@ -51,9 +52,10 @@ class FileReaderTester {
 	    System.out.println(data); 
 	} 
 	
-	public void Read_All_Bytes_2() throws Exception  { 
+	public void Read_All_Bytes_2() throws Exception
+	{
 		byte[] allBytes = Files.readAllBytes(Paths.get(fileName));
-		System.out.println(allBytes.toString());
+		System.out.println(Arrays.toString(allBytes));
 	} 
 	
 	public void Read_All_Lines() throws Exception  { 
@@ -74,7 +76,8 @@ public class ReadFilesTests {
 	/** File reader tester: **/
 	private static FileReaderTester reader = new FileReaderTester();
 	
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) throws Exception
+	{
 		// reader.ReadLambdaTest_Stream();
 		// reader.ReadLambdaTest_Stream_2();
 		// reader.ReadFile_BufferedReader();

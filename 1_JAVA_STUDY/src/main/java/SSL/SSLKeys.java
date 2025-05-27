@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -22,7 +23,9 @@ import java.security.interfaces.RSAPublicKey;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
+import java.util.Arrays;
 import java.util.Base64;
+import java.util.List;
 
 import javax.crypto.KeyGenerator;
 
@@ -108,8 +111,9 @@ public class SSLKeys {
 	}
 
 	
-	public void KeyTests2() throws IOException  {
-		final String publicKeyFile = "R:\\Documents\\sshKeys\\Infrastructure_key\\id_rsa.pub";
+	public void KeyTests2() throws IOException
+	{
+		final String publicKeyFile = "/home/andtokm/Documents/Binance/ssh_Key/ed25519.pub";
 		FileReader fileReader = new FileReader(publicKeyFile);
 		final String publicKey = IOUtils.toString(fileReader);
 		
@@ -179,16 +183,26 @@ public class SSLKeys {
 		System.out.println(publicKey);
 		System.out.println(publicKeyStr);
 	}
-	
-	/*************** MAIN  
-	 * @throws IOException **************/
-	
+
+
+	public static void readPubicKey() throws IOException
+	{
+		final String publicKeyFile = "/home/andtokm/Documents/Binance/ssh_Key/ed25519.pub";
+		String key = Files.readString(Paths.get(publicKeyFile), Charset.defaultCharset());
+		List<String> lines = Arrays.asList(key.split("\n"));
+		System.out.println(lines.get(1));
+	}
+
 	/* @throws NoSuchAlgorithmException */
-	public static void main(String[] args) throws NoSuchAlgorithmException, IOException {
+	public static void main(String[] args) throws NoSuchAlgorithmException, IOException
+	{
 		SSLKeys tests = new SSLKeys();
 		
 		// tests.GenerateKeys();
 		// tests.getPublicKey3("R:\\Projects\\Java\\JavaStudyProject\\src\\SSL\\public.key");
-		tests.TestKeys();
+		// tests.TestKeys();
+		// tests.KeyTests2();
+
+		readPubicKey();
 	}
 }
